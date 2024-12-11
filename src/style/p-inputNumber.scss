@@ -1,0 +1,11 @@
+p-inputNumber {
+
+    // all width available in parent flex search box
+    &.flexfull {
+        display: flex;
+        .p-inputnumber {
+            flex: 1;
+        }
+    }
+
+}

@@ -1,0 +1,32 @@
+<div style="padding: 24px 16px;">
+    <div style="font-size: 32px; font-weight: 500;">
+        Login
+    </div>
+</div>
+
+<div style="padding: 16px; display: flex; flex-direction: column; gap: 16px">
+
+    <div style="display: flex; flex-direction: column; gap: 8px">
+        Username
+        <input type="text" pInputText [(ngModel)]="username"/>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px">
+        Password
+        <p-password class="p-fluid" [(ngModel)]="password" [feedback]="false" [toggleMask]="true" />
+    </div>
+
+    <div>
+        <p-button label="Login" (click)="login()" />
+    </div>
+
+    <div>
+        <p-button label="LoginTest" (click)="loginTest()" />
+    </div>
+
+    <div>
+        Don't have an account? Register
+    </div>
+</div>
+
+

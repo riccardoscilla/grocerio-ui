@@ -1,0 +1,14 @@
+p-autocomplete {
+    // all width available in parent flex search box
+    &.inline-flexfull {
+        flex: 1;
+        display: flex;
+        .p-autocomplete {
+            flex: 1;
+        }
+        .p-autocomplete-input {
+            width: 100%;
+        }
+    }
+
+}

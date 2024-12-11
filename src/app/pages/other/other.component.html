@@ -1,0 +1,20 @@
+<app-title [title]="'User'"></app-title>
+
+<app-appbar>
+</app-appbar>
+
+<div style="background-color: white;">
+        
+    <app-list>
+        <app-list-item [mainText]="'Items'" [url]="'/items'"></app-list-item>
+        <app-list-item [mainText]="'Categories'" [url]="'/items'"></app-list-item>
+    </app-list>
+
+    <div style="padding: 16px;">
+        <p-button [outlined]="true" label="Logout" />
+    </div>
+</div>
+
+<app-fixed-bottom>
+    <app-menu-bottom></app-menu-bottom>
+</app-fixed-bottom>

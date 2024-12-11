@@ -1,0 +1,52 @@
+<app-title [title]="'Items'" [back]="'/other'"></app-title>
+
+<app-appbar>
+    <app-search-bar (searchTextChanged)="onSearchTextChanged($event)"></app-search-bar>
+    
+    <app-scroll-x>
+        <app-category-filter-chip 
+            [selectedCategories]="itemsData.selectedCategories" 
+            (toggleFilter)="toggleShowCategoryFilter()" >
+        </app-category-filter-chip>
+    </app-scroll-x>
+</app-appbar>
+
+<app-list *ngIf="dataStateHandler.isSuccess()">
+    <app-list-item-tile *ngFor="let item of itemsData.filteredItems"
+        [leadingIcon]="item.category"
+        [mainText]="item.name"
+        (edit)="onEdit(item)"
+        (delete)="delete(item)">
+    </app-list-item-tile>
+</app-list>
+
+<app-list-loading *ngIf="dataStateHandler.isLoading()"></app-list-loading>
+
+<app-fixed-bottom-right>
+    <app-new-button (toggleShowNew)="onNew()"></app-new-button>
+</app-fixed-bottom-right>
+
+<app-items-new 
+    [visible]="showItemNew" 
+    [item]="itemNew"
+    [categories]="categoriesData.categories"
+    (onHide)="toggleShowItemNew()" 
+    (onSave)="save()"
+></app-items-new>
+
+<app-items-edit 
+    [visible]="showItemEdit" 
+    [item]="itemEdit"
+    [categories]="categoriesData.categories"
+    (onHide)="toggleShowItemEdit()" 
+    (onSave)="edit()"
+></app-items-edit>
+
+
+<app-category-filter
+    *ngIf="showCategoryFilter"
+    [categories]="categoriesData.categories"
+    [selectedCategories]="itemsData.selectedCategories"
+    (onHide)="toggleShowCategoryFilter()" 
+    (onApply)="onApplyCategoryFilter($event)"
+></app-category-filter>

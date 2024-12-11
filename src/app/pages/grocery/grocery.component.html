@@ -1,0 +1,81 @@
+<app-title [title]="'Grocery'"></app-title>
+
+<app-appbar>
+    <app-search-bar (searchTextChanged)="onSearchTextChanged($event)"></app-search-bar>
+    
+    <app-scroll-x>
+        <app-category-filter-chip 
+            [selectedCategories]="listItemsData.selectedCategories" 
+            (toggleFilter)="toggleShowCategoryFilter()" >
+        </app-category-filter-chip>
+    </app-scroll-x>
+</app-appbar>
+
+<div style="background-color: white; flex: 1;">
+        
+    <app-list *ngIf="dataStateHandler.isSuccess()">
+        <app-list-item-tile *ngFor="let listItem of listItemsData.filteredListItems"
+            [leadingIcon]="listItem.category"
+            [mainText]="listItem.name"
+            [rightText]="listItem.quantity.toString()"
+            [checkBox]="true"
+            (check)="onCheck(listItem)"
+            (uncheck)="onUncheck(listItem)"
+            (edit)="onEdit(listItem)"
+            (delete)="onDelete(listItem)">
+        </app-list-item-tile>
+
+        <div style="padding: 16px" *ngIf="listItemsData.isEmpty()">
+            No List Items
+        </div>
+    </app-list>
+    
+    <app-list-loading *ngIf="dataStateHandler.isLoading()"></app-list-loading>
+
+</div>
+
+<app-fixed-bottom-right>
+    <p-button [rounded]="true" *ngIf="checkedListItems.length > 0"  (click)="onFinish()">
+        Finish!
+    </p-button>
+    <app-new-button (toggleShowNew)="toggleShowListItemNew()"></app-new-button>
+</app-fixed-bottom-right>
+
+<app-fixed-bottom>
+    <app-menu-bottom></app-menu-bottom>
+</app-fixed-bottom>
+
+
+<app-grocery-new 
+    [listItem]="listItemNew"
+    [visible]="showListItemNew" 
+    [items]="itemsData.filteredItems"
+    (onHide)="toggleShowListItemNew()" 
+    (onSave)="save()"
+></app-grocery-new>
+
+<app-grocery-edit 
+    [listItem]="listItemEdit"
+    [visible]="showListItemEdit" 
+    [items]="itemsData.filteredItems"
+    (onHide)="toggleShowListItemEdit()" 
+    (onSave)="edit()"
+></app-grocery-edit>
+
+<app-category-filter
+    *ngIf="showCategoryFilter"
+    [categories]="categoriesData.categories"
+    [selectedCategories]="listItemsData.selectedCategories"
+    (onHide)="toggleShowCategoryFilter()" 
+    (onApply)="onApplyCategoryFilter($event)"
+></app-category-filter>
+
+
+<!--
+<app-shelf-delete 
+    [listItem]="listItemDelete"
+    [visible]="showListItemDelete" 
+    (onCancel)="toggleShowListItemDelete()"
+    (onDelete)="delete()" 
+    (onDeleteAndInsertInList)="deleteAndInsertInList()"
+></app-shelf-delete> -->

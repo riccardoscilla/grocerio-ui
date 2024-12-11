@@ -1,0 +1,18 @@
+p-sidebar {
+    button.p-sidebar-close {
+        background-color: white;
+        color: black;
+    }
+}
+
+
+@media (min-width: 500px) { 
+    p-sidebar {
+        .p-sidebar {
+            width: 500px;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+    }
+}

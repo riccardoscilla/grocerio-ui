@@ -1,1 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+// @import "primeng/resources/themes/lara-light-blue/theme.css";
+// @import "primeng/resources/themes/aura-light-blue/theme.css";
+@import "assets/my-theme/theme.scss";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+
+// @import "style/p-iconfield.scss";
+// @import "style/p-dropdown.scss";
+// @import "style/p-button.scss";
+// @import "style/p-password.scss";
+// @import "style/p-sidebar.scss";
+// @import "style/p-inputNumber.scss";
+// @import "style/p-toast.scss";
+// @import "style/p-confirmdialog.scss";
+// @import "style/p-dialog.scss";
+// @import "style/p-calendar.scss";
+// @import "style/p-autocomplete.scss";
+// @import "style/input.scss";
+// @import "style/button.scss";
+// @import "style/textarea.scss";
+
+
+html { height: 100vh;}
+body { height: 100vh; margin: 0; padding: 0; user-select: none;}
+
+@media (min-width: 500px) { 
+    html {
+        display: flex;
+        justify-content: center;
+    }
+    body {
+        width: 500px;
+    }
+}

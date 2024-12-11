@@ -1,0 +1,38 @@
+p-calendar {
+    // all width available in parent flex search box
+    &.flexfull {
+        display: flex;
+        .p-calendar {
+            flex: 1;
+        }
+    }
+
+    // * {
+    //     box-shadow: none;
+    // }
+
+    *.p-highlight {
+        color: red;
+        background: rgba(255, 0, 0, 0.15);
+    }
+    
+    button {
+        background-color: white;
+        color: black;
+    }
+
+    // button.p-datepicker-month {
+    //     border: 1px solid black;
+    // }
+
+    // button.p-datepicker-year {
+    //     border: 1px solid black;
+    // }
+
+    .p-calendar.p-focus > .p-inputtext {
+        border-color: red;
+    }
+    .p-datepicker table td > span:focus {
+        box-shadow: none;
+    }
+}

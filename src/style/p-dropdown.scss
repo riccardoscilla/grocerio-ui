@@ -1,0 +1,35 @@
+p-dropdown {
+
+    .p-dropdown {
+        // height: 44.8px;
+    }
+
+    .p-dropdown:not(.p-disabled).p-focus {
+        // box-shadow: none;
+        // border-color: red;
+    }
+
+    .p-dropdown:hover {
+        border-color: red;
+    }
+
+    // all width available in parent flex search box
+    &.flexfull {
+        display: flex;
+        width: 100%;
+        .p-dropdown {
+            flex: 1;
+        }
+    }
+
+}
+
+p-dropdownitem {
+    .p-dropdown-item.p-focus {
+        background: rgba(255, 0, 0.75);
+        color: white;
+    }
+    .p-dropdown-item.p-highlight {
+        
+    }
+}

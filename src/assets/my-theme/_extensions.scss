@@ -1,0 +1,85 @@
+$contentBorderRadius: 12px;
+
+$inputShadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgba(18, 18, 23, 0.05);
+
+@mixin secondary-button {
+    color: $secondaryButtonTextColor;
+    background: $secondaryButtonBg;
+    border: $secondaryButtonBorder;
+
+    &:not(:disabled):hover {
+        background: $secondaryButtonHoverBg;
+        color: $secondaryButtonTextHoverColor;
+        border-color: $secondaryButtonHoverBorderColor;
+    }
+
+    &:not(:disabled):focus {
+        box-shadow: $secondaryButtonFocusShadow;
+    }
+
+    &:not(:disabled):active {
+        background: $secondaryButtonActiveBg;
+        color: $secondaryButtonTextActiveColor;
+        border-color: $secondaryButtonActiveBorderColor;
+    }
+}
+
+@layer primeng {
+    @import "./extensions/_accordion";
+    @import "./extensions/_autocomplete";
+    @import "./extensions/_button";
+    @import "./extensions/_calendar";
+    @import "./extensions/_card";
+    @import "./extensions/_carousel";
+    @import "./extensions/_cascadeselect";
+    @import "./extensions/_checkbox";
+    @import "./extensions/_chips";
+    @import "./extensions/_chip";
+    @import "./extensions/_colorpicker";
+    @import "./extensions/_confirmpopup";
+    @import "./extensions/_datatable";
+    @import "./extensions/_dataview";
+    @import "./extensions/_dialog";
+    @import "./extensions/_dropdown";
+    @import "./extensions/_treetable";
+    @import "./extensions/_fieldset";
+    @import "./extensions/_filter";
+    @import "./extensions/_fileupload";
+    @import "./extensions/_galleria";
+    @import "./extensions/_inlinemessage";
+    @import "./extensions/_inputgroup";
+    @import "./extensions/_inputnumber";
+    @import "./extensions/_inputswitch";
+    @import "./extensions/_inputtext";
+    @import "./extensions/_knob";
+    @import "./extensions/_listbox";
+    @import "./extensions/_message";
+    @import "./extensions/_multiselect";
+    @import "./extensions/_panelmenu";
+    @import "./extensions/_password";
+    @import "./extensions/_orderlist";
+    @import "./extensions/_organizationchart";
+    @import "./extensions/_overlaypanel";
+    @import "./extensions/_panel";
+    @import "./extensions/_picklist";
+    @import "./extensions/_progressbar";
+    @import "./extensions/_radiobutton";
+    @import "./extensions/_rating";
+    @import "./extensions/_selectbutton";
+    @import "./extensions/_sidebar";
+    @import "./extensions/_slider";
+    @import "./extensions/_speeddial";
+    @import "./extensions/_splitter";
+    @import "./extensions/_stepper";
+    @import "./extensions/_steps";
+    @import "./extensions/_tabmenu";
+    @import "./extensions/_tabview";
+    @import "./extensions/_tag";
+    @import "./extensions/_terminal";
+    @import "./extensions/_timeline";
+    @import "./extensions/_toast";
+    @import "./extensions/_togglebutton";
+    @import "./extensions/_toolbar";
+    @import "./extensions/_tree";
+    @import "./extensions/_treeselect";
+}

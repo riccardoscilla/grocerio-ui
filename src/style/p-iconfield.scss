@@ -1,0 +1,20 @@
+p-iconfield {
+
+    input:focus {
+        // box-shadow: none;
+    }
+
+    input:enabled {
+        // border-color: red;
+    }
+
+    // all width available in parent flex search box
+    &.flexfull {
+        flex: 1;
+
+        input {
+            width: 100%;
+        }
+    }
+
+}

@@ -1,0 +1,72 @@
+
+<app-title [title]="'Shelf'"></app-title>
+
+<app-appbar>
+    <app-search-bar (searchTextChanged)="onSearchTextChanged($event)"></app-search-bar>
+    
+    <app-scroll-x>
+        <app-category-filter-chip 
+            [selectedCategories]="shelfItemsData.selectedCategories" 
+            (toggleFilter)="toggleShowCategoryFilter()" >
+        </app-category-filter-chip>
+    </app-scroll-x>
+</app-appbar>
+
+
+<app-list *ngIf="dataStateHandler.isSuccess()">
+    <app-list-item-tile *ngFor="let shelfItem of shelfItemsData.filteredShelfItems"
+        [leadingIcon]="shelfItem.category"
+        [mainText]="shelfItem.name"
+        [secondaryText]="shelfItem.purchaseDate.toDateString()"
+        [rightText]="shelfItem.quantity.toString()"
+        (edit)="onEdit(shelfItem)"
+        (delete)="onDelete(shelfItem)">
+    </app-list-item-tile>
+
+    <div style="padding: 16px" *ngIf="shelfItemsData.isEmpty()">
+        No Shelf Items
+    </div>
+</app-list>
+
+<app-list-loading *ngIf="dataStateHandler.isLoading()"></app-list-loading>
+
+<app-fixed-bottom-right>
+    <app-new-button (toggleShowNew)="toggleShowShelfItemNew()"></app-new-button>
+</app-fixed-bottom-right>
+
+<app-fixed-bottom>
+    <app-menu-bottom></app-menu-bottom>
+</app-fixed-bottom>
+
+
+<app-shelf-new 
+    [shelfItem]="shelfItemNew"
+    [visible]="showShelfItemNew" 
+    [items]="itemsData.filteredItems"
+    (onHide)="toggleShowShelfItemNew()" 
+    (onSave)="save()"
+></app-shelf-new>
+
+<app-shelf-edit 
+    [shelfItem]="shelfItemEdit"
+    [visible]="showShelfItemEdit" 
+    [items]="itemsData.filteredItems"
+    (onHide)="toggleShowShelfItemEdit()" 
+    (onSave)="edit()"
+></app-shelf-edit>
+
+<app-shelf-delete 
+    [shelfItem]="shelfItemDelete"
+    [visible]="showShelfItemDelete" 
+    (onCancel)="toggleShowShelfItemDelete()"
+    (onDelete)="delete()" 
+    (onDeleteAndInsertInList)="deleteAndInsertInList()"
+></app-shelf-delete>
+
+<app-category-filter
+    *ngIf="showCategoryFilter"
+    [categories]="categoriesData.categories"
+    [selectedCategories]="shelfItemsData.selectedCategories"
+    (onHide)="toggleShowCategoryFilter()" 
+    (onApply)="onApplyCategoryFilter($event)"
+></app-category-filter>
