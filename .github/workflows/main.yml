@@ -22,11 +22,10 @@ jobs:
       run: npm install
 
     - name: Build Angular App
-      run: npm run build --prod
+      run: npm run build -- --configuration production
 
     - name: Deploy to gh pages
       uses: JamesIves/github-pages-deploy-action@v4
       with:
-        folder: dist/grocerio-ui/browser
+        folder: dist/grocerio-ui
         branch: gh-pages  
-        token: ${{ secrets.GH_TOKEN }}
