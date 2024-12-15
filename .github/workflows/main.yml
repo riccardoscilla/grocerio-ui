@@ -27,7 +27,7 @@ jobs:
     - name: Deploy to gh pages
       uses: JamesIves/github-pages-deploy-action@v4
       with:
-        folder: dist/grocerio-ui
+        folder: dist/grocerio-ui/browser
         branch: gh-pages  
         clean: true
         token: ${{ secrets.GH_TOKEN }}
