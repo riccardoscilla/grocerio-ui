@@ -25,8 +25,8 @@ jobs:
       run: npm run build --prod
 
     - name: Deploy to gh pages
-      run: |
-        npx angular-cli-ghpages --dir=dist/grocerio-ui
-      env:
-        CI: true
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist/grocerio-ui/browser
+          branch: gh-pages  
+          token: ${{ secrets.GH_TOKEN }}
