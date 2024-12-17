@@ -22,7 +22,7 @@ jobs:
       run: npm install --legacy-peer-deps
 
     - name: Build Angular App
-      run: npm run build -- --configuration prod --base-href /grocerio-ui/
+      run: npm run build -- --configuration production --base-href /grocerio-ui/
 
     - name: Deploy to gh pages
       uses: JamesIves/github-pages-deploy-action@v4
