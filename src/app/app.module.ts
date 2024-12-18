@@ -115,13 +115,3 @@ import { ServiceWorkerModule } from '@angular/service-worker';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-
-// import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
-
-// export class MyHammerConfig extends HammerGestureConfig  {
-//   overrides = <any>{
-//       // override hammerjs default configuration
-//       'swipe': { direction: Hammer.DIRECTION_ALL  }
-//   }
-// }
