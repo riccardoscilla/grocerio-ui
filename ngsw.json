@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1734601244086,
+  "timestamp": 1734601378690,
   "index": "/grocerio-ui/index.html",
   "assetGroups": [
     {
@@ -405,7 +405,7 @@
     "/grocerio-ui/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
     "/grocerio-ui/index.html": "867a69fbede432bdb93316599b0c99ce06bd8b97",
     "/grocerio-ui/main-6YBJHOZC.js": "0b6b8be49be79cbe148cc984e88ae4229bdbc389",
-    "/grocerio-ui/manifest.webmanifest": "b40f1fa8add897f968ff008695e0e6c57742bf6a",
+    "/grocerio-ui/manifest.webmanifest": "c62a5deb41b563b0e58e041e76b4856826bd6a94",
     "/grocerio-ui/media/Inter-italic.var-SWFAXF2C.woff2": "6f20a046917bf86d4b6cc29c4e2515bd64d2cb9b",
     "/grocerio-ui/media/Inter-roman.var-WIJJYAE4.woff2": "7a2602d2ebb08ce895e33addb6fe595f1029431e",
     "/grocerio-ui/media/color-3LUHUBGQ.png": "ff4c4bcb2207891b292f544edb4da9d2df5d45cf",
