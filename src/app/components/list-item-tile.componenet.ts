@@ -34,12 +34,12 @@ import { CheckboxChangeEvent } from 'primeng/checkbox';
 
       <!-- Action Buttons (slidable area) -->
       <div class="actions" [style.opacity]="actionOpacity" [style.width]="actionWidth" *ngIf="currentWidth > 0">
-          <p-button [text]="true" [rounded]="true" class="invert-button icon-only small" (click)="onEdit()">
+          <p-button [text]="true" [rounded]="true" (click)="onEdit()">
             <ng-template pTemplate="icon">
               <app-svg [color]="'black'" [size]="18" [path]="'file-edit.svg'"></app-svg>
             </ng-template>
           </p-button>
-          <p-button [text]="true" [rounded]="true" class="invert-button icon-only small" (click)="onDelete()">
+          <p-button [text]="true" [rounded]="true" (click)="onDelete()">
             <ng-template pTemplate="icon">
               <app-svg [color]="'black'" [size]="18" [path]="'trash-xmark.svg'"></app-svg>
             </ng-template>
@@ -169,10 +169,8 @@ export class ListItemTileComponent {
   }
 
   pl(event: any) { 
-    // console.log(event)
     if (this.currentWidth >= this.maxWidth)
       return
-    console.log("pl")
     this.currentWidth = Math.min(event.distance, this.maxWidth)
     this.actionWidth = `${this.currentWidth}px`
     this.actionOpacity = this.currentWidth / this.maxWidth
@@ -181,7 +179,6 @@ export class ListItemTileComponent {
   pr(event: any) {
     if (this.currentWidth === 0)
       return
-    console.log("pr")
     this.currentWidth = this.maxWidth - Math.min(event.distance, this.maxWidth)
     this.actionWidth = `${this.currentWidth}px`
     this.actionOpacity = this.currentWidth / this.maxWidth

@@ -15,7 +15,7 @@ export class Item implements IModel {
     static fromInterface(i: IItem) {
         const item = new Item()
         item.id = i.id
-        item.name = i.name
+        item.name = i.name.replace(/\b\w/g, (char) => char.toUpperCase());
         item.category = Category.fromInterface(i.category)
         return item
     }

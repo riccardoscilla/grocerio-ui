@@ -23,9 +23,9 @@ import { Item } from '../../model/item';
         </div> -->
 
         <ng-template pTemplate="footer">
-          <div style="display: flex; justify-content: space-between;">
-            <p-button [outlined]="true" label="Delete" (click)="onDelete.emit()" />
-            <p-button label="Delete and put in list" (click)="onDeleteAndInsertInList.emit()"  />
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <p-button class="p-fluid" [outlined]="true" label="Delete" (click)="onDelete.emit()" />
+            <p-button class="p-fluid" label="Delete and put in list" (click)="onDeleteAndInsertInList.emit()"  />
           </div>
         </ng-template>
     </p-dialog>

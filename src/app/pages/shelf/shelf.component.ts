@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
-import { ShelfItem } from '../../model/shelfItem';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ToastService } from '../../services/toast.service';
-import { CategoriesData, ItemsData, ShelfItemsData } from '../../data/data';
-import { DataStateHandler } from '../../data/dataStateHandler';
-import { forkJoin } from 'rxjs';
-import { ListItem } from '../../model/listItem';
-import { DataService } from '../../services/data.service';
-import { Category } from '../../model/category';
+import { Component } from '@angular/core'
+import { ShelfItem } from '../../model/shelfItem'
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http'
+import { ToastService } from '../../services/toast.service'
+import { CategoriesData, ItemsData, ShelfItemsData } from '../../data/data'
+import { DataStateHandler } from '../../data/dataStateHandler'
+import { catchError, forkJoin, of, tap } from 'rxjs'
+import { ListItem } from '../../model/listItem'
+import { DataService } from '../../services/data.service'
+import { Category } from '../../model/category'
 
 @Component({
   selector: 'app-shelf',
@@ -34,54 +34,64 @@ export class ShelfComponent {
     public dataService: DataService,
     private toastService: ToastService
   ) {
-    this.getShelfItems()
-    this.getCategories()
-    this.getItems()
+    this.initLoad()
+  }
+
+  initLoad() {
+    forkJoin({
+      shelfItems: this.getShelfItems(),
+      categories: this.getCategories(),
+      items: this.getItems()
+    }).subscribe({
+      next: (results) => {
+        this.toastService.handleResults(results)
+      }
+    })
   }
 
   getShelfItems() {
     this.dataStateHandler.addAndLoading(this.shelfItemsData)
-
-    this.dataService.getShelfItems().subscribe({
-      next: (shelfItems) => {
+    
+    return this.dataService.getShelfItems().pipe(
+      tap((shelfItems) => {
         this.shelfItemsData.init(shelfItems)
         this.dataStateHandler.setSuccess(this.shelfItemsData)
-      },
-      error: (error: HttpErrorResponse) => {
+      }),
+      catchError((error: HttpErrorResponse) => {
         this.dataStateHandler.setError(this.shelfItemsData)
-        this.toastService.handleError(error, "Error getShelfItem")
-      }
-    })
+        return of(error)
+      })
+    )
   }
 
   getCategories() {
     this.dataStateHandler.addAndLoading(this.categoriesData)
 
-    this.dataService.getCategories().subscribe({
-      next: (categories) => {
+    return this.dataService.getCategories().pipe(
+      tap((categories) => {
         this.categoriesData.init(categories)
         this.dataStateHandler.setSuccess(this.categoriesData)
-      },
-      error: (error: HttpErrorResponse) => {
+      }),
+      catchError((error: HttpErrorResponse) => {
         this.dataStateHandler.setError(this.categoriesData)
-        this.toastService.handleError(error, "Error getCategories")
-      }
-    })
+        return of(error)
+      })
+    )
   }
-
+  
   getItems() {
     this.dataStateHandler.addAndLoading(this.itemsData)
 
-    this.dataService.getItems().subscribe({
-      next: (items) => {
+    return this.dataService.getItems().pipe(
+      tap((items) => {
         this.itemsData.init(items)
         this.dataStateHandler.setSuccess(this.itemsData)
-      },
-      error: (error: HttpErrorResponse) => {
+      }),
+      catchError((error: HttpErrorResponse) => {
         this.dataStateHandler.setError(this.itemsData)
-        this.toastService.handleError(error, "Error getItems")
-      }
-    })
+        return of(error)
+      })
+    )
   }
 
   // FILTERS

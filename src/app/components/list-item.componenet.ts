@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
   template: `
     <div class="item" style="height: 48px; display: flex; align-items: center; justify-content: space-between;" >
       {{mainText}}
-      <p-button [text]="true" [rounded]="true" class="invert-button icon-only small" (click)="goTo()">
+      <p-button [text]="true" [rounded]="true" (click)="goTo()">
           <ng-template pTemplate="icon">
               <app-svg [color]="'black'" [size]="18" [path]="'angle-small-right.svg'"></app-svg>
           </ng-template>

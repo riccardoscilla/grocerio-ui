@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
   template: `
     <div class="content">
         <div class="side" *ngIf="back">
-            <p-button [text]="true" [rounded]="true" class="invert-button icon-only small" (click)="goBack()">
+            <p-button [text]="true" [rounded]="true" (click)="goBack()">
                 <ng-template pTemplate="icon">
                     <app-svg [color]="'white'" [size]="24" [path]="'arrow-small-left.svg'"></app-svg>
                 </ng-template>

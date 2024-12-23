@@ -1,13 +1,12 @@
-import { Component } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ToastService } from '../../services/toast.service';
-import { CategoriesData, ItemsData, ListItemsData } from '../../data/data';
-import { DataStateHandler } from '../../data/dataStateHandler';
-import { forkJoin } from 'rxjs';
-import { ListItem } from '../../model/listItem';
-import { DataService } from '../../services/data.service';
-import { ShelfItem } from '../../model/shelfItem';
-import { Category } from '../../model/category';
+import { Component } from '@angular/core'
+import { HttpErrorResponse } from '@angular/common/http'
+import { ToastService } from '../../services/toast.service'
+import { CategoriesData, ItemsData, ListItemsData } from '../../data/data'
+import { DataStateHandler } from '../../data/dataStateHandler'
+import { catchError, forkJoin, of, tap } from 'rxjs'
+import { ListItem } from '../../model/listItem'
+import { DataService } from '../../services/data.service'
+import { Category } from '../../model/category'
 
 @Component({
   selector: 'app-grocery',
@@ -36,54 +35,64 @@ export class GroceryComponent {
     public dataService: DataService,
     private toastService: ToastService
   ) {
-    this.getListItems()
-    this.getCategories()
-    this.getItems()
+    this.initLoad()
+  }
+
+  initLoad() {
+    forkJoin({
+      listItems: this.getListItems(),
+      categories: this.getCategories(),
+      items: this.getItems()
+    }).subscribe({
+      next: (results) => {
+        this.toastService.handleResults(results)
+      }
+    })
   }
 
   getListItems() {
     this.dataStateHandler.addAndLoading(this.listItemsData)
-
-    this.dataService.getListItems().subscribe({
-      next: (listItems) => {
+    
+    return this.dataService.getListItems().pipe(
+      tap((listItems) => {
         this.listItemsData.init(listItems)
         this.dataStateHandler.setSuccess(this.listItemsData)
-      },
-      error: (error: HttpErrorResponse) => {
+      }),
+      catchError((error: HttpErrorResponse) => {
         this.dataStateHandler.setError(this.listItemsData)
-        this.toastService.handleError(error, "Error getListItem")
-      }
-    })
+        return of(error)
+      })
+    )
   }
 
   getCategories() {
     this.dataStateHandler.addAndLoading(this.categoriesData)
 
-    this.dataService.getCategories().subscribe({
-      next: (categories) => {
+    return this.dataService.getCategories().pipe(
+      tap((categories) => {
         this.categoriesData.init(categories)
         this.dataStateHandler.setSuccess(this.categoriesData)
-      },
-      error: (error: HttpErrorResponse) => {
+      }),
+      catchError((error: HttpErrorResponse) => {
         this.dataStateHandler.setError(this.categoriesData)
-        this.toastService.handleError(error, "Error getCategories")
-      }
-    })
+        return of(error)
+      })
+    )
   }
-
+  
   getItems() {
     this.dataStateHandler.addAndLoading(this.itemsData)
 
-    this.dataService.getItems().subscribe({
-      next: (items) => {
+    return this.dataService.getItems().pipe(
+      tap((items) => {
         this.itemsData.init(items)
         this.dataStateHandler.setSuccess(this.itemsData)
-      },
-      error: (error: HttpErrorResponse) => {
+      }),
+      catchError((error: HttpErrorResponse) => {
         this.dataStateHandler.setError(this.itemsData)
-        this.toastService.handleError(error, "Error getItems")
-      }
-    })
+        return of(error)
+      })
+    )
   }
 
   // FILTERS
@@ -139,8 +148,6 @@ export class GroceryComponent {
   }
 
   onFinish() {
-    console.log(this.checkedListItems)
-
     this.dataService.deleteAndSaveInShelf(this.checkedListItems).subscribe({
       next: () => {
         this.toastService.handleSuccess("List items moved in shelf!")

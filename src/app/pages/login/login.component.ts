@@ -33,7 +33,6 @@ export class LoginComponent {
 
     this.authService.login(login).subscribe({
       next: (token) => {
-        console.log(token)
         this.authService.saveToken(token)
         this.router.navigate(['shelf'])
       },

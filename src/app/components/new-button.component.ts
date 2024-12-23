@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 @Component({
   selector: 'app-new-button',
   template: `
-    <p-button [rounded]="true" (click)="toggleShowNew.emit()" [style]="{ height: '48px', width: '48px' }" >
+    <p-button [rounded]="true" (click)="toggleShowNew.emit()" [style]="{ height: '52px', width: '52px' }" >
         <ng-template pTemplate="icon">
             <app-svg [color]="'white'" [size]="20" [path]="'plus.svg'"></app-svg>
         </ng-template>

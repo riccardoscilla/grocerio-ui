@@ -6,6 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Item } from '../../model/item';
 import { Category } from '../../model/category';
 import { DataService } from '../../services/data.service';
+import { catchError, forkJoin, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-items',
@@ -28,39 +29,49 @@ export class ItemsComponent {
     public dataService: DataService,
     private toastService: ToastService
   ) {
-    this.getItems()
-    this.getCategories()
+    this.initLoad()
   }
 
-  getItems() {
-    this.dataStateHandler.addAndLoading(this.itemsData)
-
-    this.dataService.getItems().subscribe({
-      next: (items) => {
-        this.itemsData.init(items)
-        this.dataStateHandler.setSuccess(this.itemsData)
-      },
-      error: (error: HttpErrorResponse) => {
-        this.dataStateHandler.setError(this.itemsData)
-        this.toastService.handleError(error, "Error getItems")
+  initLoad() {
+    forkJoin({
+      categories: this.getCategories(),
+      items: this.getItems()
+    }).subscribe({
+      next: (results) => {
+        this.toastService.handleResults(results)
       }
     })
   }
 
   getCategories() {
-    this.dataStateHandler.addAndLoading(this.categoriesData)
-
-    this.dataService.getCategories().subscribe({
-      next: (categories) => {
-        this.categoriesData.init(categories)
-        this.dataStateHandler.setSuccess(this.categoriesData)
-      },
-      error: (error: HttpErrorResponse) => {
-        this.dataStateHandler.setError(this.categoriesData)
-        this.toastService.handleError(error, "Error getCategories")
-      }
-    })
-  }
+     this.dataStateHandler.addAndLoading(this.categoriesData)
+ 
+     return this.dataService.getCategories().pipe(
+       tap((categories) => {
+         this.categoriesData.init(categories)
+         this.dataStateHandler.setSuccess(this.categoriesData)
+       }),
+       catchError((error: HttpErrorResponse) => {
+         this.dataStateHandler.setError(this.categoriesData)
+         return of(error)
+       })
+     )
+   }
+   
+   getItems() {
+     this.dataStateHandler.addAndLoading(this.itemsData)
+ 
+     return this.dataService.getItems().pipe(
+       tap((items) => {
+         this.itemsData.init(items)
+         this.dataStateHandler.setSuccess(this.itemsData)
+       }),
+       catchError((error: HttpErrorResponse) => {
+         this.dataStateHandler.setError(this.itemsData)
+         return of(error)
+       })
+     )
+   }
 
   // FILTERS
 

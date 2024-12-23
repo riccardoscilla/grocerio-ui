@@ -13,7 +13,7 @@ export class Category {
         const category = new Category()
         category.id = i.id
         category.icon = i.icon
-        category.name = i.name
+        category.name = i.name.replace(/\b\w/g, (char) => char.toUpperCase());
         return category
     }
 

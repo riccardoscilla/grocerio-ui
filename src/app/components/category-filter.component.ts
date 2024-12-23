@@ -72,7 +72,7 @@ import { Category } from '../model/category';
         cursor: pointer;
 
         &.selected {
-            border: 2px solid red;
+            border: 2px solid var(--primary-color);
         }
     }
     .text {
