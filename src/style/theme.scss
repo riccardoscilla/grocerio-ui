@@ -5957,6 +5957,9 @@
     width: 21rem !important;
     opacity: 1;
   }
+  .p-toast-bottom-center {
+    bottom: 60px !important;
+  }
   .p-toast .p-toast-message {
     margin: 0 0 1rem 0;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
@@ -7892,5 +7895,12 @@
   }
   .p-treeselect.p-treeselect-chip .p-treeselect-label-container .p-treeselect-token {
     border-radius: 4px;
+  }
+}
+
+.p-flex {
+  flex: 1;
+  > div:first-child {
+      width: 100%;
   }
 }

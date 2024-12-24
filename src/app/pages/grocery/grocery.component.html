@@ -50,6 +50,7 @@
     [listItem]="listItemNew"
     [visible]="showListItemNew" 
     [items]="itemsData.filteredItems"
+    [categories]="categoriesData.categories"
     (onHide)="toggleShowListItemNew()" 
     (onSave)="save()"
 ></app-grocery-new>
@@ -58,6 +59,7 @@
     [listItem]="listItemEdit"
     [visible]="showListItemEdit" 
     [items]="itemsData.filteredItems"
+    [categories]="categoriesData.categories"
     (onHide)="toggleShowListItemEdit()" 
     (onSave)="edit()"
 ></app-grocery-edit>

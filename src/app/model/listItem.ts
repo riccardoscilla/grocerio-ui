@@ -70,13 +70,18 @@ export class ListItem implements IModel {
         return this.item.category
     }
 
+    set category(category: Category) {
+        this.item.category = category
+    }
+
     get icon(): string {
         return this.item.category.icon
     }
 
     toSave() {
         return {
-            "itemId": this.item.id,
+            "itemName": this.item.name.toLowerCase(),
+            "categoryId": this.category.id,
             "quantity": this.quantity,
             "insertionDate": this.insertionDate,
             "note": this.note
@@ -86,7 +91,8 @@ export class ListItem implements IModel {
     toEdit() {
         return {
             "id": this.id,
-            "itemId": this.item.id,
+            "itemName": this.item.name.toLowerCase(),
+            "categoryId": this.category.id,
             "quantity": this.quantity,
             "insertionDate": this.insertionDate,
             "note": this.note

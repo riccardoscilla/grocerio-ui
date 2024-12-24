@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-list-item',
+  selector: 'app-list-item-arrow',
   template: `
     <div class="item" style="height: 48px; display: flex; align-items: center; justify-content: space-between;" >
       {{mainText}}
@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
   `,
   styles: [``]
 })
-export class ListItemComponent {
+export class ListItemArrowComponent {
   @Input() mainText: string;
   @Input() url: string;
 

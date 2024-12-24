@@ -3,15 +3,14 @@
 <app-appbar>
 </app-appbar>
 
-<div style="background-color: white;">
-        
+<div>
     <app-list>
-        <app-list-item [mainText]="'Items'" [url]="'/items'"></app-list-item>
-        <app-list-item [mainText]="'Categories'" [url]="'/items'"></app-list-item>
+        <app-list-item-arrow [mainText]="'Items'" [url]="'/items'"></app-list-item-arrow>
+        <app-list-item-arrow [mainText]="'Categories'" [url]="'/items'"></app-list-item-arrow>
     </app-list>
 
     <div style="padding: 16px;">
-        <p-button [outlined]="true" label="Logout" />
+        <p-button [outlined]="true" label="Logout" (click)="logout()" />
     </div>
 </div>
 

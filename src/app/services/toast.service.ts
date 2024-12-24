@@ -24,7 +24,7 @@ export class ToastService {
     console.error('Error:', error)
 
     if (error.status === HttpStatusCode.Unauthorized) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: "Unauthorized"+message})
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: "Unauthorized"})
       this.authService.removeToken()
       this.router.navigateByUrl(`/login`)
       return
@@ -33,13 +33,15 @@ export class ToastService {
     this.messageService.add({ severity: 'error', summary: 'Error', detail: message})
   }
 
-  handleErrorCode(code: HttpStatusCode, message: string | undefined = undefined) {
+  handleErrorCode(code: HttpStatusCode, message: string | undefined = "") {
     if (code === HttpStatusCode.Unauthorized) {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: "Unauthorized"})
       this.authService.removeToken()
       this.router.navigateByUrl(`/login`)
       return
     }
+
+    this.messageService.add({ severity: 'error', summary: 'Error', detail: message})
   }
 
   handleResults(results: any) {

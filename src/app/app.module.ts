@@ -20,7 +20,7 @@ import { Interceptor } from './auth/interceptor';
 import { ToastModule } from 'primeng/toast';
 import { SkeletonModule } from 'primeng/skeleton';
 import { ItemsComponent } from './pages/items/items.component';
-import { ListItemTileComponent } from './components/list-item-tile.componenet';
+import { ListItemTileComponent } from './components/list-item/list-item-tile.componenet';
 import { SvgComponent } from './components/svg.componenet';
 import { FixedBottomRightComponent } from './components/fixed-bottom-right.component';
 import { TitleComponent } from './components/title.component';
@@ -37,7 +37,7 @@ import { NewButtonComponent } from './components/new-button.component';
 import { GroceryNewComponent } from './pages/grocery/grocery-new.component';
 import { GroceryEditomponent } from './pages/grocery/grocery-edit.component';
 import { CategoryFilterChipComponent } from './components/category-filter-chip.component';
-import { ListItemComponent } from './components/list-item.componenet';
+import { ListItemArrowComponent } from './components/list-item/list-item-arrow.componenet';
 import { ItemsNewComponent } from './pages/items/items-new.component';
 import { ItemsEditComponent } from './pages/items/items-edit.component';
 import { OtherComponent } from './pages/other/other.component';
@@ -54,7 +54,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 
     ListComponent,
     ListItemTileComponent,
-    ListItemComponent,
+    ListItemArrowComponent,
 
     TitleComponent,
     AppBarComponent,

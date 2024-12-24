@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-other',
@@ -6,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class OtherComponent {
 
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
+
+  logout() {
+    this.authService.removeToken()
+    this.router.navigateByUrl(`/login`)
+  }
 }

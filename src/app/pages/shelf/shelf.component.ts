@@ -144,7 +144,7 @@ export class ShelfComponent {
     this.dataService.saveShelfItem(this.shelfItemNew).subscribe({
       next: () => {
         this.toastService.handleSuccess("Shelf Item saved")
-        this.getShelfItems()
+        this.getShelfItems().subscribe()
         this.toggleShowShelfItemNew()
       },
       error: (error: HttpErrorResponse) => {
@@ -157,7 +157,7 @@ export class ShelfComponent {
     this.dataService.editShelfItem(this.shelfItemEdit).subscribe({
       next: () => {
         this.toastService.handleSuccess("Shelf Item saved")
-        this.getShelfItems()
+        this.getShelfItems().subscribe()
         this.toggleShowShelfItemEdit()
       },
       error: (error: HttpErrorResponse) => {
@@ -170,7 +170,7 @@ export class ShelfComponent {
     this.dataService.deleteShelfItem(this.shelfItemDelete).subscribe({
       next: () => {
         this.toastService.handleSuccess("Shelf Item deleted")
-        this.getShelfItems()
+        this.getShelfItems().subscribe()
         this.toggleShowShelfItemDelete()
       },
       error: (error: HttpErrorResponse) => {
@@ -184,7 +184,7 @@ export class ShelfComponent {
     this.dataService.deleteAndSaveInList(this.shelfItemDelete, listItem).subscribe({
       next: () => {
         this.toastService.handleSuccess("Shelf Item deleted and saved in List")
-        this.getShelfItems()
+        this.getShelfItems().subscribe()
         this.toggleShowShelfItemDelete()
       },
       error: (error: HttpErrorResponse) => {

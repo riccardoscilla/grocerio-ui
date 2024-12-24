@@ -43,6 +43,7 @@
     [shelfItem]="shelfItemNew"
     [visible]="showShelfItemNew" 
     [items]="itemsData.filteredItems"
+    [categories]="categoriesData.categories"
     (onHide)="toggleShowShelfItemNew()" 
     (onSave)="save()"
 ></app-shelf-new>
@@ -51,6 +52,7 @@
     [shelfItem]="shelfItemEdit"
     [visible]="showShelfItemEdit" 
     [items]="itemsData.filteredItems"
+    [categories]="categoriesData.categories"
     (onHide)="toggleShowShelfItemEdit()" 
     (onSave)="edit()"
 ></app-shelf-edit>

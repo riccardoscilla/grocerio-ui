@@ -10,7 +10,7 @@ import { Component } from '@angular/core';
   styles: [`
     .fixed {
         position: absolute;
-        bottom: 16px;
+        bottom: 76px;
         right: 16px;
 
         display: flex;

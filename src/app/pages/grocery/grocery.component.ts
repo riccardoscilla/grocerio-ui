@@ -151,7 +151,7 @@ export class GroceryComponent {
     this.dataService.deleteAndSaveInShelf(this.checkedListItems).subscribe({
       next: () => {
         this.toastService.handleSuccess("List items moved in shelf!")
-        this.getListItems()
+        this.getListItems().subscribe()
       },
       error: (error: HttpErrorResponse) => {
         this.toastService.handleError(error, "Error moving List items in shelf")
@@ -165,7 +165,7 @@ export class GroceryComponent {
     this.dataService.saveListItem(this.listItemNew).subscribe({
       next: () => {
         this.toastService.handleSuccess("List Item saved")
-        this.getListItems()
+        this.getListItems().subscribe()
         this.toggleShowListItemNew()
       },
       error: (error: HttpErrorResponse) => {
@@ -178,7 +178,7 @@ export class GroceryComponent {
     this.dataService.editListItem(this.listItemEdit).subscribe({
       next: () => {
         this.toastService.handleSuccess("List Item saved")
-        this.getListItems()
+        this.getListItems().subscribe()
         this.toggleShowListItemEdit()
       },
       error: (error: HttpErrorResponse) => {
@@ -191,7 +191,7 @@ export class GroceryComponent {
     this.dataService.deleteListItem(this.listItemDelete).subscribe({
       next: () => {
         this.toastService.handleSuccess("List Item deleted")
-        this.getListItems()
+        this.getListItems().subscribe()
         this.toggleShowListItemDelete()
       },
       error: (error: HttpErrorResponse) => {

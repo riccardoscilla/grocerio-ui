@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ShelfItem } from '../../model/shelfItem';
 import { Item } from '../../model/item';
 import { ListItem } from '../../model/listItem';
+import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
+import { Category } from '../../model/category';
 
 @Component({
   selector: 'app-grocery-new',
@@ -24,23 +25,37 @@ import { ListItem } from '../../model/listItem';
             <div style="display: flex; flex-direction: column; gap: 16px;">            
                 <div style="display: flex; flex-direction: column; gap: 8px;">
                     Item
-                    <p-dropdown 
-                        [options]="items" 
-                        [(ngModel)]="listItem.item"
-                        optionLabel="name"
-                        placeholder="Select an Item"
-                        class="p-fluid">
-                        <ng-template pTemplate="selectedItem">
-                            <div *ngIf="listItem.item">
-                                {{ listItem.item.category.icon }} {{ listItem.item.name }}
-                            </div>
-                        </ng-template>
-                        <ng-template let-item pTemplate="item">
-                            <div>
-                                {{ item.category.icon }} {{ item.name }}
-                            </div>
-                        </ng-template>
-                    </p-dropdown>    
+                    <div style="display: flex; width: 100%; gap: 8px;">
+                        <p-dropdown 
+                            [options]="categories" 
+                            [(ngModel)]="listItem.category"
+                            optionLabel="name">
+                            <ng-template pTemplate="selectedItem">
+                                <div *ngIf="listItem.category">
+                                    {{ listItem.category.icon }}
+                                </div>
+                            </ng-template>
+                            <ng-template let-category pTemplate="item">
+                                <div>
+                                    {{ category.icon }} {{ category.name }}
+                                </div>
+                            </ng-template>
+                        </p-dropdown>    
+
+                        <p-autoComplete
+                            [suggestions]="filteredItems"
+                            [(ngModel)]="listItem.item.name"
+                            [dropdown]="true"
+                            (completeMethod)="filterItem($event)"
+                            (onSelect)="selectItem($event)"
+                            optionLabel="name">
+                            <ng-template let-item pTemplate="item">
+                                <div>
+                                    {{ item.category.icon }} {{ item.name }}
+                                </div>
+                            </ng-template>
+                        </p-autoComplete>
+                    </div>  
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 8px;">
                     Quantity
@@ -96,8 +111,20 @@ import { ListItem } from '../../model/listItem';
 export class GroceryNewComponent {
     @Input() listItem: ListItem;
     @Input() items: Item[];
+    @Input() categories: Category[];
     @Input() visible: boolean;
 
     @Output() onHide = new EventEmitter<void>();
     @Output() onSave = new EventEmitter<void>();
+
+    filteredItems: Item[]
+    
+    filterItem(event: AutoCompleteCompleteEvent) {
+        this.filteredItems = [...this.items.filter(i => i.name.toLowerCase().indexOf(event.query.toLowerCase()) == 0)]
+    }
+
+    selectItem(event: any) {
+        const item = event.value as Item
+        this.listItem.item = item.deepcopy()
+    }
 }

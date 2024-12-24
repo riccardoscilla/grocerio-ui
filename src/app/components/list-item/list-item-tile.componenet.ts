@@ -23,7 +23,7 @@ import { CheckboxChangeEvent } from 'primeng/checkbox';
         </span>
       </div>
 
-      <div class="content">
+      <div class="content" (click)="onEdit()">
         <div class="main-text">{{ mainText }}</div>
         <div class="secondary-text">{{ secondaryText }}</div>
       </div>
@@ -34,12 +34,12 @@ import { CheckboxChangeEvent } from 'primeng/checkbox';
 
       <!-- Action Buttons (slidable area) -->
       <div class="actions" [style.opacity]="actionOpacity" [style.width]="actionWidth" *ngIf="currentWidth > 0">
-          <p-button [text]="true" [rounded]="true" (click)="onEdit()">
+          <p-button [text]="true" (click)="onEdit()">
             <ng-template pTemplate="icon">
               <app-svg [color]="'black'" [size]="18" [path]="'file-edit.svg'"></app-svg>
             </ng-template>
           </p-button>
-          <p-button [text]="true" [rounded]="true" (click)="onDelete()">
+          <p-button [text]="true" (click)="onDelete()">
             <ng-template pTemplate="icon">
               <app-svg [color]="'black'" [size]="18" [path]="'trash-xmark.svg'"></app-svg>
             </ng-template>

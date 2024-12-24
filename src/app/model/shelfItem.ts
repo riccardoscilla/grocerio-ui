@@ -37,7 +37,7 @@ export class ShelfItem implements IModel {
         const shelfItem = new ShelfItem()
         shelfItem.quantity = 0
         shelfItem.purchaseDate = new Date()
-        // shelfItem.item = Item.new()
+        shelfItem.item = Item.new()
         return shelfItem
     }
 
@@ -57,7 +57,7 @@ export class ShelfItem implements IModel {
             return false
         if (this.purchaseDate === null)
             return false 
-        if (!this.item.valid())
+        if (this.item instanceof Item && !this.item.valid())
             return false
         return true
     }
@@ -70,13 +70,18 @@ export class ShelfItem implements IModel {
         return this.item.category
     }
 
+    set category(category: Category) {
+        this.item.category = category
+    }
+
     get icon(): string {
         return this.item.category.icon
     }
 
     toSave() {
         return {
-            "itemId": this.item.id,
+            "itemName": this.item.name.toLowerCase(),
+            "categoryId": this.category.id,
             "quantity": this.quantity,
             "purchaseDate": this.purchaseDate,
             "note": this.note
@@ -86,7 +91,8 @@ export class ShelfItem implements IModel {
     toEdit() {
         return {
             "id": this.id,
-            "itemId": this.item.id,
+            "itemName": this.item.name.toLowerCase(),
+            "categoryId": this.category.id,
             "quantity": this.quantity,
             "purchaseDate": this.purchaseDate,
             "note": this.note
