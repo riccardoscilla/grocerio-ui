@@ -6,7 +6,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { AuthGuard } from './auth/auth.guard';
 import { ItemsComponent } from './pages/items/items.component';
 import { GroceryComponent } from './pages/grocery/grocery.component';
-import { OtherComponent } from './pages/other/other.component';
+import { MoreComponent } from './pages/more/more.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/shelf', pathMatch: 'full' },
@@ -18,7 +18,7 @@ const routes: Routes = [
 
   { path: 'grocery', component: GroceryComponent, canActivate: [AuthGuard] },
  
-  { path: 'other', component: OtherComponent, canActivate: [AuthGuard] },
+  { path: 'more', component: MoreComponent, canActivate: [AuthGuard] },
 
   { path: 'items', component: ItemsComponent, canActivate: [AuthGuard] },
 

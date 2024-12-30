@@ -48,7 +48,8 @@ import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
                             [dropdown]="true"
                             (completeMethod)="filterItem($event)"
                             (onSelect)="selectItem($event)"
-                            optionLabel="name">
+                            optionLabel="name"
+                            class="p-flex">
                             <ng-template let-item pTemplate="item">
                                 <div>
                                     {{ item.category.icon }} {{ item.name }}

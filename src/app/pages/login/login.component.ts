@@ -19,13 +19,17 @@ export class LoginComponent {
     private messageService: MessageService
   ) { }
 
-  public loginTest() {
+  gotoRegister() {
+    this.router.navigate(['register'])
+  }
+
+  loginTest() {
     this.username = 'provaciao@mail.com'
     this.password = 'password'
     this.login()
   }
 
-  public login() {
+  login() {
     const login = {
       email: this.username,
       password: this.password

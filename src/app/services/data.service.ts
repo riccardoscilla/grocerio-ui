@@ -6,18 +6,35 @@ import { IShelfItem, ShelfItem } from '../model/shelfItem';
 import { IListItem, ListItem } from '../model/listItem';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { IShelf, Shelf } from '../model/shelf';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
   private apiUrl = environment.apiUrl;
+  private userPath = 'users'
+  private shelfPath = 'shelf'
   private categoryPath = 'categories'
   private itemPath = "items"
   private shelfItemPath = "shelf-items"
   private listItemPath = "list-items"
 
   constructor(private http: HttpClient) { }
+
+  // USER
+
+  joinShelf(shareId: String) {
+    return this.http.post<void>(`${this.apiUrl}/${this.userPath}/join-shelf`, shareId)
+  }
+
+  // SHELF
+
+  getShareId(): Observable<Shelf> {
+    return this.http.get<IShelf>(`${this.apiUrl}/${this.shelfPath}/shareId`).pipe(
+      map(shelf => Shelf.fromInterface(shelf))
+    )
+  }
 
   // CATEGORIES
 
@@ -68,7 +85,7 @@ export class DataService {
   }
 
   deleteAndSaveInList(shelfItem: ShelfItem, listItem: ListItem): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/${this.shelfItemPath}/${shelfItem.id}/deleteAndSaveInList`, listItem.toSave())
+    return this.http.post<void>(`${this.apiUrl}/${this.shelfItemPath}/${shelfItem.id}/delete-and-save-in-list`, listItem.toSave())
   }
 
   // LIST ITEMS
@@ -96,7 +113,7 @@ export class DataService {
       "listItemIds": listItems.map(i => i.id),
       "shelfItems": listItems.map(i => ShelfItem.fromListItem(i).toSave())
     }
-    return this.http.post<void>(`${this.apiUrl}/${this.listItemPath}/deleteAndSaveInShelf`, combined)
+    return this.http.post<void>(`${this.apiUrl}/${this.listItemPath}/delete-and-save-in-shelf`, combined)
   }
 
 }

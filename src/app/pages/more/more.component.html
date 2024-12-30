@@ -1,0 +1,35 @@
+<app-title [title]="'More'"></app-title>
+
+<app-appbar>
+</app-appbar>
+
+<div>
+    <app-list>
+        <app-list-item-arrow [mainText]="'Items'" [url]="'/items'"></app-list-item-arrow>
+        <app-list-item-arrow [mainText]="'Categories'" [url]="'/items'"></app-list-item-arrow>
+    </app-list>
+
+    <div style="padding: 16px; display: flex; flex-direction: column; gap: 8px;">
+        Share Id
+        <p-inputGroup>
+            <input type="text" pInputText [(ngModel)]="shareId"/>
+            <button type="button" pButton label="Generate" (click)="getShareId()"></button>
+        </p-inputGroup>
+    </div>
+
+    <div style="padding: 16px; display: flex; flex-direction: column; gap: 8px;">
+        Join Shelf
+        <p-inputGroup>
+            <input type="text" pInputText [(ngModel)]="joinShareId"/>
+            <button type="button" pButton label="Join" (click)="joinShelf()"></button>
+        </p-inputGroup>
+    </div>
+
+    <div style="padding: 16px;">
+        <p-button [outlined]="true" label="Logout" (click)="logout()" />
+    </div>
+</div>
+
+<app-fixed-bottom>
+    <app-menu-bottom></app-menu-bottom>
+</app-fixed-bottom>

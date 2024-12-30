@@ -40,7 +40,7 @@ import { CategoryFilterChipComponent } from './components/category-filter-chip.c
 import { ListItemArrowComponent } from './components/list-item/list-item-arrow.componenet';
 import { ItemsNewComponent } from './pages/items/items-new.component';
 import { ItemsEditComponent } from './pages/items/items-edit.component';
-import { OtherComponent } from './pages/other/other.component';
+import { MoreComponent } from './pages/more/more.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
@@ -84,7 +84,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     ItemsNewComponent,
     ItemsEditComponent,
 
-    OtherComponent,
+    MoreComponent,
   ],
   imports: [
     BrowserModule,

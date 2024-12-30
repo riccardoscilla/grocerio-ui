@@ -24,8 +24,8 @@
         <p-button label="LoginTest" (click)="loginTest()" />
     </div>
 
-    <div>
-        Don't have an account? Register
+    <div style="display: flex; align-items: center;">
+        Don't have an account? <p-button label="Register" [link]="true" (click)="gotoRegister()"/> 
     </div>
 </div>
 

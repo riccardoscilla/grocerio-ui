@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Login } from '../model/login';
 import { Token } from '../model/token';
 import { environment } from '../../environments/environment';
+import { Register } from '../model/register';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,10 @@ export class AuthService {
 
   login(login: Login): Observable<Token> {
     return this.http.post<Token>(this.apiUrl+'/signIn', login)
+  }
+
+  register(register: Register): Observable<Token> {
+    return this.http.post<Token>(this.apiUrl+'/signUp', register)
   }
 
   saveToken(token: Token) {

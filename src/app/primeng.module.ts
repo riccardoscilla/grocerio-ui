@@ -29,6 +29,9 @@ import { RatingModule } from 'primeng/rating';
 import { SidebarModule } from 'primeng/sidebar';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 
 @NgModule({
   exports: [
@@ -60,7 +63,10 @@ import { InputIconModule } from 'primeng/inputicon';
     RatingModule,
     SidebarModule,
     IconFieldModule,
-    InputIconModule
+    InputIconModule,
+    SelectButtonModule,
+    InputGroupModule,
+    InputGroupAddonModule
   ]
 })
 export class PrimeNgModule {}
