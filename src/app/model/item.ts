@@ -50,7 +50,7 @@ export class Item implements IModel {
     valid() {
         if (this.name === undefined || this.name.trim() === "")
             return false
-        if (this.category === undefined || this.category.id === undefined)
+        if (!this.category.valid())
             return false
         return true
     }

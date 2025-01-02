@@ -1,0 +1,38 @@
+<app-title [title]="'Categories'" [back]="'/more'"></app-title>
+
+<app-appbar>
+    <app-search-bar (searchTextChanged)="onSearchTextChanged($event)"></app-search-bar>
+</app-appbar>
+
+<app-list *ngIf="dataStateHandler.isSuccess()">
+    <app-list-item-tile *ngFor="let category of categoriesData.filteredCategories"
+        [leadingIcon]="category"
+        [mainText]="category.name"
+        (edit)="onEdit(category)"
+        (delete)="delete(category)">
+    </app-list-item-tile>
+</app-list>
+
+<app-list-loading *ngIf="dataStateHandler.isLoading()"></app-list-loading>
+
+<app-fixed-bottom-right>
+    <app-new-button (toggleShowNew)="onNew()"></app-new-button>
+</app-fixed-bottom-right>
+
+<app-fixed-bottom>
+    <app-menu-bottom></app-menu-bottom>
+</app-fixed-bottom>
+
+<app-category-new 
+    [visible]="showCategoryNew" 
+    [category]="categoryNew"
+    (onHide)="toggleShowCategoryNew()" 
+    (onSave)="save()"
+></app-category-new>
+
+<app-category-edit 
+    [visible]="showCategoryEdit" 
+    [category]="categoryEdit"
+    (onHide)="toggleShowCategoryEdit()" 
+    (onSave)="edit()"
+></app-category-edit>

@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ShelfItem } from '../../model/shelfItem';
 import { Item } from '../../model/item';
+import { ListItem } from '../../model/listItem';
 
 @Component({
-  selector: 'app-shelf-delete',
+  selector: 'app-grocery-delete',
   template: `
     <p-dialog *ngIf="visible"
-        [header]="'Delete Shelf Item'"
+        [header]="'Delete List Item'"
         [modal]="true" 
         [(visible)]="visible" 
         [style]="{ width: '90vw' }" 
@@ -14,25 +14,23 @@ import { Item } from '../../model/item';
         [resizable]="false">
 
         <span>
-          Delete shelf item {{shelfItem.icon }} {{shelfItem.name}}?
+          Delete list item {{listItem.icon }} {{listItem.name}}?
         </span>
 
         <ng-template pTemplate="footer">
           <div style="display: flex; flex-direction: column; gap: 8px;">
             <p-button class="p-fluid" [outlined]="true" label="Delete" (click)="onDelete.emit()" />
-            <p-button class="p-fluid" label="Delete and put in list" (click)="onDeleteAndInsertInList.emit()"  />
           </div>
         </ng-template>
     </p-dialog>
   `,
   styles: []
 })
-export class ShelfDeleteComponent {
-    @Input() shelfItem: ShelfItem;
+export class GroceryDeleteComponent {
+    @Input() listItem: ListItem;
     @Input() items: Item[];
     @Input() visible: boolean;
 
     @Output() onCancel = new EventEmitter<void>();
     @Output() onDelete = new EventEmitter<void>();
-    @Output() onDeleteAndInsertInList = new EventEmitter<void>();
 }

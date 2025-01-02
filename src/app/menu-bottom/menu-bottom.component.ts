@@ -19,7 +19,7 @@ export class MenuBottomComponent {
     {url: '/shelf', text: 'Shelf', icon: 'home.svg', urlColor: []},
     {url: '/grocery', text: 'Grocery', icon: 'grocery-basket.svg', urlColor: []},
     {url: '/recipe', text: 'Recipes', icon: 'recipe-book.svg', urlColor: []},
-    {url: '/more', text: 'More', icon: 'menu-dots.svg', urlColor: ['/items']},
+    {url: '/more', text: 'More', icon: 'menu-dots.svg', urlColor: ['/items', '/categories', '/share-shelf']},
   ]
 
   constructor(

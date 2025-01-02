@@ -3,7 +3,7 @@ import { Item } from '../../model/item';
 import { Category } from '../../model/category';
 
 @Component({
-  selector: 'app-items-new',
+  selector: 'app-item-new',
   template: `
     <p-sidebar 
         [visible]="visible" 
@@ -57,7 +57,7 @@ import { Category } from '../../model/category';
   `,
   styles: []
 })
-export class ItemsNewComponent {
+export class ItemNewComponent {
     @Input() item: Item;
     @Input() categories: Category[];
     @Input() visible: boolean;

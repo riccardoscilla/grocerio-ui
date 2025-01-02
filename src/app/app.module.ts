@@ -19,7 +19,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Interceptor } from './auth/interceptor';
 import { ToastModule } from 'primeng/toast';
 import { SkeletonModule } from 'primeng/skeleton';
-import { ItemsComponent } from './pages/items/items.component';
+import { ItemComponent } from './pages/item/item.component';
 import { ListItemTileComponent } from './components/list-item/list-item-tile.componenet';
 import { SvgComponent } from './components/svg.componenet';
 import { FixedBottomRightComponent } from './components/fixed-bottom-right.component';
@@ -38,10 +38,15 @@ import { GroceryNewComponent } from './pages/grocery/grocery-new.component';
 import { GroceryEditomponent } from './pages/grocery/grocery-edit.component';
 import { CategoryFilterChipComponent } from './components/category-filter-chip.component';
 import { ListItemArrowComponent } from './components/list-item/list-item-arrow.componenet';
-import { ItemsNewComponent } from './pages/items/items-new.component';
-import { ItemsEditComponent } from './pages/items/items-edit.component';
+import { ItemNewComponent } from './pages/item/item-new.component';
+import { ItemEditComponent } from './pages/item/item-edit.component';
 import { MoreComponent } from './pages/more/more.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { GroceryDeleteComponent } from './pages/grocery/grocery-delete.component';
+import { ShareShelfComponent } from './pages/share-shelf/share-shelf.component';
+import { CategoryComponent } from './pages/category/category.component';
+import { CategoryNewComponent } from './pages/category/category-new.component';
+import { CategoryEditComponent } from './pages/category/category-edit.component';
 
 @NgModule({
   declarations: [
@@ -79,12 +84,18 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     GroceryComponent,
     GroceryNewComponent,
     GroceryEditomponent,
+    GroceryDeleteComponent,
 
-    ItemsComponent,
-    ItemsNewComponent,
-    ItemsEditComponent,
+    ItemComponent,
+    ItemNewComponent,
+    ItemEditComponent,
+
+    CategoryComponent,
+    CategoryNewComponent,
+    CategoryEditComponent,
 
     MoreComponent,
+    ShareShelfComponent
   ],
   imports: [
     BrowserModule,

@@ -4,9 +4,11 @@ import { ShelfComponent } from './pages/shelf/shelf.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { AuthGuard } from './auth/auth.guard';
-import { ItemsComponent } from './pages/items/items.component';
+import { ItemComponent } from './pages/item/item.component';
 import { GroceryComponent } from './pages/grocery/grocery.component';
 import { MoreComponent } from './pages/more/more.component';
+import { ShareShelfComponent } from './pages/share-shelf/share-shelf.component';
+import { CategoryComponent } from './pages/category/category.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/shelf', pathMatch: 'full' },
@@ -19,8 +21,10 @@ const routes: Routes = [
   { path: 'grocery', component: GroceryComponent, canActivate: [AuthGuard] },
  
   { path: 'more', component: MoreComponent, canActivate: [AuthGuard] },
+  { path: 'share-shelf', component: ShareShelfComponent, canActivate: [AuthGuard] },
 
-  { path: 'items', component: ItemsComponent, canActivate: [AuthGuard] },
+  { path: 'items', component: ItemComponent, canActivate: [AuthGuard] },
+  { path: 'categories', component: CategoryComponent, canActivate: [AuthGuard] },
 
 ];
 

@@ -4,7 +4,7 @@ import { Item } from '../../model/item';
 import { Category } from '../../model/category';
 
 @Component({
-  selector: 'app-items-edit',
+  selector: 'app-item-edit',
   template: `
     <p-sidebar 
         [visible]="visible" 
@@ -15,7 +15,7 @@ import { Category } from '../../model/category';
 
         <ng-template pTemplate="header">
             <div style="font-size: 24px; font-weight: 500;">
-                Edit Shelf Item
+                Edit Item
             </div>
         </ng-template>
 
@@ -59,7 +59,7 @@ import { Category } from '../../model/category';
   `,
   styles: []
 })
-export class ItemsEditComponent {
+export class ItemEditComponent {
     @Input() item: Item;
     @Input() categories: Category[];
     @Input() visible: boolean;

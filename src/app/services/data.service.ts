@@ -44,6 +44,18 @@ export class DataService {
     )
   }
 
+  saveCategory(category: Category): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/${this.categoryPath}`, category.toSave())
+  }
+
+  editCategory(category: Category): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/${this.categoryPath}/${category.id}`, category.toEdit())
+  }
+
+  deleteCategory(category: Category): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${this.categoryPath}/${category.id}`)
+  }
+
   // ITEMS
 
   getItems(): Observable<Item[]> {

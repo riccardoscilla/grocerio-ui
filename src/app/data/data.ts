@@ -56,13 +56,30 @@ export class ItemsData extends DataState {
 
 export class CategoriesData extends DataState {
     categories: Category[]
+    filteredCategories: Category[]
+
+    searchText: string = ''
+
+    isEmpty() {
+        return this.filteredCategories.length === 0;
+    }
 
     init(categories: Category[]) {
         this.categories = categories
+        this.filteredCategories = categories
         this.sortByName()
     }
+
     sortByName() {
         this.categories.sort((a, b) => a.name.localeCompare(b.name))
+    }
+
+    filter() {
+        this.init(this.categories)
+    
+        if (this.searchText.length > 0) {
+            this.filteredCategories = this.filteredCategories.filter(category => category.name.toLowerCase().includes(this.searchText.toLocaleLowerCase()))
+        }
     }
 }
 

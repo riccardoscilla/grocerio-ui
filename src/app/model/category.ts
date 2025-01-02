@@ -1,10 +1,12 @@
+import { IModel } from "./imodel"
+
 export interface ICategory {
     id: string
     icon: string
     name: string
 }
 
-export class Category {
+export class Category implements IModel {
     id: string
     icon: string
     name: string
@@ -28,4 +30,27 @@ export class Category {
         category.name = this.name
         return category
     } 
+
+    valid() {
+        if (this.name === undefined || this.name.trim() === "")
+            return false
+        if (this.icon === undefined || this.icon.trim() === "")
+            return false
+        return true
+    }
+
+    toSave() {
+        return {
+            "name": this.name,
+            "icon": this.icon
+        }
+    }
+
+    toEdit() {
+        return {
+            "id": this.id,
+            "name": this.name,
+            "icon": this.icon
+        }
+    }
 }

@@ -9,10 +9,10 @@ import { DataService } from '../../services/data.service';
 import { catchError, forkJoin, of, tap } from 'rxjs';
 
 @Component({
-  selector: 'app-items',
-  templateUrl: './items.component.html'
+  selector: 'app-item',
+  templateUrl: './item.component.html'
 })
-export class ItemsComponent {
+export class ItemComponent {
   itemsData: ItemsData = new ItemsData()
   categoriesData: CategoriesData = new CategoriesData()
   dataStateHandler: DataStateHandler = new DataStateHandler()
@@ -119,7 +119,7 @@ export class ItemsComponent {
     this.dataService.saveItem(this.itemNew).subscribe({
       next: () => {
         this.toastService.handleSuccess("Item saved")
-        this.getItems()
+        this.getItems().subscribe()
         this.toggleShowItemNew()
       },
       error: (error: HttpErrorResponse) => {
@@ -132,7 +132,7 @@ export class ItemsComponent {
     this.dataService.editItem(this.itemEdit).subscribe({
       next: () => {
         this.toastService.handleSuccess("Item saved")
-        this.getItems()
+        this.getItems().subscribe()
         this.toggleShowItemEdit()
       },
       error: (error: HttpErrorResponse) => {
@@ -145,7 +145,7 @@ export class ItemsComponent {
     this.dataService.deleteItem(item).subscribe({
       next: () => {
         this.toastService.handleSuccess("Item Deleted")
-        this.getItems()
+        this.getItems().subscribe()
       },
       error: (error: HttpErrorResponse) => {
         this.toastService.handleError(error, "Error deleteItem")

@@ -30,21 +30,21 @@
     <app-menu-bottom></app-menu-bottom>
 </app-fixed-bottom>
 
-<app-items-new 
+<app-item-new 
     [visible]="showItemNew" 
     [item]="itemNew"
     [categories]="categoriesData.categories"
     (onHide)="toggleShowItemNew()" 
     (onSave)="save()"
-></app-items-new>
+></app-item-new>
 
-<app-items-edit 
+<app-item-edit 
     [visible]="showItemEdit" 
     [item]="itemEdit"
     [categories]="categoriesData.categories"
     (onHide)="toggleShowItemEdit()" 
     (onSave)="edit()"
-></app-items-edit>
+></app-item-edit>
 
 
 <app-category-filter
