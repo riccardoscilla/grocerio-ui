@@ -22,6 +22,7 @@ import { Router } from '@angular/router';
   `,
   styles: [`
     .content {
+        position: relative;
         padding: 8px; 
         
         display: flex; 
@@ -44,6 +45,30 @@ import { Router } from '@angular/router';
     }
     .side {
         width: 48px;
+    }
+
+    .content::before {
+        content: "";
+        position: absolute;
+        background-color: transparent;
+        bottom: -32px;
+        left: 0;
+        height: 32px;
+        width: 16px;
+        border-top-left-radius: 16px;
+        box-shadow: 0 -16px 0 0 var(--primary-color);
+    }
+
+    .content::after {
+        content: "";
+        position: absolute;
+        background-color: transparent;
+        bottom: -32px;
+        right: 0;
+        height: 32px;
+        width: 16px;
+        border-top-right-radius: 16px;
+        box-shadow: 0 -16px 0 0 var(--primary-color);
     }
   `]
 })
