@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, HostListener } from '@angular/core'
 import { ShelfItem } from '../../model/shelfItem'
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http'
 import { ToastService } from '../../services/toast.service'

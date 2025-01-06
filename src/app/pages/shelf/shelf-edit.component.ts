@@ -102,7 +102,10 @@ import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
         </ng-template>
 
         <ng-template pTemplate="footer" >
-            <p-button class="p-fluid" label="Salva" (click)="onSave.emit()" [disabled]="shelfItem && !shelfItem.valid()"/>
+            <div style="display: flex; gap: 8px">
+                <p-button class="p-flex" [outlined]="true" severity="danger" label="Delete" (click)="onDelete.emit()" [disabled]="shelfItem && !shelfItem.valid()"/>
+                <p-button class="p-flex" label="Save" (click)="onSave.emit()" [disabled]="shelfItem && !shelfItem.valid()"/>
+            </div>
         </ng-template>
 
     </p-sidebar>
@@ -117,6 +120,7 @@ export class ShelfEditomponent {
 
     @Output() onHide = new EventEmitter<void>();
     @Output() onSave = new EventEmitter<void>();
+    @Output() onDelete = new EventEmitter<void>();
 
     filteredItems: Item[]
 

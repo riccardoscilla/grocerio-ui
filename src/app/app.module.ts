@@ -47,6 +47,7 @@ import { ShareShelfComponent } from './pages/share-shelf/share-shelf.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { CategoryNewComponent } from './pages/category/category-new.component';
 import { CategoryEditComponent } from './pages/category/category-edit.component';
+import { ListItemComponent } from './components/list-item/list-item.componenet';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { CategoryEditComponent } from './pages/category/category-edit.component'
     ScrollXComponent,
 
     ListComponent,
+    ListItemComponent,
     ListItemTileComponent,
     ListItemArrowComponent,
 

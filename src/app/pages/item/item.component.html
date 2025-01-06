@@ -12,12 +12,11 @@
 </app-appbar>
 
 <app-list *ngIf="dataStateHandler.isSuccess()">
-    <app-list-item-tile *ngFor="let item of itemsData.filteredItems"
+    <app-list-item *ngFor="let item of itemsData.filteredItems"
         [leadingIcon]="item.category"
         [mainText]="item.name"
-        (edit)="onEdit(item)"
-        (delete)="delete(item)">
-    </app-list-item-tile>
+        (edit)="onEdit(item)">
+    </app-list-item>
 </app-list>
 
 <app-list-loading *ngIf="dataStateHandler.isLoading()"></app-list-loading>
@@ -44,6 +43,7 @@
     [categories]="categoriesData.categories"
     (onHide)="toggleShowItemEdit()" 
     (onSave)="edit()"
+    (onDelete)="delete(itemEdit)"
 ></app-item-edit>
 
 

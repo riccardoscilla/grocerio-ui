@@ -1,4 +1,4 @@
-<app-title [title]="'Grocery'"></app-title>
+<app-title [title]="'Grocery List'"></app-title>
 
 <app-appbar>
     <app-search-bar (searchTextChanged)="onSearchTextChanged($event)"></app-search-bar>
@@ -11,28 +11,25 @@
     </app-scroll-x>
 </app-appbar>
 
-<div style="background-color: white; flex: 1;">
-        
-    <app-list *ngIf="dataStateHandler.isSuccess()">
-        <app-list-item-tile *ngFor="let listItem of listItemsData.filteredListItems"
-            [leadingIcon]="listItem.category"
-            [mainText]="listItem.name"
-            [rightText]="listItem.quantity.toString()"
-            [checkBox]="true"
-            (check)="onCheck(listItem)"
-            (uncheck)="onUncheck(listItem)"
-            (edit)="onEdit(listItem)"
-            (delete)="onDelete(listItem)">
-        </app-list-item-tile>
 
-        <div style="padding: 16px" *ngIf="listItemsData.isEmpty()">
-            No List Items
-        </div>
-    </app-list>
-    
-    <app-list-loading *ngIf="dataStateHandler.isLoading()"></app-list-loading>
+<app-list *ngIf="dataStateHandler.isSuccess()">
+    <app-list-item *ngFor="let listItem of listItemsData.filteredListItems"
+        [leadingIcon]="listItem.category"
+        [mainText]="listItem.name"
+        [rightText]="listItem.quantity.toString()"
+        [notesIcon]="listItem.note !== null"
+        [checkBox]="true"
+        (check)="onCheck(listItem)"
+        (uncheck)="onUncheck(listItem)"
+        (edit)="onEdit(listItem)">
+    </app-list-item>
 
-</div>
+    <div style="padding: 16px" *ngIf="listItemsData.isEmpty()">
+        No List Items
+    </div>
+</app-list>
+
+<app-list-loading *ngIf="dataStateHandler.isLoading()"></app-list-loading>
 
 <app-fixed-bottom-right>
     <p-button [rounded]="true" *ngIf="checkedListItems.length > 0"  (click)="onFinish()">
@@ -62,6 +59,7 @@
     [categories]="categoriesData.categories"
     (onHide)="toggleShowListItemEdit()" 
     (onSave)="edit()"
+    (onDelete)="onDelete(listItemEdit)"
 ></app-grocery-edit>
 
 <app-category-filter

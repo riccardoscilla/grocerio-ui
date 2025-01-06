@@ -28,8 +28,9 @@ import { CheckboxChangeEvent } from 'primeng/checkbox';
         <div class="secondary-text">{{ secondaryText }}</div>
       </div>
 
-      <div class="text-right" *ngIf="rightText && currentWidth === 0">
-        {{ rightText }}
+      <div class="text-right" *ngIf="currentWidth === 0">
+        <app-svg *ngIf="notesIcon" [color]="'black'" [size]="16" [path]="'memo.svg'"></app-svg>
+        <span *ngIf="rightText">{{ rightText }}</span>
       </div>
 
       <!-- Action Buttons (slidable area) -->
@@ -70,6 +71,12 @@ import { CheckboxChangeEvent } from 'primeng/checkbox';
       }
     }
 
+    .leading-icons {
+      width: 28px;
+      display: flex;
+      justify-content: center;
+    }
+
     .icon {
       font-size: 20px;
     }
@@ -87,6 +94,9 @@ import { CheckboxChangeEvent } from 'primeng/checkbox';
 
     .text-right {
       padding-right: 8px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
     }
 
     .actions {
@@ -108,6 +118,7 @@ export class ListItemTileComponent {
   @Input() secondaryText: string | undefined;
   @Input() rightText: string | undefined;
   @Input() checkBox: boolean = false
+  @Input() notesIcon: boolean = false
   @Output() check = new EventEmitter<void>();
   @Output() uncheck = new EventEmitter<void>();
   @Output() edit = new EventEmitter<void>();

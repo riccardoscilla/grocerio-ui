@@ -14,14 +14,14 @@
 
 
 <app-list *ngIf="dataStateHandler.isSuccess()">
-    <app-list-item-tile *ngFor="let shelfItem of shelfItemsData.filteredShelfItems"
+    <app-list-item *ngFor="let shelfItem of shelfItemsData.filteredShelfItems"
         [leadingIcon]="shelfItem.category"
         [mainText]="shelfItem.name"
         [secondaryText]="shelfItem.purchaseDate.toDateString()"
         [rightText]="shelfItem.quantity.toString()"
         (edit)="onEdit(shelfItem)"
         (delete)="onDelete(shelfItem)">
-    </app-list-item-tile>
+    </app-list-item>
 
     <div style="padding: 16px" *ngIf="shelfItemsData.isEmpty()">
         No Shelf Items
@@ -55,6 +55,7 @@
     [categories]="categoriesData.categories"
     (onHide)="toggleShowShelfItemEdit()" 
     (onSave)="edit()"
+    (onDelete)="onDelete(shelfItemEdit)"
 ></app-shelf-edit>
 
 <app-shelf-delete 

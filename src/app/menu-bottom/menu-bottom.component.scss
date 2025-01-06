@@ -2,13 +2,11 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  
-  display: flex;
 }
 
 .item {
   width: calc(100% / 4);
-  padding-top: 12px;
+  padding: 12px 0 6px 0;
 
   cursor: pointer;
 

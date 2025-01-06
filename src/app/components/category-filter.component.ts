@@ -46,7 +46,7 @@ import { Category } from '../model/category';
     .content {
         display: flex; 
         flex-wrap: wrap; 
-        row-gap: 24px;
+        row-gap: 16px;
     }
     .category {
         width: calc(100% / 4); 
@@ -54,6 +54,7 @@ import { Category } from '../model/category';
         align-items: center;  
         justify-content: center; 
         font-size: 24px;
+        padding: 0 8px;
     }
     .category-icon {
         display: flex; 

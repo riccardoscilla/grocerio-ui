@@ -35,7 +35,7 @@ export class ShelfItem implements IModel {
 
     static new() {
         const shelfItem = new ShelfItem()
-        shelfItem.quantity = 0
+        shelfItem.quantity = 1
         shelfItem.purchaseDate = new Date()
         shelfItem.item = Item.new()
         return shelfItem
@@ -52,12 +52,12 @@ export class ShelfItem implements IModel {
         return shelfItem
     } 
 
-    valid(): boolean {
+    valid() {
         if (this.quantity < 1)
             return false
         if (this.purchaseDate === null)
             return false 
-        if (this.item instanceof Item && !this.item.valid())
+        if (this.item !== undefined && !this.item.valid())
             return false
         return true
     }

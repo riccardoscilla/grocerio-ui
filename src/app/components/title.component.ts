@@ -23,7 +23,7 @@ import { Router } from '@angular/router';
   styles: [`
     .content {
         height: 64px; 
-        padding: 16px 8px 0; 
+        padding: 0 8px; 
         
         display: flex; 
         align-items: center; 
@@ -42,11 +42,7 @@ import { Router } from '@angular/router';
             padding-left: 16px;
             font-size: 32px; 
         }
-
-
     }
-    
-
     .side {
         width: 48px;
     }

@@ -12,9 +12,9 @@ import { Component } from '@angular/core';
       position: fixed;
       bottom: 0;
       width: 100vw;
-      height: 60px;
-      padding: 0 8px 0;
+      padding: 0 8px;
 
+      background: white;
       border-top: 2px solid #f0f0f0;
       border-radius: 16px;
     }

@@ -35,7 +35,7 @@ export class ListItem implements IModel {
 
     static new() {
         const listItem = new ListItem()
-        listItem.quantity = 0
+        listItem.quantity = 1
         listItem.insertionDate = new Date()
         listItem.item = Item.new()
         return listItem
@@ -52,12 +52,12 @@ export class ListItem implements IModel {
         return listItem
     } 
 
-    valid(): boolean {
+    valid() {
         if (this.quantity < 1)
             return false
         if (this.insertionDate === null)
             return false 
-        if (!this.item.valid())
+        if (this.item !== undefined && !this.item.valid())
             return false
         return true
     }

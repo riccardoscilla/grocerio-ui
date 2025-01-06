@@ -10,7 +10,7 @@ import { Component, Input } from '@angular/core';
   styles: [`
     .content {
         background-color: var(--primary-color); 
-        box-shadow: -1px -2px 0px 0 var(--primary-color);
+        box-shadow: 0 -2px 0px 0 var(--primary-color);
         position: sticky;
         top: 0;
 
@@ -31,7 +31,7 @@ import { Component, Input } from '@angular/core';
         height: 32px;
         width: 16px;
         border-top-left-radius: 16px;
-        box-shadow: -1px -16px 0 0 var(--primary-color);
+        box-shadow: 0 -16px 0 0 var(--primary-color);
     }
 
     .content::after {
@@ -43,7 +43,7 @@ import { Component, Input } from '@angular/core';
         height: 32px;
         width: 16px;
         border-top-right-radius: 16px;
-        box-shadow: 1px -16px 0 0 var(--primary-color);
+        box-shadow: 0 -16px 0 0 var(--primary-color);
     }
 
   `]
