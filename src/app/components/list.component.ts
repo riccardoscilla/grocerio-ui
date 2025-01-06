@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
   `,
   styles: [`
     .list {
-      padding: 8px 16px 68px;
+      padding: 8px 16px;
     }
 
     .list ::ng-deep > * .item {

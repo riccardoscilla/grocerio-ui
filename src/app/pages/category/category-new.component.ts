@@ -33,7 +33,7 @@ import { Category } from '../../model/category';
         </ng-template>
 
         <ng-template pTemplate="footer" >
-            <p-button class="p-fluid" label="Salva" (click)="onSave.emit()" [disabled]="!category.valid()"/>
+            <p-button class="p-fluid" label="Save" (click)="onSave.emit()" [disabled]="!category.valid()"/>
         </ng-template>
 
     </p-sidebar>

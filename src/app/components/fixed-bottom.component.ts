@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-fixed-bottom',
   template: `
+    <div style="height: 60px;"></div>
     <div class="fixed">
       <ng-content></ng-content>
     </div>

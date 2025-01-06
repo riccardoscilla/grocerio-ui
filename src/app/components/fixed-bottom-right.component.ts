@@ -12,7 +12,7 @@ import { Component, HostListener } from '@angular/core';
         position: fixed;
         bottom: 76px;
         width: 100vw;
-        padding: 0 8px;
+        padding: 0 16px;
 
         display: flex;
         flex-direction: row-reverse;

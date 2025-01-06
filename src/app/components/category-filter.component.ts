@@ -77,7 +77,7 @@ import { Category } from '../model/category';
         }
     }
     .text {
-        font-size: 16px;
+        font-size: 14px;
         text-align: center;
         height: 40px;
     }
