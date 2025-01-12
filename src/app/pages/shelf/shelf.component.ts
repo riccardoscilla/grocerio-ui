@@ -2,7 +2,7 @@ import { Component, HostListener } from '@angular/core'
 import { ShelfItem } from '../../model/shelfItem'
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http'
 import { ToastService } from '../../services/toast.service'
-import { CategoriesData, ItemsData, ShelfItemsData } from '../../data/data'
+import { CategoriesData, ItemsData, ShelfData, ShelfItemsData } from '../../data/data'
 import { DataStateHandler } from '../../data/dataStateHandler'
 import { catchError, forkJoin, of, tap } from 'rxjs'
 import { ListItem } from '../../model/listItem'
@@ -17,6 +17,7 @@ export class ShelfComponent {
   shelfItemsData: ShelfItemsData = new ShelfItemsData()
   categoriesData: CategoriesData = new CategoriesData()
   itemsData: ItemsData = new ItemsData()
+  shelfData: ShelfData = new ShelfData()
   dataStateHandler: DataStateHandler = new DataStateHandler()
 
   showShelfItemNew = false
@@ -41,12 +42,28 @@ export class ShelfComponent {
     forkJoin({
       shelfItems: this.getShelfItems(),
       categories: this.getCategories(),
-      items: this.getItems()
+      items: this.getItems(),
+      shelf: this.getShelf()
     }).subscribe({
       next: (results) => {
         this.toastService.handleResults(results)
       }
     })
+  }
+
+  getShelf() {
+    this.dataStateHandler.addAndLoading(this.shelfData)
+
+    return this.dataService.getShelf().pipe(
+      tap((shelf) => {
+        this.shelfData.init(shelf)
+        this.dataStateHandler.setSuccess(this.shelfData)
+      }),
+      catchError((error: HttpErrorResponse) => {
+        this.dataStateHandler.setError(this.shelfData)
+        return of(error)
+      })
+    )
   }
 
   getShelfItems() {
@@ -172,6 +189,7 @@ export class ShelfComponent {
         this.toastService.handleSuccess("Shelf Item deleted")
         this.getShelfItems().subscribe()
         this.toggleShowShelfItemDelete()
+        this.toggleShowShelfItemEdit()
       },
       error: (error: HttpErrorResponse) => {
         this.toastService.handleError(error, "Error delete Shelf Item")
@@ -186,6 +204,7 @@ export class ShelfComponent {
         this.toastService.handleSuccess("Shelf Item deleted and saved in List")
         this.getShelfItems().subscribe()
         this.toggleShowShelfItemDelete()
+        this.toggleShowShelfItemEdit()
       },
       error: (error: HttpErrorResponse) => {
         this.toastService.handleError(error, "Error delete Shelf Item and saved in list")

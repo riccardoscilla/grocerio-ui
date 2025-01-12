@@ -1,6 +1,7 @@
 import { Category } from "../model/category";
 import { Item } from "../model/item";
 import { ListItem } from "../model/listItem";
+import { Shelf } from "../model/shelf";
 import { ShelfItem } from "../model/shelfItem";
 import { DataState } from "./dataState";
 
@@ -177,5 +178,13 @@ export class ListItemsData extends DataState {
         if (this.searchText.length > 0) {
             this.filteredListItems = this.filteredListItems.filter(item => item.name.toLowerCase().includes(this.searchText.toLocaleLowerCase()))
         }
+    }
+}
+
+export class ShelfData extends DataState {
+    shelf: Shelf
+
+    init(shelf: Shelf) {
+        this.shelf = shelf
     }
 }

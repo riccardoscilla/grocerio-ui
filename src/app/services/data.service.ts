@@ -30,8 +30,8 @@ export class DataService {
 
   // SHELF
 
-  getShareId(): Observable<Shelf> {
-    return this.http.get<IShelf>(`${this.apiUrl}/${this.shelfPath}/shareId`).pipe(
+  getShelf(): Observable<Shelf> {
+    return this.http.get<IShelf>(`${this.apiUrl}/${this.shelfPath}`).pipe(
       map(shelf => Shelf.fromInterface(shelf))
     )
   }

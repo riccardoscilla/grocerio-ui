@@ -21,7 +21,7 @@ export class ShareShelfComponent {
   ) {}
 
   getShareId() {
-    this.dataService.getShareId().subscribe({
+    this.dataService.getShelf().subscribe({
       next: (shelf) => {
         this.shareId = shelf.shareId
         this.copyToClipboard()

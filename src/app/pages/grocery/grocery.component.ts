@@ -193,6 +193,7 @@ export class GroceryComponent {
         this.toastService.handleSuccess("List Item deleted")
         this.getListItems().subscribe()
         this.toggleShowListItemDelete()
+        this.toggleShowListItemEdit()
       },
       error: (error: HttpErrorResponse) => {
         this.toastService.handleError(error, "Error delete List Item")
