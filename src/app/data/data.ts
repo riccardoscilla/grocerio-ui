@@ -182,7 +182,7 @@ export class ListItemsData extends DataState {
 }
 
 export class ShelfData extends DataState {
-    shelf: Shelf
+    shelf?: Shelf
 
     init(shelf: Shelf) {
         this.shelf = shelf

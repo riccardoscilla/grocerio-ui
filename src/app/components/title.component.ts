@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
         </div>
 
         <div class="title" [ngClass]="{'main-title': !back}">
-            {{title}}
+            {{ getTitle() }}
         </div>
 
         <div class="side"></div> 
@@ -73,15 +73,22 @@ import { Router } from '@angular/router';
   `]
 })
 export class TitleComponent {
-    @Input() title: string;
+    @Input() title?: string;
+    @Input() defaultTitle: string;
     @Input() back: string;
 
     constructor(
         private router: Router
     ) {}
     
-
     goBack() {
         this.router.navigateByUrl(this.back);
     }
+
+    getTitle() {
+        if (this.title)
+            return this.title
+        return this.defaultTitle
+    }
+
 }
