@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1736765819232,
+  "timestamp": 1736971388669,
   "index": "/grocerio-ui/index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/grocerio-ui/favicon.ico",
         "/grocerio-ui/index.html",
-        "/grocerio-ui/main-4UKUFHXK.js",
+        "/grocerio-ui/main-BY2SYMGT.js",
         "/grocerio-ui/manifest.webmanifest",
         "/grocerio-ui/polyfills-6EAL64PA.js",
         "/grocerio-ui/styles-Y3RHT44A.css"
@@ -107,8 +107,8 @@
     "/grocerio-ui/assets/svg-icons/settings-sliders.svg": "a9cee9c08a1451e2ecce25c8e2d705d853c9633a",
     "/grocerio-ui/assets/svg-icons/trash-xmark.svg": "8076df79a1c227d9dfb4222daec18a35523399b9",
     "/grocerio-ui/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
-    "/grocerio-ui/index.html": "d71a5c65a6a01a9cd61365c38ebf8d9e52294a2b",
-    "/grocerio-ui/main-4UKUFHXK.js": "cb96eb592cb720869f19cd7ff1f549f45828c6d5",
+    "/grocerio-ui/index.html": "c231e858fce25aa83eedf75c57e0b7be4c53690a",
+    "/grocerio-ui/main-BY2SYMGT.js": "bb78625775f2e73739337c716c2cf6f563938bb4",
     "/grocerio-ui/manifest.webmanifest": "32fd8e6d671fa586f8c4d7ce1851981e5506a9aa",
     "/grocerio-ui/media/Inter-italic.var-SWFAXF2C.woff2": "6f20a046917bf86d4b6cc29c4e2515bd64d2cb9b",
     "/grocerio-ui/media/Inter-roman.var-WIJJYAE4.woff2": "7a2602d2ebb08ce895e33addb6fe595f1029431e",
