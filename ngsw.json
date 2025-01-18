@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1736971388669,
+  "timestamp": 1737193716432,
   "index": "/grocerio-ui/index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/grocerio-ui/favicon.ico",
         "/grocerio-ui/index.html",
-        "/grocerio-ui/main-BY2SYMGT.js",
+        "/grocerio-ui/main-EEN7DQJ2.js",
         "/grocerio-ui/manifest.webmanifest",
         "/grocerio-ui/polyfills-6EAL64PA.js",
         "/grocerio-ui/styles-Y3RHT44A.css"
@@ -47,6 +47,7 @@
         "/grocerio-ui/assets/svg-icons/angle-circle-right.svg",
         "/grocerio-ui/assets/svg-icons/angle-small-right.svg",
         "/grocerio-ui/assets/svg-icons/arrow-small-left.svg",
+        "/grocerio-ui/assets/svg-icons/circle-heart.svg",
         "/grocerio-ui/assets/svg-icons/circle-user.svg",
         "/grocerio-ui/assets/svg-icons/edit.svg",
         "/grocerio-ui/assets/svg-icons/file-edit.svg",
@@ -93,6 +94,7 @@
     "/grocerio-ui/assets/svg-icons/angle-circle-right.svg": "cf366f3edc3469d14173ccbacf784db728ed49e7",
     "/grocerio-ui/assets/svg-icons/angle-small-right.svg": "41a7a6cf3c06e9ad2fb24db0f252ddab08aca45d",
     "/grocerio-ui/assets/svg-icons/arrow-small-left.svg": "961b8cfc2711cf704eaf738f11dcb48dd8f952bb",
+    "/grocerio-ui/assets/svg-icons/circle-heart.svg": "91e289b8013d246fbdb75489db008d801735a51a",
     "/grocerio-ui/assets/svg-icons/circle-user.svg": "28f1ef4528b12311078f03c60facc0fb4f4215d5",
     "/grocerio-ui/assets/svg-icons/edit.svg": "de3054af547a9d0704492f892a2490ef8eeb3c4e",
     "/grocerio-ui/assets/svg-icons/file-edit.svg": "d0931b56d4b7d3281da42ae4c657e8e7e68dea90",
@@ -107,8 +109,8 @@
     "/grocerio-ui/assets/svg-icons/settings-sliders.svg": "a9cee9c08a1451e2ecce25c8e2d705d853c9633a",
     "/grocerio-ui/assets/svg-icons/trash-xmark.svg": "8076df79a1c227d9dfb4222daec18a35523399b9",
     "/grocerio-ui/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
-    "/grocerio-ui/index.html": "c231e858fce25aa83eedf75c57e0b7be4c53690a",
-    "/grocerio-ui/main-BY2SYMGT.js": "bb78625775f2e73739337c716c2cf6f563938bb4",
+    "/grocerio-ui/index.html": "b4c15a3586ba1e4f07c9c082998bf414c2da0461",
+    "/grocerio-ui/main-EEN7DQJ2.js": "f20390f89bebfcfce1f4a819ffc7447690fdce4e",
     "/grocerio-ui/manifest.webmanifest": "32fd8e6d671fa586f8c4d7ce1851981e5506a9aa",
     "/grocerio-ui/media/Inter-italic.var-SWFAXF2C.woff2": "6f20a046917bf86d4b6cc29c4e2515bd64d2cb9b",
     "/grocerio-ui/media/Inter-roman.var-WIJJYAE4.woff2": "7a2602d2ebb08ce895e33addb6fe595f1029431e",
