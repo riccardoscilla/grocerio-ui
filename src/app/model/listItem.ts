@@ -80,8 +80,7 @@ export class ListItem implements IModel {
 
     toSave() {
         return {
-            "itemName": this.item.name.toLowerCase(),
-            "categoryId": this.category.id,
+            "itemNew": this.item.toSave(),
             "quantity": this.quantity,
             "insertionDate": this.insertionDate,
             "note": this.note
@@ -91,8 +90,7 @@ export class ListItem implements IModel {
     toEdit() {
         return {
             "id": this.id,
-            "itemName": this.item.name.toLowerCase(),
-            "categoryId": this.category.id,
+            "itemNew": this.item.toSave(),
             "quantity": this.quantity,
             "insertionDate": this.insertionDate,
             "note": this.note

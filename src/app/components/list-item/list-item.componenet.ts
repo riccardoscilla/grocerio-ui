@@ -14,9 +14,13 @@ import { CheckboxChangeEvent } from 'primeng/checkbox';
       </div>
 
       <div class="leading-icons">
-        <span class="icon">
+        <span class="icon" >
           {{ leadingIcon!!.icon }}
         </span>
+        <div class="fav-icon">
+          <app-svg *ngIf="favIcon"  [color]="'black'" [size]="14" [path]="'circle-heart.svg'"></app-svg>
+        </div>
+
       </div>
 
       <div class="content" (click)="edit.emit()">
@@ -54,10 +58,22 @@ import { CheckboxChangeEvent } from 'primeng/checkbox';
       width: 28px;
       display: flex;
       justify-content: center;
+
+      position: relative;
     }
 
     .icon {
       font-size: 20px;
+    }
+
+    .fav-icon {
+      position: absolute; 
+      display: flex; 
+      bottom: -4px; 
+      right: -4px;
+      background-color: white;
+      border-radius: 50%;
+      padding: 0.7px;
     }
 
     .content {
@@ -98,6 +114,7 @@ export class ListItemComponent {
   @Input() rightText: string | undefined;
   @Input() checkBox: boolean = false
   @Input() notesIcon: boolean = false
+  @Input() favIcon: boolean = false;
   @Output() check = new EventEmitter<void>();
   @Output() uncheck = new EventEmitter<void>();
   @Output() edit = new EventEmitter<void>();

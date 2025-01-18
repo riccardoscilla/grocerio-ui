@@ -46,6 +46,10 @@ import { Category } from '../../model/category';
                         </ng-template>
                     </p-dropdown>    
                 </div>
+                <div style="display: flex; align-items: center; gap: 16px; padding-top: 8px;">
+                    <p-checkbox [binary]="true" variant="filled" [(ngModel)]="item.favourite"/>
+                    Favourite
+                </div>
             </div>
             
 

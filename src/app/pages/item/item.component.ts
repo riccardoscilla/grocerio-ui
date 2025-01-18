@@ -146,6 +146,7 @@ export class ItemComponent {
       next: () => {
         this.toastService.handleSuccess("Item Deleted")
         this.getItems().subscribe()
+        this.toggleShowItemEdit()
       },
       error: (error: HttpErrorResponse) => {
         this.toastService.handleError(error, "Error deleteItem")

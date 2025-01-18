@@ -116,6 +116,7 @@ export class CategoryComponent {
       next: () => {
         this.toastService.handleSuccess("Category Deleted")
         this.getCategories().subscribe()
+        this.toggleShowCategoryEdit()
       },
       error: (error: HttpErrorResponse) => {
         this.toastService.handleError(error, "Error delete Category")

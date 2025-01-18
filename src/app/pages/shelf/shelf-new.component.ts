@@ -84,6 +84,10 @@ import { Category } from '../../model/category';
                         class="p-fluid"
                     />
                 </div>
+                <div style="display: flex; align-items: center; gap: 16px; padding-top: 8px;">
+                    <p-checkbox [binary]="true" variant="filled" [(ngModel)]="shelfItem.item.favourite"/>
+                    Favourite
+                </div>
                 <div style="display: flex; flex-direction: column; gap: 8px;">
                     Note
                     <textarea 

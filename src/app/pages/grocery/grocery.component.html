@@ -19,6 +19,7 @@
         [rightText]="listItem.quantity.toString()"
         [notesIcon]="listItem.note !== null"
         [checkBox]="true"
+        [favIcon]="listItem.item.favourite"
         (check)="onCheck(listItem)"
         (uncheck)="onUncheck(listItem)"
         (edit)="onEdit(listItem)">
@@ -32,10 +33,10 @@
 <app-list-loading *ngIf="dataStateHandler.isLoading()"></app-list-loading>
 
 <app-fixed-bottom-right>
+    <app-new-button (toggleShowNew)="toggleShowListItemNew()"></app-new-button>
     <p-button [rounded]="true" *ngIf="checkedListItems.length > 0"  (click)="onFinish()">
         Finish!
     </p-button>
-    <app-new-button (toggleShowNew)="toggleShowListItemNew()"></app-new-button>
 </app-fixed-bottom-right>
 
 <app-fixed-bottom>

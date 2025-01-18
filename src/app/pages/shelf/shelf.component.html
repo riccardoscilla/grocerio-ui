@@ -21,6 +21,7 @@
         [mainText]="shelfItem.name"
         [secondaryText]="shelfItem.purchaseDate.toDateString()"
         [rightText]="shelfItem.quantity.toString()"
+        [favIcon]="shelfItem.item.favourite"
         (edit)="onEdit(shelfItem)"
         (delete)="onDelete(shelfItem)">
     </app-list-item>
