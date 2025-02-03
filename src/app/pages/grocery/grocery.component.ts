@@ -27,9 +27,7 @@ export class GroceryComponent {
   showListItemDelete = false
   listItemDelete: ListItem
 
-  showCategoryFilter = false 
-
-  checkedListItems: ListItem[] = []
+  showCategoryFilter = false
 
   constructor(
     public dataService: DataService,
@@ -140,15 +138,35 @@ export class GroceryComponent {
   }
 
   onCheck(listItem: ListItem) {
-    this.checkedListItems.push(listItem)
+    listItem.inCart = true
+
+    this.dataService.editListItem(listItem).subscribe({
+      next: () => {
+        // this.toastService.handleSuccess("List items checked!")
+        // this.getListItems().subscribe()
+      },
+      error: (error: HttpErrorResponse) => {
+        this.toastService.handleError(error, "Error List items checked")
+      }
+    })
   }
 
   onUncheck(listItem: ListItem) {
-    this.checkedListItems = this.checkedListItems.filter(item => item.id !== listItem.id) 
+    listItem.inCart = false
+
+    this.dataService.editListItem(listItem).subscribe({
+      next: () => {
+        // this.toastService.handleSuccess("List items checked!")
+        // this.getListItems().subscribe()
+      },
+      error: (error: HttpErrorResponse) => {
+        this.toastService.handleError(error, "Error List items checked")
+      }
+    })
   }
 
   onFinish() {
-    this.dataService.deleteAndSaveInShelf(this.checkedListItems).subscribe({
+    this.dataService.deleteAndSaveInShelf().subscribe({
       next: () => {
         this.toastService.handleSuccess("List items moved in shelf!")
         this.getListItems().subscribe()

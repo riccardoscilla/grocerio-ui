@@ -1,11 +1,10 @@
-import { Component, HostListener } from '@angular/core'
+import { Component } from '@angular/core'
 import { ShelfItem } from '../../model/shelfItem'
-import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http'
+import { HttpErrorResponse } from '@angular/common/http'
 import { ToastService } from '../../services/toast.service'
 import { CategoriesData, ItemsData, ShelfData, ShelfItemsData } from '../../data/data'
 import { DataStateHandler } from '../../data/dataStateHandler'
 import { catchError, forkJoin, of, tap } from 'rxjs'
-import { ListItem } from '../../model/listItem'
 import { DataService } from '../../services/data.service'
 import { Category } from '../../model/category'
 
@@ -198,8 +197,7 @@ export class ShelfComponent {
   }
 
   deleteAndInsertInList() {
-    const listItem = ListItem.fromShelfItem(this.shelfItemDelete)
-    this.dataService.deleteAndSaveInList(this.shelfItemDelete, listItem).subscribe({
+    this.dataService.deleteAndSaveInList(this.shelfItemDelete).subscribe({
       next: () => {
         this.toastService.handleSuccess("Shelf Item deleted and saved in List")
         this.getShelfItems().subscribe()

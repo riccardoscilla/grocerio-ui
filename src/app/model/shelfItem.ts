@@ -96,14 +96,4 @@ export class ShelfItem implements IModel {
             "note": this.note
         }
     }
-
-    static fromListItem(listItem: ListItem) {
-        const shelfItem = new ShelfItem()
-        shelfItem.quantity = listItem.quantity
-        shelfItem.purchaseDate = new Date()
-        shelfItem.note = listItem.note
-
-        shelfItem.item = listItem.item.deepcopy()
-        return shelfItem
-    }
 }

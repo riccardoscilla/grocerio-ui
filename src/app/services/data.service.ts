@@ -96,8 +96,8 @@ export class DataService {
     return this.http.delete<void>(`${this.apiUrl}/${this.shelfItemPath}/${shelfItem.id}`)
   }
 
-  deleteAndSaveInList(shelfItem: ShelfItem, listItem: ListItem): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/${this.shelfItemPath}/${shelfItem.id}/delete-and-save-in-list`, listItem.toSave())
+  deleteAndSaveInList(shelfItem: ShelfItem): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${this.shelfItemPath}/${shelfItem.id}/delete-and-save-in-list`)
   }
 
   // LIST ITEMS
@@ -120,12 +120,8 @@ export class DataService {
     return this.http.delete<void>(`${this.apiUrl}/${this.listItemPath}/${listItem.id}`)
   }
 
-  deleteAndSaveInShelf(listItems: ListItem[]): Observable<void> {
-    const combined = {
-      "listItemIds": listItems.map(i => i.id),
-      "shelfItems": listItems.map(i => ShelfItem.fromListItem(i).toSave())
-    }
-    return this.http.post<void>(`${this.apiUrl}/${this.listItemPath}/delete-and-save-in-shelf`, combined)
+  deleteAndSaveInShelf(): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${this.listItemPath}/delete-and-save-in-shelf`)
   }
 
 }

@@ -10,7 +10,7 @@ import { CheckboxChangeEvent } from 'primeng/checkbox';
     >
 
       <div *ngIf="checkBox" style="padding-left: -16px;">
-        <p-checkbox (onChange)="onCheckChange($event)" [binary]="true" variant="filled" />
+        <p-checkbox [(ngModel)]="checked" (onChange)="onCheckChange($event)" [binary]="true" variant="filled" />
       </div>
 
       <div class="leading-icons">
@@ -115,6 +115,7 @@ export class ListItemComponent {
   @Input() checkBox: boolean = false
   @Input() notesIcon: boolean = false
   @Input() favIcon: boolean = false;
+  @Input() checked: boolean = false
   @Output() check = new EventEmitter<void>();
   @Output() uncheck = new EventEmitter<void>();
   @Output() edit = new EventEmitter<void>();

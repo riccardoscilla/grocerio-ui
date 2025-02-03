@@ -1,8 +1,6 @@
 
 <app-title [title]="shelfData.shelf?.name" [defaultTitle]="'Shelf'"></app-title>
 
-<!-- <app-title [title]="'Shelf'" *ngIf="dataStateHandler.isLoading()"></app-title> -->
-
 <app-appbar>
     <app-search-bar (searchTextChanged)="onSearchTextChanged($event)"></app-search-bar>
     

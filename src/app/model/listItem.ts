@@ -9,6 +9,7 @@ export interface IListItem {
     quantity: number;
     insertionDate: string;
     note?: string;
+    inCart: boolean;
 
     item: IItem
 }
@@ -18,6 +19,7 @@ export class ListItem implements IModel {
     quantity: number;
     insertionDate: Date;
     note?: string;
+    inCart: boolean;
 
     item: Item
 
@@ -27,6 +29,7 @@ export class ListItem implements IModel {
         listItem.quantity = i.quantity
         listItem.insertionDate = new Date(i.insertionDate)
         listItem.note = i.note
+        listItem.inCart = i.inCart
 
         listItem.item = Item.fromInterface(i.item)
 
@@ -38,6 +41,7 @@ export class ListItem implements IModel {
         listItem.quantity = 1
         listItem.insertionDate = new Date()
         listItem.item = Item.new()
+        listItem.inCart = false;
         return listItem
     }
 
@@ -47,6 +51,7 @@ export class ListItem implements IModel {
         listItem.note = this.note 
         listItem.quantity = this.quantity
         listItem.insertionDate = this.insertionDate
+        listItem.inCart = this.inCart
 
         listItem.item = this.item.deepcopy()
         return listItem
@@ -83,7 +88,8 @@ export class ListItem implements IModel {
             "itemNew": this.item.toSave(),
             "quantity": this.quantity,
             "insertionDate": this.insertionDate,
-            "note": this.note
+            "note": this.note,
+            "inCart": this.inCart
         }
     }
 
@@ -93,16 +99,8 @@ export class ListItem implements IModel {
             "itemNew": this.item.toSave(),
             "quantity": this.quantity,
             "insertionDate": this.insertionDate,
-            "note": this.note
+            "note": this.note,
+            "inCart": this.inCart
         }
-    }
-
-    static fromShelfItem(shelfItem: ShelfItem) {
-        const listItem = new ListItem()
-        listItem.quantity = 1
-        listItem.insertionDate = new Date()
-
-        listItem.item = shelfItem.item.deepcopy()
-        return listItem
     }
 }

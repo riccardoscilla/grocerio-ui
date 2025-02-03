@@ -85,8 +85,12 @@ import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
                     />
                 </div>
                 <div style="display: flex; align-items: center; gap: 16px; padding-top: 8px;">
-                    <p-checkbox [binary]="true" variant="filled" [(ngModel)]="shelfItem.item.favourite"/>
-                    Favourite
+                    <p-toggleButton [(ngModel)]="shelfItem.item.favourite" 
+                        onLabel="Favourite"
+                        offLabel="Favourite" 
+                        onIcon="pi pi-heart-fill"
+                        offIcon="pi pi-heart"
+                    />
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 8px;">
                     Note
