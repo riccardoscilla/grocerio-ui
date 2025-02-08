@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1738613597404,
+  "timestamp": 1739012732215,
   "index": "/grocerio-ui/index.html",
   "assetGroups": [
     {
@@ -13,10 +13,11 @@
       "urls": [
         "/grocerio-ui/favicon.ico",
         "/grocerio-ui/index.html",
-        "/grocerio-ui/main-STDR3G2X.js",
+        "/grocerio-ui/main-AMRWRX55.js",
         "/grocerio-ui/manifest.webmanifest",
         "/grocerio-ui/polyfills-6EAL64PA.js",
-        "/grocerio-ui/styles-Y3RHT44A.css"
+        "/grocerio-ui/styles-Y3RHT44A.css",
+        "/grocerio-ui/worker-OPD5IEWY.js"
       ],
       "patterns": []
     },
@@ -109,8 +110,8 @@
     "/grocerio-ui/assets/svg-icons/settings-sliders.svg": "a9cee9c08a1451e2ecce25c8e2d705d853c9633a",
     "/grocerio-ui/assets/svg-icons/trash-xmark.svg": "8076df79a1c227d9dfb4222daec18a35523399b9",
     "/grocerio-ui/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
-    "/grocerio-ui/index.html": "cad79d0436194cebd2199a55359520c7e17b90cc",
-    "/grocerio-ui/main-STDR3G2X.js": "85d1d113b907a4fea36543ba943983c4c5deca97",
+    "/grocerio-ui/index.html": "f72f7d41f85423453c8d4447912a16a62c64f472",
+    "/grocerio-ui/main-AMRWRX55.js": "28eee2cb0e612a7f3cce0d1eba21eb90144e7fb0",
     "/grocerio-ui/manifest.webmanifest": "32fd8e6d671fa586f8c4d7ce1851981e5506a9aa",
     "/grocerio-ui/media/Inter-italic.var-SWFAXF2C.woff2": "6f20a046917bf86d4b6cc29c4e2515bd64d2cb9b",
     "/grocerio-ui/media/Inter-roman.var-WIJJYAE4.woff2": "7a2602d2ebb08ce895e33addb6fe595f1029431e",
@@ -121,7 +122,8 @@
     "/grocerio-ui/media/primeicons-GEFHGEHP.ttf": "3b878ca7e88945a8ec25814810b95367d8977ae6",
     "/grocerio-ui/media/primeicons-P53SE5CV.woff": "361e3af71bb4e515feead2f787348a92a5527158",
     "/grocerio-ui/polyfills-6EAL64PA.js": "d874147a12a6570d9b44e99935e9de8b7f3cabbc",
-    "/grocerio-ui/styles-Y3RHT44A.css": "1a6cf924d9076b747d06e45b9c694918d4667f16"
+    "/grocerio-ui/styles-Y3RHT44A.css": "1a6cf924d9076b747d06e45b9c694918d4667f16",
+    "/grocerio-ui/worker-OPD5IEWY.js": "881347a60411d7111b888b4f4847a3c567a202eb"
   },
   "navigationUrls": [
     {
