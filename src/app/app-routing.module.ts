@@ -9,6 +9,7 @@ import { GroceryComponent } from './pages/grocery/grocery.component';
 import { MoreComponent } from './pages/more/more.component';
 import { ShareShelfComponent } from './pages/share-shelf/share-shelf.component';
 import { CategoryComponent } from './pages/category/category.component';
+import { TimerComponent } from './components/timer.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/shelf', pathMatch: 'full' },
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'items', component: ItemComponent, canActivate: [AuthGuard] },
   { path: 'categories', component: CategoryComponent, canActivate: [AuthGuard] },
 
+  { path: 'timer', component: TimerComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
