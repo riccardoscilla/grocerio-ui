@@ -29,6 +29,7 @@ self.addEventListener('notificationclick', (event) => {
         if (clientList.length > 0) {
             return clientList[0].focus();
         }
+        return clients.openWindow('/'); // Replace '/' with your PWA's homepage
         })
     );
 });
