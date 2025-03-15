@@ -17,7 +17,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core'
     .container {
       display: flex;
       align-items: center;
-      gap: 80px;
+      gap: 8px;
     }
   `]
 })
@@ -93,9 +93,7 @@ export class TimerComponent implements OnInit, OnDestroy {
         vibrate: [200, 100, 200],
       }
       navigator.serviceWorker.ready.then(registration => {
-        registration.showNotification('Countdown finished!', {
-          body: 'Your timer has reached 0.',
-        })
+        registration.showNotification('Countdown finished!', options)
       })
     } else {
       console.warn('Notifications not available.')
