@@ -90,9 +90,9 @@ export class TimerComponent implements OnInit, OnDestroy {
     if (Notification.permission === 'granted' && navigator.serviceWorker) {
       const options = {
         body: 'Your timer has reached 0.',
-        vibrate: [200, 100, 200],
-        icon: '/assets/icons/icon-72x72.png', 
-        badge: '/assets/icons/icon-72x72.png', 
+        // vibrate: [200, 100, 200],
+        // icon: '/assets/icons/icon-72x72.png', 
+        // badge: '/assets/icons/icon-72x72.png', 
       }
       navigator.serviceWorker.ready.then(registration => {
         registration.showNotification('Countdown finished!', options)
