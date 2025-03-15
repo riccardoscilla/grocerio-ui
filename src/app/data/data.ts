@@ -5,7 +5,7 @@ import { Shelf } from "../model/shelf";
 import { ShelfItem } from "../model/shelfItem";
 import { DataState } from "./dataState";
 
-export class ItemsData extends DataState {
+export class ItemsData extends DataState<Item[]> {
     items: Item[]
     filteredItems: Item[]
 
@@ -13,7 +13,7 @@ export class ItemsData extends DataState {
     prevCategories: Category[] = []
     selectedCategories: Category[] = []
 
-    init(items: Item[]) {
+    override init(items: Item[]) {
         this.set(items)
         this.sortByName()
         this.groupByCategory()
@@ -55,7 +55,7 @@ export class ItemsData extends DataState {
 
 }
 
-export class CategoriesData extends DataState {
+export class CategoriesData extends DataState<Category[]> {
     categories: Category[]
     filteredCategories: Category[]
 
@@ -65,7 +65,7 @@ export class CategoriesData extends DataState {
         return this.filteredCategories.length === 0;
     }
 
-    init(categories: Category[]) {
+    override init(categories: Category[]) {
         this.categories = categories
         this.filteredCategories = categories
         this.sortByName()
@@ -85,7 +85,7 @@ export class CategoriesData extends DataState {
 }
 
 
-export class ShelfItemsData extends DataState {
+export class ShelfItemsData extends DataState<ShelfItem[]> {
     shelfItems: ShelfItem[]
     filteredShelfItems: ShelfItem[]
 
@@ -96,7 +96,7 @@ export class ShelfItemsData extends DataState {
         return this.filteredShelfItems.length === 0;
     }
 
-    init(shelfItems: ShelfItem[]) {
+    override init(shelfItems: ShelfItem[]) {
         this.shelfItems = shelfItems
         this.filteredShelfItems = shelfItems
         this.sortByName()
@@ -133,7 +133,7 @@ export class ShelfItemsData extends DataState {
     }
 }
 
-export class ListItemsData extends DataState {
+export class ListItemsData extends DataState<ListItem[]> {
     listItems: ListItem[]
     filteredListItems: ListItem[]
 
@@ -144,7 +144,7 @@ export class ListItemsData extends DataState {
         return this.filteredListItems.length === 0;
     }
 
-    init(listItems: ListItem[]) {
+    override init(listItems: ListItem[]) {
         this.listItems = listItems
         this.filteredListItems = listItems
         this.sortByName()
@@ -181,10 +181,10 @@ export class ListItemsData extends DataState {
     }
 }
 
-export class ShelfData extends DataState {
+export class ShelfData extends DataState<Shelf> {
     shelf?: Shelf
 
-    init(shelf: Shelf) {
+    override init(shelf: Shelf) {
         this.shelf = shelf
     }
 }

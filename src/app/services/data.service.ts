@@ -1,12 +1,14 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Category, ICategory } from '../model/category';
 import { IItem, Item } from '../model/item';
 import { IShelfItem, ShelfItem } from '../model/shelfItem';
 import { IListItem, ListItem } from '../model/listItem';
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { IShelf, Shelf } from '../model/shelf';
+import { DataState } from '../data/dataState';
+import { DataStateHandler } from '../data/dataStateHandler';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +23,25 @@ export class DataService {
   private listItemPath = "list-items"
 
   constructor(private http: HttpClient) { }
+
+  fetchData<T extends DataState>(
+    state: T, 
+    handler: DataStateHandler, 
+    request: () => Observable<any>
+  ): Observable<any> {
+    handler.addAndLoading(state);
+
+    return request().pipe(
+      tap(data => {
+        state.init(data);
+        handler.setSuccess(state);
+      }),
+      catchError((error: HttpErrorResponse) => {
+        handler.setError(state);
+        return of(error);
+      })
+    );
+  }
 
   // USER
 

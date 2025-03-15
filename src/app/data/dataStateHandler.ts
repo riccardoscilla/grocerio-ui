@@ -20,7 +20,7 @@ export class DataStateHandler {
     }
 
     isLoading() {
-        return Array.from(this.states.values()).every(value => value.loading === true)
+        return Array.from(this.states.values()).some(value => value.loading === true)
     }
 
     isSuccess() {

@@ -1,8 +1,10 @@
-export class DataState {
+export class DataState<T = any> {
     idle = true
     loading = false
     success = false
     error = false
+
+    init(data: T) {}
 
     setLoading() {
         this.idle = false
