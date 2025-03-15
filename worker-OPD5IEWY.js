@@ -1,1 +1,0 @@
-var s,e=0;self.onmessage=t=>{let{command:a,startTime:l}=t.data;a==="start"?(e=l,s=setInterval(()=>{e-=1e3,self.postMessage(e),e<=0&&(clearInterval(s),self.postMessage("done"))},1e3)):a==="pause"?clearInterval(s):a==="reset"&&(clearInterval(s),e=3e4,self.postMessage(e))};

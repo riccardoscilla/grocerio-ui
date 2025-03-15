@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1742051470085,
+  "timestamp": 1742055454940,
   "index": "/grocerio-ui/index.html",
   "assetGroups": [
     {
@@ -13,11 +13,11 @@
       "urls": [
         "/grocerio-ui/favicon.ico",
         "/grocerio-ui/index.html",
-        "/grocerio-ui/main-LQWB4WO6.js",
+        "/grocerio-ui/main-O4EYC3E4.js",
         "/grocerio-ui/manifest.webmanifest",
         "/grocerio-ui/polyfills-6EAL64PA.js",
         "/grocerio-ui/styles-Y3RHT44A.css",
-        "/grocerio-ui/worker-OPD5IEWY.js"
+        "/grocerio-ui/worker-YHHKB4AM.js"
       ],
       "patterns": []
     },
@@ -62,6 +62,7 @@
         "/grocerio-ui/assets/svg-icons/recipe-book.svg",
         "/grocerio-ui/assets/svg-icons/settings-sliders.svg",
         "/grocerio-ui/assets/svg-icons/trash-xmark.svg",
+        "/grocerio-ui/assets/sw.js",
         "/grocerio-ui/media/Inter-italic.var-SWFAXF2C.woff2",
         "/grocerio-ui/media/Inter-roman.var-WIJJYAE4.woff2",
         "/grocerio-ui/media/color-3LUHUBGQ.png",
@@ -109,9 +110,10 @@
     "/grocerio-ui/assets/svg-icons/recipe-book.svg": "060c80cf240ea86e89fdcc1b061b24ab2e8e261c",
     "/grocerio-ui/assets/svg-icons/settings-sliders.svg": "a9cee9c08a1451e2ecce25c8e2d705d853c9633a",
     "/grocerio-ui/assets/svg-icons/trash-xmark.svg": "8076df79a1c227d9dfb4222daec18a35523399b9",
+    "/grocerio-ui/assets/sw.js": "c14d467c6a75b9768b4fe2125d382be646002814",
     "/grocerio-ui/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
-    "/grocerio-ui/index.html": "fc176011e9ce192bde2f6c586a26a9bb64e0a2d4",
-    "/grocerio-ui/main-LQWB4WO6.js": "618a6cee81c64850ba855bd0a802e3ca801759a8",
+    "/grocerio-ui/index.html": "fefc4b9d25fc5ae038df4f99bfba4d04b89e0047",
+    "/grocerio-ui/main-O4EYC3E4.js": "903e345dcfd313f811db06c6222509db3db40be9",
     "/grocerio-ui/manifest.webmanifest": "32fd8e6d671fa586f8c4d7ce1851981e5506a9aa",
     "/grocerio-ui/media/Inter-italic.var-SWFAXF2C.woff2": "6f20a046917bf86d4b6cc29c4e2515bd64d2cb9b",
     "/grocerio-ui/media/Inter-roman.var-WIJJYAE4.woff2": "7a2602d2ebb08ce895e33addb6fe595f1029431e",
@@ -123,7 +125,7 @@
     "/grocerio-ui/media/primeicons-P53SE5CV.woff": "361e3af71bb4e515feead2f787348a92a5527158",
     "/grocerio-ui/polyfills-6EAL64PA.js": "d874147a12a6570d9b44e99935e9de8b7f3cabbc",
     "/grocerio-ui/styles-Y3RHT44A.css": "1a6cf924d9076b747d06e45b9c694918d4667f16",
-    "/grocerio-ui/worker-OPD5IEWY.js": "881347a60411d7111b888b4f4847a3c567a202eb"
+    "/grocerio-ui/worker-YHHKB4AM.js": "3a78c9b42e1e9b2d31171cc3dab2df43a30bbe57"
   },
   "navigationUrls": [
     {
