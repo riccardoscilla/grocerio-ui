@@ -21,15 +21,10 @@ self.addEventListener('push', (event) => {
     );
 });
 
-self.addEventListener('notificationclick', (event) => {
-    event.notification.close();
-
+self.addEventListener('notificationclick', function(event) {
+    event.notification.close(); // Close the notification
+    // Open the app or navigate to a specific URL
     event.waitUntil(
-        clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
-        if (clientList.length > 0) {
-            return clientList[0].focus();
-        }
-        return clients.openWindow('/'); // Replace '/' with your PWA's homepage
-        })
+      clients.openWindow('/your-path') // This could be your app's main page or a specific route
     );
 });
