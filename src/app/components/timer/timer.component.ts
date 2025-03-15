@@ -10,7 +10,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 
       <p-button *ngIf="!running" icon="pi pi-play" [rounded]="true" [outlined]="true" (click)="startTimer()"/>
       <p-button *ngIf="running" icon="pi pi-pause" [rounded]="true" [outlined]="true" (click)="pauseTimer()"/>
-      <p-button *ngIf="!running" icon="pi pi-refresh" [rounded]="true" [outlined]="true" (click)="resetTimer()"/>
+      <p-button icon="pi pi-refresh" [rounded]="true" [outlined]="true" (click)="resetTimer()"/>
     </div>
   `,
   styles: [`
@@ -90,12 +90,12 @@ export class TimerComponent implements OnInit, OnDestroy {
     if (Notification.permission === 'granted' && navigator.serviceWorker) {
       const options = {
         body: 'Your timer has reached 0.',
-        // vibrate: [200, 100, 200],
-        // icon: '/assets/icons/icon-72x72.png', 
-        // badge: '/assets/icons/icon-72x72.png', 
+        vibrate: [200, 100, 200],
       }
       navigator.serviceWorker.ready.then(registration => {
-        registration.showNotification('Countdown finished!', options)
+        registration.showNotification('Countdown finished!', {
+          body: 'Your timer has reached 0.',
+        })
       })
     } else {
       console.warn('Notifications not available.')
