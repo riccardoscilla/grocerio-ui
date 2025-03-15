@@ -17,7 +17,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core'
     .container {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 80px;
     }
   `]
 })
@@ -43,7 +43,7 @@ export class TimerComponent implements OnInit, OnDestroy {
             console.log("received done")
             this.running = false
             this.resetTimer()
-            this.sendBrowserNotification()
+            // this.sendBrowserNotification()
             this.sendPWANotification()
           } else {
             this.elapsedTime = data
