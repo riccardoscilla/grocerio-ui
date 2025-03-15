@@ -21,10 +21,14 @@ self.addEventListener('push', (event) => {
     );
 });
 
-self.addEventListener('notificationclick', function(event) {
-    event.notification.close(); // Close the notification
-    // Open the app or navigate to a specific URL
+self.addEventListener('notificationclick', (event) => {
+    event.notification.close();
+
     event.waitUntil(
-      clients.openWindow('/your-path') // This could be your app's main page or a specific route
+        clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+        if (clientList.length > 0) {
+            return clientList[0].focus();
+        }
+        })
     );
 });

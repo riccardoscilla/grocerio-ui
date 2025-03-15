@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1742061620835,
+  "timestamp": 1742061826603,
   "index": "/grocerio-ui/index.html",
   "assetGroups": [
     {
@@ -110,7 +110,7 @@
     "/grocerio-ui/assets/svg-icons/recipe-book.svg": "060c80cf240ea86e89fdcc1b061b24ab2e8e261c",
     "/grocerio-ui/assets/svg-icons/settings-sliders.svg": "a9cee9c08a1451e2ecce25c8e2d705d853c9633a",
     "/grocerio-ui/assets/svg-icons/trash-xmark.svg": "8076df79a1c227d9dfb4222daec18a35523399b9",
-    "/grocerio-ui/assets/sw.js": "cbbb71c6593c6e9f272b7da4e5f6799a95c8bfa5",
+    "/grocerio-ui/assets/sw.js": "b4711a0866a580fcb886607c9526443b4fed678c",
     "/grocerio-ui/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
     "/grocerio-ui/index.html": "95f7052c63ccbb576ad9e6402cfdcd66254e9066",
     "/grocerio-ui/main-RR7AOFYB.js": "7f90c68404f766955afac2b8e8e8f0ff22144370",
