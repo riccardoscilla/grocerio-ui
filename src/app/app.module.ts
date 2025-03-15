@@ -48,7 +48,7 @@ import { CategoryComponent } from './pages/category/category.component';
 import { CategoryNewComponent } from './pages/category/category-new.component';
 import { CategoryEditComponent } from './pages/category/category-edit.component';
 import { ListItemComponent } from './components/list-item/list-item.componenet';
-import { TimerComponent } from './components/timer.component';
+import { TimerComponent } from './components/timer/timer.component';
 
 @NgModule({
   declarations: [

@@ -27,23 +27,36 @@ export class TimerComponent implements OnInit, OnDestroy {
   running = false;
 
   ngOnInit(): void {
-    if (typeof Worker !== 'undefined') {
-      this.worker = new Worker(new URL('../timer.worker', import.meta.url), { type: 'module' });
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('assets/sw.js')
+        .then(reg => console.log('Service Worker registered!', reg))
+        .catch(err => console.error('Service Worker registration failed:', err));
+    }
 
-      this.worker.onmessage = ({ data }) => {
-        if (data === 'done') {
-          this.running = false;
-          this.sendNotification();
-        } else {
-          this.elapsedTime = data;
-        }
-      };
+    if (typeof Worker !== 'undefined') {
+      try {
+        this.worker = new Worker(new URL('../../timer.worker', import.meta.url), { type: 'module' });
+        console.log('Web Worker initialized');
+
+        this.worker.onmessage = ({ data }) => {
+          if (data === 'done') {
+            console.log("received done")
+            this.running = false;
+            this.sendNotification();
+          } else {
+            this.elapsedTime = data;
+          }
+        };
+      } catch (error) {
+        console.error('Error initializing Web Worker:', error);
+      }
     } else {
       console.error('Web Workers not supported in this browser.');
     }
 
     this.requestNotificationPermission();
   }
+  
 
   startTimer() {
     if (!this.running) {
@@ -64,18 +77,31 @@ export class TimerComponent implements OnInit, OnDestroy {
   }
 
   sendNotification() {
-    if (Notification.permission === 'granted') {
+    if (Notification.permission === 'granted' && navigator.serviceWorker) {
+      // pwa notification
+      navigator.serviceWorker.ready.then(registration => {
+        registration.showNotification('Countdown finished!', {
+          body: 'Your timer has reached 0.',
+        });
+      });
+
+      // browser notification
       new Notification('Countdown finished!', { body: 'Your timer has reached 0.' });
+    } else {
+      console.warn('Notifications not available.');
     }
-  }
+  }  
 
   requestNotificationPermission() {
     if ('Notification' in window) {
       Notification.requestPermission().then((permission) => {
+        console.log('Notification permission:', permission);
         if (permission !== 'granted') {
           console.warn('Notifications are blocked.');
         }
       });
+    } else {
+      console.warn('Notifications API not supported in this browser.');
     }
   }
 

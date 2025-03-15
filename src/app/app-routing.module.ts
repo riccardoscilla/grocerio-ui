@@ -9,7 +9,7 @@ import { GroceryComponent } from './pages/grocery/grocery.component';
 import { MoreComponent } from './pages/more/more.component';
 import { ShareShelfComponent } from './pages/share-shelf/share-shelf.component';
 import { CategoryComponent } from './pages/category/category.component';
-import { TimerComponent } from './components/timer.component';
+import { TimerComponent } from './components/timer/timer.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/shelf', pathMatch: 'full' },

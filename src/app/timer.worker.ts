@@ -11,9 +11,11 @@ self.onmessage = (event) => {
     intervalId = setInterval(() => {
       remainingTime -= 1000;
       self.postMessage(remainingTime);
-      
+
       if (remainingTime <= 0) {
+        console.log("Timer Done!")
         clearInterval(intervalId);
+        self.postMessage(5000);
         self.postMessage('done');
       }
     }, 1000);
@@ -23,7 +25,6 @@ self.onmessage = (event) => {
   } 
   else if (command === 'reset') {
     clearInterval(intervalId);
-    remainingTime = 30_000;
-    self.postMessage(remainingTime);
+    self.postMessage(5000);
   }
 };
