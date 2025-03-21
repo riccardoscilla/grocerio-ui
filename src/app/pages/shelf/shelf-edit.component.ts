@@ -60,18 +60,11 @@ import { AutoCompleteCompleteEvent } from 'primeng/autocomplete';
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 8px;">
                     Quantity
-                    <p-inputNumber 
-                        [(ngModel)]="shelfItem.quantity" 
-                        [showButtons]="true" 
-                        buttonLayout="horizontal" 
-                        inputId="horizontal" 
-                        spinnerMode="horizontal" 
-                        [step]="1"
-                        [min]="0"
-                        incrementButtonIcon="pi pi-plus" 
-                        decrementButtonIcon="pi pi-minus"
-                        class="p-fluid"
-                    />
+                    <p-inputGroup>
+                        <button type="button" pButton icon="pi pi-minus" (click)="shelfItem.minusQuantity()"></button>
+                        <input type="text" pInputText [(ngModel)]="shelfItem.quantity" [readOnly]="true" />
+                        <button type="button" pButton icon="pi pi-plus" (click)="shelfItem.plusQuantity()"></button>
+                    </p-inputGroup>
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 8px;">
                     Purchase Date

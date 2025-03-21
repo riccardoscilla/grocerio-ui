@@ -96,4 +96,12 @@ export class ShelfItem implements IModel {
             "note": this.note
         }
     }
+    
+    plusQuantity() {
+        this.quantity += 1
+    }
+
+    minusQuantity() {
+        this.quantity = Math.max(0, this.quantity -= 1)
+    }
 }

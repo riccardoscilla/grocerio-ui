@@ -103,4 +103,12 @@ export class ListItem implements IModel {
             "inCart": this.inCart
         }
     }
+
+    plusQuantity() {
+        this.quantity += 1
+    }
+
+    minusQuantity() {
+        this.quantity = Math.max(0, this.quantity -= 1)
+    }
 }
