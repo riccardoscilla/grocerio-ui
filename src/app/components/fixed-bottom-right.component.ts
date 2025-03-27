@@ -3,7 +3,7 @@ import { Component, HostListener } from '@angular/core';
 @Component({
   selector: 'app-fixed-bottom-right',
   template: `
-    <div class="fixed" *ngIf="scrollPosition < 64">
+    <div class="fixed" *ngIf="show">
       <ng-content></ng-content>
     </div>
   `,
@@ -28,11 +28,20 @@ import { Component, HostListener } from '@angular/core';
   `]
 })
 export class FixedBottomRightComponent {
-  scrollPosition = 0;
+  show = true;
+  lastPixelFromTop = 0;
 
   @HostListener('window:scroll', [])
-  onWindowScroll() {
-    this.scrollPosition = window.scrollY || document.documentElement.scrollTop;
-  }  
+  onScroll(): void {
+    const pixelsFromTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollingTop = pixelsFromTop < this.lastPixelFromTop 
+
+    if (!scrollingTop && pixelsFromTop > 64)
+      this.show = false
+    else if (scrollingTop)
+      this.show = true
+
+    this.lastPixelFromTop = Math.max(pixelsFromTop, 0)
+  }
 
 }

@@ -126,7 +126,7 @@ export class ShelfEditomponent {
     filteredItems: Item[]
 
     filterItem(event: AutoCompleteCompleteEvent) {
-        this.filteredItems = [...this.items.filter(i => i.name.toLowerCase().indexOf(event.query.toLowerCase()) == 0)]
+        this.filteredItems = [...this.items.filter(i => i.name.toLowerCase().indexOf(event.query.toLowerCase().trim()) == 0)]
     }
 
     selectItem(event: any) {
