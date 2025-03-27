@@ -1,14 +1,14 @@
 <app-title [title]="'Items'" [back]="'/more'"></app-title>
 
 <app-appbar>
-    <app-search-bar (searchTextChanged)="onSearchTextChanged($event)"></app-search-bar>
-    
-    <app-scroll-x>
-        <app-category-filter-chip 
+    <div style="display: flex; gap: 8px;">
+        <app-search-bar (searchTextChanged)="onSearchTextChanged($event)" style="flex: 1;"></app-search-bar>
+        
+        <app-filter-button
             [selectedCategories]="itemsData.selectedCategories" 
             (toggleFilter)="toggleShowCategoryFilter()" >
-        </app-category-filter-chip>
-    </app-scroll-x>
+        </app-filter-button>
+    </div>
 </app-appbar>
 
 <app-list *ngIf="dataStateHandler.isSuccess()">
