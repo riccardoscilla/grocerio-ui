@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1754064213477,
+  "timestamp": 1754065564057,
   "index": "/grocerio-ui/index.html",
   "assetGroups": [
     {
@@ -16,7 +16,7 @@
         "/grocerio-ui/main-FNPVLKMD.js",
         "/grocerio-ui/manifest.webmanifest",
         "/grocerio-ui/polyfills-6EAL64PA.js",
-        "/grocerio-ui/styles-2M6P3PZ5.css",
+        "/grocerio-ui/styles-TDXBG5CE.css",
         "/grocerio-ui/worker-3NCFLVFN.js"
       ],
       "patterns": []
@@ -79,12 +79,12 @@
   "hashTable": {
     "/grocerio-ui/assets/gif/grocery-smile.gif": "288ae6cbec4b34f34d5f17a3045a5375a34ad22c",
     "/grocerio-ui/assets/gif/grocery.gif": "6d4fc428b71c6ac50aef0f08d4aee2424483de7a",
-    "/grocerio-ui/assets/manifest/android-launchericon-144-144.png": "38da50cec83bc3f3d09cae9838789b99bce06585",
-    "/grocerio-ui/assets/manifest/android-launchericon-192-192.png": "271d9ac34c87243d7ba8575a94d978ef37669e54",
-    "/grocerio-ui/assets/manifest/android-launchericon-48-48.png": "df5ef0b2c5766e19a4f7d0d72d80ef17df3b4930",
-    "/grocerio-ui/assets/manifest/android-launchericon-512-512.png": "d8ea0773c09a842c6e16b7baf10349f7ea9da71c",
-    "/grocerio-ui/assets/manifest/android-launchericon-72-72.png": "bef44cf5f5986eac00342331ea537378e56a0eae",
-    "/grocerio-ui/assets/manifest/android-launchericon-96-96.png": "d2580b64a1f7e3deb3ee841772d901d50064a865",
+    "/grocerio-ui/assets/manifest/android-launchericon-144-144.png": "58b5d8d797a1d4f15664f84a32f6b327322afa47",
+    "/grocerio-ui/assets/manifest/android-launchericon-192-192.png": "15e155d14e5b421b8ec1f9de4ec86fcd67aff5d2",
+    "/grocerio-ui/assets/manifest/android-launchericon-48-48.png": "9e582b4aae60e25d2fc499736fe724d81e4ce54b",
+    "/grocerio-ui/assets/manifest/android-launchericon-512-512.png": "83f53b838c47fa5418c8b69fe961e23df18c2a8b",
+    "/grocerio-ui/assets/manifest/android-launchericon-72-72.png": "a4932f0f8676f0a355663d67c2c1488232a9d188",
+    "/grocerio-ui/assets/manifest/android-launchericon-96-96.png": "6fb0bbc2c57254aefd4ff2c2086b6d327413160a",
     "/grocerio-ui/assets/manifest/shopping-cart-128x128.png": "2304fcb68cd12647fce3e74511e8918b3ae685b6",
     "/grocerio-ui/assets/manifest/shopping-cart-144x144.png": "f5682100f43ea820d15b7eee99224c66e9133e13",
     "/grocerio-ui/assets/manifest/shopping-cart-152x152.png": "358b2d161136ce7c346dcf166125aa390ccb0550",
@@ -112,7 +112,7 @@
     "/grocerio-ui/assets/svg/trash-xmark.svg": "8076df79a1c227d9dfb4222daec18a35523399b9",
     "/grocerio-ui/assets/sw.js": "b4711a0866a580fcb886607c9526443b4fed678c",
     "/grocerio-ui/favicon.ico": "84d20f10a40f14d5323b7f2b3525cac4839542f6",
-    "/grocerio-ui/index.html": "22889ba5dee39a4bf781ae7abb274d8dd00e8df7",
+    "/grocerio-ui/index.html": "b14216ebf6ea83eef53a8bad51e1e853365d9d4a",
     "/grocerio-ui/main-FNPVLKMD.js": "f6d9da95ba9356a91245e8f453492cb9090b250b",
     "/grocerio-ui/manifest.webmanifest": "54cd5e64af7ea5ee94031cc1b5054792739ce38a",
     "/grocerio-ui/media/Inter-italic.var-SWFAXF2C.woff2": "6f20a046917bf86d4b6cc29c4e2515bd64d2cb9b",
@@ -124,7 +124,7 @@
     "/grocerio-ui/media/primeicons-GEFHGEHP.ttf": "3b878ca7e88945a8ec25814810b95367d8977ae6",
     "/grocerio-ui/media/primeicons-P53SE5CV.woff": "361e3af71bb4e515feead2f787348a92a5527158",
     "/grocerio-ui/polyfills-6EAL64PA.js": "d874147a12a6570d9b44e99935e9de8b7f3cabbc",
-    "/grocerio-ui/styles-2M6P3PZ5.css": "84b252a18a9300c0f1296482a7dbe8aceb1c7701",
+    "/grocerio-ui/styles-TDXBG5CE.css": "c34b26a1d7e8f583b72d9f5f6f2896cb2705c45b",
     "/grocerio-ui/worker-3NCFLVFN.js": "756a43891df3952ba22651337f9d728ade940814"
   },
   "navigationUrls": [
