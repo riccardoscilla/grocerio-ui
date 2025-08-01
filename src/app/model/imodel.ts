@@ -1,6 +1,4 @@
 export interface IModel {
-    deepcopy(): any;
-    toSave(): any;
-    toEdit(): any;
-    valid(): boolean;
+  deepcopy(): any;
+  valid(): boolean;
 }

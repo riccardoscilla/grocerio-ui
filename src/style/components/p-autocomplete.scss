@@ -1,0 +1,119 @@
+p-autocomplete {
+
+  .p-autocomplete .p-autocomplete-loader {
+    right: 0.75rem;
+  }
+  .p-autocomplete.p-autocomplete-dd .p-autocomplete-loader {
+    right: 3.25rem;
+  }
+//   .p-autocomplete:not(.p-disabled):hover .p-autocomplete-multiple-container {
+//     border-color: #94a3b8;
+//   }
+//   .p-autocomplete:not(.p-disabled).p-focus .p-autocomplete-multiple-container {
+//     outline: 1px solid var(--p-focus-ring-color);
+//     outline-offset: -1px;
+//     box-shadow: none;
+//     border-color: #94a3b8;
+//   }
+//   .p-autocomplete .p-autocomplete-multiple-container {
+//     padding: 0.25rem 0.75rem;
+//     gap: 0.5rem;
+//   }
+//   .p-autocomplete .p-autocomplete-multiple-container .p-autocomplete-input-token {
+//     padding: 0.25rem 0;
+//   }
+//   .p-autocomplete .p-autocomplete-multiple-container .p-autocomplete-input-token input {
+//     font-family: var(--font-family);
+//     font-feature-settings: var(--font-feature-settings, normal);
+//     font-size: 1rem;
+//     color: #334155;
+//     padding: 0;
+//     margin: 0;
+//   }
+//   .p-autocomplete .p-autocomplete-multiple-container .p-autocomplete-token {
+//     padding: 0.25rem 0.75rem;
+//     background: #f1f5f9;
+//     color: #1e293b;
+//     border-radius: 16px;
+//   }
+//   .p-autocomplete .p-autocomplete-multiple-container .p-autocomplete-token .p-autocomplete-token-icon {
+//     margin-left: 0.5rem;
+//   }
+//   .p-autocomplete .p-autocomplete-multiple-container .p-autocomplete-token.p-focus {
+//     background: #e2e8f0;
+//     color: #0f172a;
+//   }
+  .p-autocomplete.p-invalid.p-component > .p-inputtext {
+    border-color: var(--error-color);
+  }
+
+  .p-autocomplete-panel {
+    background: var(--background-color);
+    color: var(--background-text-color);
+    border: 1px solid var(--background-border-color);
+    border-radius: 6px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  }
+  .p-autocomplete-panel .p-autocomplete-items {
+    padding: 0.25rem 0.25rem;
+  }
+  .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item {
+    margin: 2px 0;
+    padding: 0.5rem 0.75rem;
+    // border: 0 none;
+    // color: var(--background-text-color);
+    // background: transparent;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s, outline-color 0.2s;
+    border-radius: 4px;
+  }
+//   .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item:first-child {
+//     margin-top: 0;
+//   }
+  .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item.p-highlight {
+    color: var(--primary-color);
+    // background: #EFF6FF;
+    background: var(--primary-highlight-color);
+  }
+//   .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item.p-highlight.p-focus {
+//     background: rgba(59, 130, 246, 0.24);
+//   }
+  .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item:not(.p-highlight):not(.p-disabled).p-focus {
+    // color: #0f172a;
+    // background: #e2e8f0;
+    background: var(--primary-highlight-color);
+  }
+  .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item:not(.p-highlight):not(.p-disabled):hover {
+    // color: #1e293b;
+    // background: #f1f5f9;
+    background: var(--primary-highlight-color);
+  }
+//   .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item-group {
+//     margin: 0;
+//     padding: 0.5rem 0.75rem;
+//     color: #94a3b8;
+//     background: #ffffff;
+//     font-weight: 600;
+//   }
+//   .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-empty-message {
+//     padding: 0.5rem 0.75rem;
+//     color: #334155;
+//     background: transparent;
+//   }
+
+//   p-autocomplete.ng-dirty.ng-invalid > .p-autocomplete > .p-inputtext {
+//     border-color: var(--error-color);
+//   }
+
+//   p-autocomplete.p-autocomplete-clearable .p-inputtext {
+//     padding-right: 2.5rem;
+//   }
+//   p-autocomplete.p-autocomplete-clearable .p-autocomplete-clear-icon {
+//     color: #94a3b8;
+//     right: 0.75rem;
+//   }
+
+//   p-autocomplete.p-autocomplete-clearable .p-autocomplete-dd .p-autocomplete-clear-icon {
+//     color: #94a3b8;
+//     right: 3.25rem;
+//   }
+}

@@ -1,77 +1,139 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ShelfItem } from '../../model/shelfItem';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Item } from '../../model/item';
 import { Category } from '../../model/category';
+import { CategoriesData } from '../../data/data';
+import { ApiService } from '../../services/api.service';
+import { ToastService } from '../../services/toast.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-item-edit',
   template: `
-    <p-sidebar 
-        [visible]="visible" 
-        position="bottom" 
-        (onHide)="onHide.emit()"
-        [style]="{ height: '90vh' }" 
+    <app-bottom-sheet
+      [header]="'Edit Item'"
+      [visible]="visible"
+      (visibleChange)="visibleChange.emit($event)"
     >
+      <app-container content>
+        <app-row label="Name">
+          <input #fullflex type="text" pInputText [(ngModel)]="name" />
+        </app-row>
 
-        <ng-template pTemplate="header">
-            <div style="font-size: 24px; font-weight: 500;">
-                Edit Item
-            </div>
-        </ng-template>
+        <app-row label="Category">
+          <p-dropdown
+            #fullflex
+            [options]="categoriesData.filteredCategories"
+            [(ngModel)]="category"
+            optionLabel="name"
+            placeholder="Select a Category"
+          >
+            <ng-template let-category pTemplate="selectedItem">
+              <div>{{ category.icon }} {{ category.name }}</div>
+            </ng-template>
+            <ng-template let-category pTemplate="item">
+              <div>{{ category.icon }} {{ category.name }}</div>
+            </ng-template>
+          </p-dropdown>
+        </app-row>
 
-        <ng-template pTemplate="content">
+        <app-row>
+          <p-checkbox
+            [(ngModel)]="item.favourite"
+            [binary]="true"
+            variant="filled"
+          />
+          Favourite
+        </app-row>
+      </app-container>
 
-        <div style="display: flex; flex-direction: column; gap: 16px;">            
-                <div style="display: flex; flex-direction: column; gap: 8px;">
-                    Name
-                    <input type="text" pInputText [(ngModel)]="item.name" />   
-                </div>
-                <div style="display: flex; flex-direction: column; gap: 8px;">
-                    Category
-                    <p-dropdown 
-                        [options]="categories" 
-                        [(ngModel)]="item.category"
-                        optionLabel="name"
-                        placeholder="Select a Category"
-                        class="p-fluid">
-                        <ng-template pTemplate="selectedItem">
-                            <div *ngIf="item.category">
-                                {{ item.category.icon }} {{ item.category.name }}
-                            </div>
-                        </ng-template>
-                        <ng-template let-category pTemplate="item">
-                            <div>
-                                {{ category.icon }} {{ category.name }}
-                            </div>
-                        </ng-template>
-                    </p-dropdown>    
-                </div>
-                <div style="display: flex; align-items: center; gap: 16px; padding-top: 8px;">
-                    <p-checkbox [binary]="true" variant="filled" [(ngModel)]="item.favourite"/>
-                    Favourite
-                </div>
-            </div>
-            
+      <app-row footer>
+        <p-button
+          #fullflex
+          label="Delete"
+          [outlined]="true"
+          (click)="onDelete()"
+          severity="danger"
+        />
+        <p-button
+          #fullflex
+          label="Save"
+          [disabled]="invaliEdit()"
+          (click)="save()"
+        />
+      </app-row>
+    </app-bottom-sheet>
 
-        </ng-template>
-
-        <ng-template pTemplate="footer" >
-            <div style="display: flex; gap: 8px">
-                <p-button class="p-flex" [outlined]="true" severity="danger" label="Delete" (click)="onDelete.emit()" [disabled]="item && !item.valid()"/>
-                <p-button class="p-flex" label="Save" (click)="onSave.emit()" [disabled]="item && !item.valid()"/>
-            </div>  
-        </ng-template>
-
-    </p-sidebar>
+    <app-item-delete
+      *ngIf="showItemDelete"
+      [(visible)]="showItemDelete"
+      [item]="itemDelete"
+      (onDeleted)="deletedItem($event)"
+    ></app-item-delete>
   `,
-  styles: []
+  styles: [],
 })
-export class ItemEditComponent {
-    @Input() item: Item;
-    @Input() categories: Category[];
-    @Input() visible: boolean;
+export class ItemEditComponent implements OnInit {
+  @Input() item: Item;
+  @Input() categoriesData: CategoriesData;
+  @Input() visible: boolean;
 
-    @Output() onHide = new EventEmitter<void>();
-    @Output() onSave = new EventEmitter<void>();
-    @Output() onDelete = new EventEmitter<void>();
+  @Output() visibleChange = new EventEmitter<boolean>();
+  @Output() onEdited = new EventEmitter<Item>();
+  @Output() onDeleted = new EventEmitter<Item>();
+  
+  showItemDelete = false;
+  itemDelete: Item;
+
+  // form
+  name: string;
+  category: Category;
+  favourite: boolean = false;
+
+  constructor(
+    public apiService: ApiService,
+    private toastService: ToastService
+  ) {}
+
+  ngOnInit(): void {
+    this.name = this.item.name;
+    this.category = this.item.category;
+    this.favourite = this.item.favourite;
+  }
+
+  onDelete() {
+    this.itemDelete = this.item.deepcopy();
+    this.showItemDelete = true;
+  }
+
+  save() {
+    const data = {
+      id: this.item.id,
+      name: this.name,
+      categoryId: this.category.id,
+      favourite: this.favourite,
+      lastPurchaseDate: null,
+    };
+
+    this.apiService.editItem(this.item.id, data).subscribe({
+      next: (item: Item) => {
+        this.toastService.handleSuccess('Item saved');
+        this.visibleChange.emit(false);
+        this.onEdited.emit(item);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.toastService.handleError(error, 'Error save Item');
+      },
+    });
+  }
+
+  deletedItem(item: Item) {
+    this.onDeleted.emit(item);
+    this.visibleChange.emit(false);
+  }
+
+  invaliEdit() {
+    if (this.name === undefined || this.name.trim() === '') return true;
+    if (this.category === undefined) return true;
+    return false;
+  }
 }

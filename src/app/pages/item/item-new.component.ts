@@ -1,71 +1,108 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Item } from '../../model/item';
 import { Category } from '../../model/category';
+import { CategoriesData } from '../../data/data';
+import { ApiService } from '../../services/api.service';
+import { ToastService } from '../../services/toast.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-item-new',
   template: `
-    <p-sidebar 
-        [visible]="visible" 
-        position="bottom" 
-        (onHide)="onHide.emit()"
-        [style]="{ height: '90vh' }" 
+    <app-bottom-sheet
+      [header]="'New Item'"
+      [visible]="visible"
+      (visibleChange)="visibleChange.emit($event)"
     >
+      <app-container content>
+        <app-row label="Name">
+          <input #fullflex type="text" pInputText [(ngModel)]="name" />
+        </app-row>
 
-        <ng-template pTemplate="header">
-            <div style="font-size: 24px; font-weight: 500;">
-                New Item
-            </div>
-        </ng-template>
+        <app-row label="Category">
+          <p-dropdown
+            #fullflex
+            [options]="categoriesData.filteredCategories"
+            [(ngModel)]="category"
+            optionLabel="name"
+            placeholder="Select a Category"
+          >
+            <ng-template let-category pTemplate="selectedItem">
+              <div>{{ category.icon }} {{ category.name }}</div>
+            </ng-template>
+            <ng-template let-category pTemplate="item">
+              <div>{{ category.icon }} {{ category.name }}</div>
+            </ng-template>
+          </p-dropdown>
+        </app-row>
 
-        <ng-template pTemplate="content">
+        <app-row>
+          <p-checkbox
+            [(ngModel)]="item.favourite"
+            [binary]="true"
+            variant="filled"
+          />
+          Favourite
+        </app-row>
+      </app-container>
 
-            <div style="display: flex; flex-direction: column; gap: 16px;">            
-                <div style="display: flex; flex-direction: column; gap: 8px;">
-                    Name
-                    <input type="text" pInputText [(ngModel)]="item.name" />   
-                </div>
-                <div style="display: flex; flex-direction: column; gap: 8px;">
-                    Category
-                    <p-dropdown 
-                        [options]="categories" 
-                        [(ngModel)]="item.category"
-                        optionLabel="name"
-                        placeholder="Select a Category"
-                        class="p-fluid">
-                        <ng-template pTemplate="selectedItem">
-                            <div *ngIf="item.category">
-                                {{ item.category.icon }} {{ item.category.name }}
-                            </div>
-                        </ng-template>
-                        <ng-template let-category pTemplate="item">
-                            <div>
-                                {{ category.icon }} {{ category.name }}
-                            </div>
-                        </ng-template>
-                    </p-dropdown>    
-                </div>
-                <div style="display: flex; align-items: center; gap: 16px; padding-top: 8px;">
-                    <p-checkbox [binary]="true" variant="filled" [(ngModel)]="item.favourite"/>
-                    Favourite
-                </div>
-            </div>
-
-        </ng-template>
-
-        <ng-template pTemplate="footer" >
-            <p-button class="p-fluid" label="Save" (click)="onSave.emit()" [disabled]="!item.valid()"/>
-        </ng-template>
-
-    </p-sidebar>
+      <app-row footer>
+        <p-button
+          #fullflex
+          label="Save"
+          [disabled]="disabledSave()"
+          (click)="save()"
+        />
+      </app-row>
+    </app-bottom-sheet>
   `,
-  styles: []
+  styles: [],
 })
-export class ItemNewComponent {
-    @Input() item: Item;
-    @Input() categories: Category[];
-    @Input() visible: boolean;
+export class ItemNewComponent implements OnInit {
+  @Input() item: Item;
+  @Input() categoriesData: CategoriesData;
+  @Input() visible: boolean;
 
-    @Output() onHide = new EventEmitter<void>();
-    @Output() onSave = new EventEmitter<void>();
+  @Output() visibleChange = new EventEmitter<boolean>();
+  @Output() onSaved = new EventEmitter<Item>();
+
+  // form
+  name: string;
+  category: Category;
+  favourite: boolean = false;
+
+  constructor(
+    public apiService: ApiService,
+    private toastService: ToastService
+  ) {}
+
+  ngOnInit(): void {
+    this.name = this.item.name;
+  }
+
+  save() {
+    const data = {
+      name: this.name,
+      categoryId: this.category.id,
+      favourite: this.favourite,
+      lastPurchaseDate: null,
+    };
+
+    this.apiService.saveItem(data).subscribe({
+      next: (item: Item) => {
+        this.toastService.handleSuccess('Item saved');
+        this.visibleChange.emit(false);
+        this.onSaved.emit(item);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.toastService.handleError(error, 'Error save Item');
+      },
+    });
+  }
+
+  disabledSave() {
+    if (this.name === undefined || this.name.trim() === '') return true;
+    if (this.category === undefined) return true;
+    return false;
+  }
 }

@@ -9,29 +9,33 @@ import { GroceryComponent } from './pages/grocery/grocery.component';
 import { MoreComponent } from './pages/more/more.component';
 import { ShareShelfComponent } from './pages/share-shelf/share-shelf.component';
 import { CategoryComponent } from './pages/category/category.component';
-import { TimerComponent } from './components/timer/timer.component';
+import { TimerPageComponent } from './pages/timer/timer.component';
+import { WelcomeComponent } from './pages/welcome/welcome.component';
+import { ShelfJoinComponent } from './pages/register/shelf-join.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/shelf', pathMatch: 'full' },
+  { path: '', redirectTo: '/welcome', pathMatch: 'full' },
 
+  { path: 'welcome', component: WelcomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'shelf-join', component: ShelfJoinComponent, canActivate: [AuthGuard] },
 
   { path: 'shelf', component: ShelfComponent, canActivate: [AuthGuard] },
 
   { path: 'grocery', component: GroceryComponent, canActivate: [AuthGuard] },
- 
+
   { path: 'more', component: MoreComponent, canActivate: [AuthGuard] },
   { path: 'share-shelf', component: ShareShelfComponent, canActivate: [AuthGuard] },
 
   { path: 'items', component: ItemComponent, canActivate: [AuthGuard] },
   { path: 'categories', component: CategoryComponent, canActivate: [AuthGuard] },
 
-  { path: 'timer', component: TimerComponent, canActivate: [AuthGuard] },
+  { path: 'timer', component: TimerPageComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

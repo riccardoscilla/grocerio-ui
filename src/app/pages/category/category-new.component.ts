@@ -1,49 +1,80 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Category } from '../../model/category';
+import { ApiService } from '../../services/api.service';
+import { ToastService } from '../../services/toast.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-category-new',
   template: `
-    <p-sidebar 
-        [visible]="visible" 
-        position="bottom" 
-        (onHide)="onHide.emit()"
-        [style]="{ height: '90vh' }" 
+    <app-bottom-sheet
+      [header]="'Edit Grocery Item'"
+      [visible]="visible"
+      (visibleChange)="visibleChange.emit($event)"
     >
+      <app-container content>
+        <app-row label="Name">
+          <input #fullflex type="text" pInputText [(ngModel)]="name" />
+        </app-row>
 
-        <ng-template pTemplate="header">
-            <div style="font-size: 24px; font-weight: 500;">
-                New Category
-            </div>
-        </ng-template>
+        <app-row label="Icon">
+          <input #fullflex type="text" pInputText [(ngModel)]="icon" />
+        </app-row>
+      </app-container>
 
-        <ng-template pTemplate="content">
-
-            <div style="display: flex; flex-direction: column; gap: 16px;">            
-                <div style="display: flex; flex-direction: column; gap: 8px;">
-                    Name
-                    <input type="text" pInputText [(ngModel)]="category.name" />   
-                </div>
-                <div style="display: flex; flex-direction: column; gap: 8px;">
-                    Icon
-                    <input type="text" pInputText [(ngModel)]="category.icon" />   
-                </div>
-            </div>
-
-        </ng-template>
-
-        <ng-template pTemplate="footer" >
-            <p-button class="p-fluid" label="Save" (click)="onSave.emit()" [disabled]="!category.valid()"/>
-        </ng-template>
-
-    </p-sidebar>
+      <app-row footer>
+        <p-button
+          #fullflex
+          label="Save"
+          [disabled]="disabledSave()"
+          (click)="save()"
+        />
+      </app-row>
+    </app-bottom-sheet>
   `,
-  styles: []
+  styles: [],
 })
-export class CategoryNewComponent {
-    @Input() category: Category;
-    @Input() visible: boolean;
+export class CategoryNewComponent implements OnInit {
+  @Input() category: Category;
+  @Input() visible: boolean;
 
-    @Output() onHide = new EventEmitter<void>();
-    @Output() onSave = new EventEmitter<void>();
+  @Output() visibleChange = new EventEmitter<boolean>();
+  @Output() onSaved = new EventEmitter<Category>();
+
+  // form
+  name: string;
+  icon: string;
+
+  constructor(
+    public apiService: ApiService,
+    private toastService: ToastService
+  ) {}
+
+  ngOnInit(): void {
+    this.name = this.category.name;
+  }
+
+  save() {
+    const data = {
+      name: this.name,
+      icon: this.icon,
+    };
+
+    this.apiService.saveCategory(data).subscribe({
+      next: (category: Category) => {
+        this.toastService.handleSuccess('Category saved');
+        this.visibleChange.emit(false);
+        this.onSaved.emit(category);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.toastService.handleError(error, 'Error save Category');
+      },
+    });
+  }
+
+  disabledSave() {
+    if (this.name === undefined || this.name.trim() === '') return true;
+    if (this.icon === undefined || this.name.trim() === '') return true;
+    return false;
+  }
 }

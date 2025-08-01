@@ -1,9 +1,0 @@
-<div class="menu">
-
-    <div class="item" *ngFor="let menuItem of menuItems" [class.selected]="isRoute(menuItem)" (click)="goTo(menuItem.url)">
-        <div class="select-bar"></div>
-        <app-svg [color]="getIconColor(menuItem)" [path]="menuItem.icon"></app-svg>
-        <div class="text">{{menuItem.text}}</div>
-    </div>
-
-</div>

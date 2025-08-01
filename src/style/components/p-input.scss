@@ -1,0 +1,43 @@
+  .p-inputtext {
+    font-family: var(--font-family);
+    font-feature-settings: var(--font-feature-settings, normal);
+    font-size: 1rem;
+    color: var(--background-text-color);
+    background: var(--background-color);
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--background-border-color);
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s, outline-color 0.2s;
+    // appearance: none;
+    border-radius: 6px;
+  }
+  .p-inputtext:enabled:hover {
+    border-color: var(--background-border-highlight-color);
+  }
+  .p-inputtext:enabled:focus {
+    // outline: 1px solid var(--p-focus-ring-color);
+    // outline-offset: -1px;
+    outline: 0;
+    
+    // box-shadow: none;
+    border-color: var(--background-border-highlight-color);
+  }
+  .p-inputtext.ng-dirty.ng-invalid {
+    border-color: var(--error-color);
+  }
+//   .p-inputtext.p-variant-filled {
+//     background-color: #f8fafc;
+//   }
+//   .p-inputtext.p-variant-filled:enabled:hover {
+//     background-color: #f8fafc;
+//   }
+//   .p-inputtext.p-variant-filled:enabled:focus {
+//     background-color: #ffffff;
+//   }
+//   .p-inputtext.p-inputtext-sm {
+//     font-size: 0.875rem;
+//     padding: 0.4375rem 0.65625rem;
+//   }
+//   .p-inputtext.p-inputtext-lg {
+//     font-size: 1.25rem;
+//     padding: 0.625rem 0.9375rem;
+//   }

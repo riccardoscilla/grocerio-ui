@@ -1,127 +1,111 @@
 import { Component } from '@angular/core';
-import { CategoriesData, ItemsData } from '../../data/data';
+import { CategoriesData } from '../../data/data';
 import { ToastService } from '../../services/toast.service';
 import { DataStateHandler } from '../../data/dataStateHandler';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Item } from '../../model/item';
 import { Category } from '../../model/category';
-import { DataService } from '../../services/data.service';
-import { catchError, forkJoin, of, tap } from 'rxjs';
+import { ApiService } from '../../services/api.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-category',
-  templateUrl: './category.component.html'
+  template: `
+    <app-title [title]="'Categories'" [back]="'/more'"></app-title>
+
+    <app-container [padding]="'16px'" *ngIf="dataStateHandler.isSuccess()">
+      <app-list>
+        <app-list-item
+          *ngFor="let category of categoriesData.filteredCategories"
+          [icon]="category.icon"
+          [contentText]="category.name"
+          (edit)="onEdit(category)"
+        >
+        </app-list-item>
+      </app-list>
+
+      <app-row *ngIf="categoriesData.isEmpty()">No Categories</app-row>
+    </app-container>
+
+    <app-list-loading *ngIf="dataStateHandler.isLoading()"></app-list-loading>
+
+    <app-fixed-bottom-right>
+      <app-new-button (toggleShowNew)="onNew()"></app-new-button>
+    </app-fixed-bottom-right>
+
+    <app-menu-bottom></app-menu-bottom>
+
+    <app-category-new
+      *ngIf="showCategoryNew"
+      [(visible)]="showCategoryNew"
+      [category]="categoryNew"
+      (onSaved)="savedCategory($event)"
+    ></app-category-new>
+
+    <app-category-edit
+      *ngIf="showCategoryEdit"
+      [(visible)]="showCategoryEdit"
+      [category]="categoryEdit"
+      (onEdited)="editedCategory($event)"
+    ></app-category-edit>
+  `,
 })
 export class CategoryComponent {
-  categoriesData: CategoriesData = new CategoriesData()
-  dataStateHandler: DataStateHandler = new DataStateHandler()
+  categoriesData: CategoriesData = new CategoriesData();
+  dataStateHandler: DataStateHandler = new DataStateHandler();
 
-  showCategoryNew = false
-  categoryNew: Category = Category.new()
+  showCategoryNew = false;
+  categoryNew: Category;
 
-  showCategoryEdit = false
-  categoryEdit: Category
+  showCategoryEdit = false;
+  categoryEdit: Category;
 
   constructor(
-    public dataService: DataService,
+    public apiService: ApiService,
     private toastService: ToastService
   ) {
-    this.initLoad()
+    this.initLoad();
   }
 
   initLoad() {
     forkJoin({
-      categories: this.getCategories()
+      categories: this.getCategories(),
     }).subscribe({
       next: (results) => {
-        this.toastService.handleResults(results)
-      }
-    })
+        this.toastService.handleResults(results);
+      },
+    });
   }
 
   getCategories() {
-     this.dataStateHandler.addAndLoading(this.categoriesData)
- 
-     return this.dataService.getCategories().pipe(
-       tap((categories) => {
-         this.categoriesData.init(categories)
-         this.dataStateHandler.setSuccess(this.categoriesData)
-       }),
-       catchError((error: HttpErrorResponse) => {
-         this.dataStateHandler.setError(this.categoriesData)
-         return of(error)
-       })
-     )
-   }
-
-  // FILTERS
-
-  onSearchTextChanged(searchText: string) {
-    this.categoriesData.searchText = searchText
-    this.categoriesData.filter()
+    return this.apiService.fetchData(
+      this.categoriesData,
+      this.dataStateHandler,
+      () => this.apiService.getCategories()
+    );
   }
 
-  // TOGGLE
-
-  toggleShowCategoryNew() {
-    this.showCategoryNew = !this.showCategoryNew
-  }
-
-  toggleShowCategoryEdit() {
-    this.showCategoryEdit = !this.showCategoryEdit
-  }
-
-  // HANDLE ACTIONS
+  // HANDLES
 
   onNew() {
-    this.categoryNew = Category.new()
-    this.toggleShowCategoryNew()
+    this.categoryNew = Category.new();
+    this.showCategoryNew = true;
   }
 
   onEdit(category: Category) {
-    this.categoryEdit = category.deepcopy()
-    this.toggleShowCategoryEdit()
+    this.categoryEdit = category.deepcopy();
+    this.showCategoryEdit = true;
   }
 
   // ACTIONS
 
-  save() {
-    this.dataService.saveCategory(this.categoryNew).subscribe({
-      next: () => {
-        this.toastService.handleSuccess("Category saved")
-        this.getCategories().subscribe()
-        this.toggleShowCategoryNew()
-      },
-      error: (error: HttpErrorResponse) => {
-        this.toastService.handleError(error, "Error save Category")
-      }
-    })
+  editedCategory(category: Category) {
+    this.categoriesData.update([category]);
   }
 
-  edit() {
-    this.dataService.editCategory(this.categoryEdit).subscribe({
-      next: () => {
-        this.toastService.handleSuccess("Category saved")
-        this.getCategories().subscribe()
-        this.toggleShowCategoryEdit()
-      },
-      error: (error: HttpErrorResponse) => {
-        this.toastService.handleError(error, "Error edit Category")
-      }
-    })
+  savedCategory(category: Category) {
+    this.categoriesData.update([category]);
   }
 
-  delete(category: Category) {
-    this.dataService.deleteCategory(category).subscribe({
-      next: () => {
-        this.toastService.handleSuccess("Category Deleted")
-        this.getCategories().subscribe()
-        this.toggleShowCategoryEdit()
-      },
-      error: (error: HttpErrorResponse) => {
-        this.toastService.handleError(error, "Error delete Category")
-      }
-    })
+  deletedCategory(category: Category) {
+    this.categoriesData.delete([category]);
   }
-
 }

@@ -1,157 +1,153 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CategoriesData, ItemsData } from '../../data/data';
 import { ToastService } from '../../services/toast.service';
 import { DataStateHandler } from '../../data/dataStateHandler';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Item } from '../../model/item';
 import { Category } from '../../model/category';
-import { DataService } from '../../services/data.service';
+import { ApiService } from '../../services/api.service';
 import { catchError, forkJoin, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-item',
-  templateUrl: './item.component.html'
+  template: `
+    <app-title [title]="'Items'" [back]="'/more'"></app-title>
+
+    <!-- <app-appbar>
+        <div style="display: flex; gap: 8px;">
+            <app-search-bar (searchTextChanged)="onSearchTextChanged($event)" style="flex: 1;"></app-search-bar>
+            
+            <app-filter-button
+                [selectedCategories]="itemsData.selectedCategories" 
+                (toggleFilter)="toggleShowCategoryFilter()" >
+            </app-filter-button>
+        </div>
+    </app-appbar> -->
+
+    <app-container [padding]="'16px'" *ngIf="dataStateHandler.isSuccess()">
+      <app-list>
+        <app-list-item
+          *ngFor="let item of itemsData.filteredItems"
+          [icon]="item.icon"
+          [favourite]="item.favourite"
+          [contentText]="item.name"
+          (edit)="onEdit(item)"
+        >
+        </app-list-item>
+      </app-list>
+
+      <app-row *ngIf="itemsData.isEmpty()">No Items</app-row>
+    </app-container>
+
+    <app-list-loading *ngIf="dataStateHandler.isLoading()"></app-list-loading>
+
+    <app-fixed-bottom-right>
+      <app-new-button (toggleShowNew)="onNew()"></app-new-button>
+    </app-fixed-bottom-right>
+
+    <app-menu-bottom></app-menu-bottom>
+
+    <app-item-new
+      *ngIf="showItemNew"
+      [(visible)]="showItemNew"
+      [item]="itemNew"
+      [categoriesData]="categoriesData"
+      (onSaved)="savedItem($event)"
+    ></app-item-new>
+
+    <app-item-edit
+      *ngIf="showItemEdit"
+      [(visible)]="showItemEdit"
+      [item]="itemEdit"
+      [categoriesData]="categoriesData"
+      (onEdited)="editedItem($event)"
+      (onDeleted)="deletedItem($event)"
+    >
+    </app-item-edit>
+  `,
 })
-export class ItemComponent {
-  itemsData: ItemsData = new ItemsData()
-  categoriesData: CategoriesData = new CategoriesData()
-  dataStateHandler: DataStateHandler = new DataStateHandler()
+export class ItemComponent implements OnInit {
+  itemsData: ItemsData = new ItemsData();
+  categoriesData: CategoriesData = new CategoriesData();
+  dataStateHandler: DataStateHandler = new DataStateHandler();
 
-  showItemNew = false
-  itemNew: Item = Item.new()
+  showItemNew = false;
+  itemNew: Item;
 
-  showItemEdit = false
-  itemEdit: Item
+  showItemEdit = false;
+  itemEdit: Item;
 
-  showCategoryFilter = false 
+  showCategoryFilter = false;
 
   constructor(
-    public dataService: DataService,
+    public apiService: ApiService,
     private toastService: ToastService
-  ) {
-    this.initLoad()
+  ) {}
+
+  ngOnInit() {
+    this.initLoad();
   }
 
   initLoad() {
     forkJoin({
       categories: this.getCategories(),
-      items: this.getItems()
+      items: this.getItems(),
     }).subscribe({
       next: (results) => {
-        this.toastService.handleResults(results)
-      }
-    })
+        this.toastService.handleResults(results);
+      },
+    });
   }
 
   getCategories() {
-     this.dataStateHandler.addAndLoading(this.categoriesData)
- 
-     return this.dataService.getCategories().pipe(
-       tap((categories) => {
-         this.categoriesData.init(categories)
-         this.dataStateHandler.setSuccess(this.categoriesData)
-       }),
-       catchError((error: HttpErrorResponse) => {
-         this.dataStateHandler.setError(this.categoriesData)
-         return of(error)
-       })
-     )
-   }
-   
-   getItems() {
-     this.dataStateHandler.addAndLoading(this.itemsData)
- 
-     return this.dataService.getItems().pipe(
-       tap((items) => {
-         this.itemsData.init(items)
-         this.dataStateHandler.setSuccess(this.itemsData)
-       }),
-       catchError((error: HttpErrorResponse) => {
-         this.dataStateHandler.setError(this.itemsData)
-         return of(error)
-       })
-     )
-   }
+    return this.apiService.fetchData(
+      this.categoriesData,
+      this.dataStateHandler,
+      () => this.apiService.getCategories()
+    );
+  }
 
-  // FILTERS
+  getItems() {
+    return this.apiService.fetchData(
+      this.itemsData,
+      this.dataStateHandler,
+      () => this.apiService.getItems()
+    );
+  }
+
+  // HANDLES
 
   onSearchTextChanged(searchText: string) {
-    this.itemsData.searchText = searchText
-    this.itemsData.filter()
+    this.itemsData.itemName = searchText;
+    this.itemsData.filter();
   }
-
-  // TOGGLE
-
-  toggleShowItemNew() {
-    this.showItemNew = !this.showItemNew
-  }
-
-  toggleShowItemEdit() {
-    this.showItemEdit = !this.showItemEdit
-  }
-
-  toggleShowCategoryFilter() {
-    this.showCategoryFilter = !this.showCategoryFilter
-  }
-  
-  // HANDLE ACTIONS
 
   onNew() {
-    this.itemNew = Item.new()
-    this.toggleShowItemNew()
+    this.itemNew = Item.new();
+    this.showItemNew = true;
   }
 
   onEdit(item: Item) {
-    this.itemEdit = item.deepcopy()
-    this.toggleShowItemEdit()
+    this.itemEdit = item.deepcopy();
+    this.showItemEdit = true;
   }
 
   onApplyCategoryFilter(categories: Category[]) {
-    this.itemsData.selectedCategories = [...categories]
-    this.itemsData.filter()
-    this.toggleShowCategoryFilter()
+    this.itemsData.selectedCategories = [...categories];
+    this.itemsData.filter();
+    this.showCategoryFilter = false;
   }
-
 
   // ACTIONS
-
-  save() {
-    this.dataService.saveItem(this.itemNew).subscribe({
-      next: () => {
-        this.toastService.handleSuccess("Item saved")
-        this.getItems().subscribe()
-        this.toggleShowItemNew()
-      },
-      error: (error: HttpErrorResponse) => {
-        this.toastService.handleError(error, "Error save Item")
-      }
-    })
+  editedItem(item: Item) {
+    this.itemsData.update([item]);
   }
 
-  edit() {
-    this.dataService.editItem(this.itemEdit).subscribe({
-      next: () => {
-        this.toastService.handleSuccess("Item saved")
-        this.getItems().subscribe()
-        this.toggleShowItemEdit()
-      },
-      error: (error: HttpErrorResponse) => {
-        this.toastService.handleError(error, "Error edit Item")
-      }
-    })
+  savedItem(item: Item) {
+    this.itemsData.update([item]);
   }
 
-  delete(item: Item) {
-    this.dataService.deleteItem(item).subscribe({
-      next: () => {
-        this.toastService.handleSuccess("Item Deleted")
-        this.getItems().subscribe()
-        this.toggleShowItemEdit()
-      },
-      error: (error: HttpErrorResponse) => {
-        this.toastService.handleError(error, "Error deleteItem")
-      }
-    })
+  deletedItem(item: Item) {
+    this.itemsData.delete([item]);
   }
-
 }

@@ -1,0 +1,89 @@
+p-dialog.bottom-sheet .p-dialog {
+  width: 100vw;
+  height: calc(-60px + 100vh);
+  border-radius: 6px 6px 0px 0px;
+  margin: 0;
+}
+
+@media (min-width: 500px) { 
+  p-dialog.bottom-sheet .p-dialog {
+    width: 500px;
+  }
+}
+
+  .p-dialog {
+    border-radius: 6px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    background: var(--background-color);
+    color: var(-background-text-color);
+    border: 1px solid var(--background-border-color);
+  }
+
+
+  .p-dialog .p-dialog-header {
+    padding: 1rem;
+    border-bottom: 0 none;
+    color: var(--background-text-color);
+    // border-top-right-radius: 6px;
+    // border-top-left-radius: 6px;
+  }
+  .p-dialog .p-dialog-header .p-dialog-title {
+    font-weight: 500;
+    font-size: 1.5rem;
+  }
+  .p-dialog .p-dialog-header .p-dialog-header-icon {
+    width: 1.75rem;
+    height: 1.75rem;
+    color: var(--background-text-color);
+    padding: 1rem;
+    border: 0 none;
+    background: var(--background-color);
+    border-radius: 50%;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s, outline-color 0.2s;
+    // margin-right: 0.5rem;
+  }
+  .p-dialog .p-dialog-header .p-dialog-header-icon:enabled:hover {
+    color: var(--background-text-color);
+    // border-color: transparent;
+    background: var(--background-highlight-color);
+  }
+  // .p-dialog .p-dialog-header .p-dialog-header-icon:focus-visible {
+  //   outline: 1px solid var(--p-focus-ring-color);
+  //   outline-offset: 2px;
+  //   box-shadow: none;
+  // }
+  // .p-dialog .p-dialog-header .p-dialog-header-icon:last-child {
+  //   margin-right: 0;
+  // }
+  .p-dialog .p-dialog-content {
+    // background: #ffffff;
+    // color: #334155;
+    padding: 0 1rem 1rem 1rem;
+  }
+  // .p-dialog .p-dialog-content:last-of-type {
+  //   border-bottom-right-radius: 6px;
+  //   border-bottom-left-radius: 6px;
+  // }
+  .p-dialog .p-dialog-footer {
+    // border-top: 0 none;
+    // background: #ffffff;
+    // color: #334155;
+    padding: 0 1rem 1rem 1rem;
+    // text-align: right;
+    // border-bottom-right-radius: 6px;
+    // border-bottom-left-radius: 6px;
+  }
+  // .p-dialog .p-dialog-footer button {
+  //   margin: 0 0.5rem 0 0;
+  //   width: auto;
+  // }
+  // .p-dialog.p-confirm-dialog .p-confirm-dialog-icon {
+  //   font-size: 2rem;
+  // }
+  // .p-dialog.p-confirm-dialog .p-confirm-dialog-icon.p-icon {
+  //   width: 2rem;
+  //   height: 2rem;
+  // }
+  // .p-dialog.p-confirm-dialog .p-confirm-dialog-message {
+  //   margin-left: 1rem;
+  // }

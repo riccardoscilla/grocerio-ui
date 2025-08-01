@@ -3,46 +3,75 @@ import { AuthService } from '../../services/auth.service';
 import { Login } from '../../model/login';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { ToastService } from '../../services/toast.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  template: `
+    <app-title [title]="'Login'" [onPrimary]="false"></app-title>
+    <app-container [padding]="'16px'">
+      <app-row [label]="'Email'">
+        <input #fullflex type="text" pInputText [(ngModel)]="username" placeholder="Email" />
+      </app-row>
+      <app-row [label]="'Password'">
+        <p-password #fullflex [(ngModel)]="password" [feedback]="false" [toggleMask]="true" placeholder="Password"/>
+      </app-row>
+
+      <app-container />
+
+      <app-row>
+        <p-button #fullflex label="Login" (click)="login()" />
+      </app-row>
+      <app-row>
+        <p-button #fullflex label="Login Demo" [outlined]="true" (click)="loginDemo()" />
+      </app-row>
+
+      <app-container />
+
+      <app-row>
+        <span>Don't have an account?</span>
+        <p-button #fullflex label="Register" [text]="true" (click)="gotoRegister()" />
+      </app-row>
+    </app-container>
+  `,
+  styles: [],
 })
 export class LoginComponent {
-  username: string = ""
-  password: string = ""
+  username: string = '';
+  password: string = '';
 
   constructor(
     private authService: AuthService,
     private router: Router,
-    private messageService: MessageService
-  ) { }
+    private toastService: ToastService
+  ) {}
 
   gotoRegister() {
-    this.router.navigate(['register'])
+    this.router.navigate(['register']);
   }
 
-  loginTest() {
-    this.username = 'provaciao@mail.com'
-    this.password = 'password'
-    this.login()
+  loginDemo() {
+    this.username = 'demo@demo.com';
+    this.password = 'demo';
+    this.login();
   }
 
   login() {
     const login = {
       email: this.username,
-      password: this.password
+      password: this.password,
     } as Login;
 
     this.authService.login(login).subscribe({
-      next: (token) => {
-        this.authService.saveToken(token)
-        this.router.navigate(['shelf'])
+      next: (authResponse) => {
+        this.authService.saveAuthResponse(authResponse);
+        if (authResponse.shelf_id) this.router.navigate(['shelf']);
+        else this.router.navigate(['shelf-join']);
       },
-      error: (error) => {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error Login'});
-      }
-    })
+      error: (error: HttpErrorResponse) => {
+        this.toastService.handleError(error, "Error Login");
+      },
+    });
   }
 }

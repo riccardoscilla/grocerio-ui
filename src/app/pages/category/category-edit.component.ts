@@ -1,54 +1,110 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Category } from '../../model/category';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ApiService } from '../../services/api.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-category-edit',
   template: `
-    <p-sidebar 
-        [visible]="visible" 
-        position="bottom" 
-        (onHide)="onHide.emit()"
-        [style]="{ height: '90vh' }" 
+    <app-bottom-sheet
+      [header]="'Edit Category'"
+      [visible]="visible"
+      (visibleChange)="visibleChange.emit($event)"
     >
+      <app-container content>
+        <app-row label="Name">
+          <input #fullflex type="text" pInputText [(ngModel)]="name" />
+        </app-row>
 
-        <ng-template pTemplate="header">
-            <div style="font-size: 24px; font-weight: 500;">
-                Edit Category
-            </div>
-        </ng-template>
+        <app-row label="Icon">
+          <input #fullflex type="text" pInputText [(ngModel)]="icon" />
+        </app-row>
+      </app-container>
 
-        <ng-template pTemplate="content">
+      <app-row footer>
+        <p-button
+          #fullflex
+          label="Delete"
+          [outlined]="true"
+          (click)="onDelete()"
+          severity="danger"
+        />
+        <p-button
+          #fullflex
+          label="Save"
+          [disabled]="disabledSave()"
+          (click)="save()"
+        />
+      </app-row>
+    </app-bottom-sheet>
 
-        <div style="display: flex; flex-direction: column; gap: 16px;">            
-                <div style="display: flex; flex-direction: column; gap: 8px;">
-                    Name
-                    <input type="text" pInputText [(ngModel)]="category.name" />   
-                </div>
-                <div style="display: flex; flex-direction: column; gap: 8px;">
-                    Icon
-                    <input type="text" pInputText [(ngModel)]="category.icon" />   
-                </div>
-            </div>
-            
-
-        </ng-template>
-
-        <ng-template pTemplate="footer">
-            <div style="display: flex; gap: 8px">
-                <p-button class="p-flex" [outlined]="true" severity="danger" label="Delete" (click)="onDelete.emit()" [disabled]="category && !category.valid()"/>
-                <p-button class="p-flex" label="Save" (click)="onSave.emit()" [disabled]="category && !category.valid()"/>
-            </div>  
-        </ng-template>
-
-    </p-sidebar>
+    <app-category-delete
+      *ngIf="showCategoryDelete"
+      [(visible)]="showCategoryDelete"
+      [category]="categoryDelete"
+      (onDeleted)="deletedCategory($event)"
+    ></app-category-delete>
   `,
-  styles: []
+  styles: [],
 })
-export class CategoryEditComponent {
-    @Input() category: Category;
-    @Input() visible: boolean;
+export class CategoryEditComponent implements OnInit {
+  @Input() category: Category;
+  @Input() visible: boolean;
 
-    @Output() onHide = new EventEmitter<void>();
-    @Output() onSave = new EventEmitter<void>();
-    @Output() onDelete = new EventEmitter<void>();
+  @Output() visibleChange = new EventEmitter<boolean>();
+  @Output() onEdited = new EventEmitter<Category>();
+  @Output() onDeleted = new EventEmitter<Category>();
+
+  showCategoryDelete = false;
+  categoryDelete: Category;
+
+  // form
+  name: string;
+  icon: string;
+
+  constructor(
+    public apiService: ApiService,
+    private toastService: ToastService
+  ) {}
+
+  ngOnInit(): void {
+    this.name = this.category.name;
+    this.icon = this.category.icon;
+  }
+
+  onDelete() {
+    this.categoryDelete = this.category.deepcopy();
+    this.showCategoryDelete = true;
+  }
+
+  save() {
+    const data = {
+      id: this.category.id,
+      name: this.name,
+      icon: this.icon,
+    };
+
+    this.apiService.editCategory(this.category.id, data).subscribe({
+      next: (category: Category) => {
+        this.toastService.handleSuccess('Category saved');
+        this.visibleChange.emit(false);
+        this.onEdited.emit(category);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.toastService.handleError(error, 'Error save Category');
+      },
+    });
+  }
+
+  deletedCategory(category: Category) {
+    this.onDeleted.emit(category);
+    this.visibleChange.emit(false);
+  }
+
+  disabledSave() {
+    if (this.name === undefined || this.name.trim() === '') return true;
+    if (this.icon === undefined || this.name.trim() === '') return true;
+    return false;
+  }
 }

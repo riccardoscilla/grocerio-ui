@@ -1,0 +1,23 @@
+  p-calendar.ng-dirty.ng-invalid > .p-calendar > .p-inputtext {
+    border-color: var(--error-color);
+  }
+
+//   .p-calendar:not(.p-calendar-disabled).p-focus > .p-inputtext {
+//     outline: 1px solid var(--p-focus-ring-color);
+//     outline-offset: -1px;
+//     box-shadow: none;
+//     border-color: #94a3b8;
+//   }
+
+//   p-calendar.p-calendar-clearable .p-inputtext {
+//     padding-right: 2.5rem;
+//   }
+//   p-calendar.p-calendar-clearable .p-calendar-clear-icon {
+//     color: #94a3b8;
+//     right: 0.75rem;
+//   }
+
+//   p-calendar.p-calendar-clearable .p-calendar-w-btn .p-calendar-clear-icon {
+//     color: #94a3b8;
+//     right: 3.25rem;
+//   }

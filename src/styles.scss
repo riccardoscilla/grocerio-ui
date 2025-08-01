@@ -5,7 +5,17 @@
 @import "style/theme.scss";
 
 html { height: 100vh;}
-body { height: 100vh; margin: 0; padding: 0; user-select: none; position: relative;}
+body { 
+    height: 100vh; 
+    margin: 0; 
+    padding: 0; 
+    user-select: none;
+    -webkit-tap-highlight-color: transparent; // remove highlight tap
+    -webkit-tap-callout: none;
+    position: relative;
+}
+
+
 
 @media (min-width: 500px) { 
     html {
@@ -16,9 +26,9 @@ body { height: 100vh; margin: 0; padding: 0; user-select: none; position: relati
         width: 500px;
     }
 
-    .p-sidebar-bottom {
-        width: 500px !important;
-        left: 50%;
-        transform: translateX(-50%);
-    }
+    // .p-sidebar-bottom {
+    //     width: 500px !important;
+    //     left: 50%;
+    //     transform: translateX(-50%);
+    // }
 }

@@ -1,222 +1,193 @@
-import { Component } from '@angular/core'
-import { HttpErrorResponse } from '@angular/common/http'
-import { ToastService } from '../../services/toast.service'
-import { CategoriesData, ItemsData, ListItemsData } from '../../data/data'
-import { DataStateHandler } from '../../data/dataStateHandler'
-import { catchError, forkJoin, of, tap } from 'rxjs'
-import { ListItem } from '../../model/listItem'
-import { DataService } from '../../services/data.service'
-import { Category } from '../../model/category'
+import { Component } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ToastService } from '../../services/toast.service';
+import { CategoriesData, ItemsData, GroceryItemsData } from '../../data/data';
+import { DataStateHandler } from '../../data/dataStateHandler';
+import { forkJoin } from 'rxjs';
+import { GroceryItem } from '../../model/groceryItem';
+import { ApiService } from '../../services/api.service';
+import { Category } from '../../model/category';
 
 @Component({
   selector: 'app-grocery',
-  templateUrl: './grocery.component.html'
+  template: `
+    <app-round-top-container>
+      <app-title [title]="'Grocery List'" [onPrimary]="true" />
+    </app-round-top-container>
+
+    <app-container [padding]="'16px 24px'" *ngIf="dataStateHandler.isSuccess()">
+      <app-list>
+        <app-list-item
+          *ngFor="let groceryItem of groceryItemsData.filteredGroceryItems"
+          [icon]="groceryItem.icon"
+          [favourite]="groceryItem.item.favourite"
+          [contentText]="groceryItem.name"
+          (edit)="onEdit(groceryItem)"
+          [showCheckbox]="true"
+          [checked]="groceryItem.inCart"
+          (check)="onCheck(groceryItem, $event)"
+        >
+        </app-list-item>
+      </app-list>
+
+      <app-row *ngIf="groceryItemsData.isEmpty()">No Grocery Items</app-row>
+    </app-container>
+
+    <app-list-loading *ngIf="dataStateHandler.isLoading()"></app-list-loading>
+
+    <app-fixed-bottom-right>
+      <app-new-button (toggleShowNew)="onNew()"></app-new-button>
+    </app-fixed-bottom-right>
+
+    <app-menu-bottom></app-menu-bottom>
+
+    <app-grocery-new
+      *ngIf="showGroceryItemNew"
+      [(visible)]="showGroceryItemNew"
+      [itemsData]="itemsData"
+      [categoriesData]="categoriesData"
+      (onSaved)="savedGroceryItems($event)"
+    >
+    </app-grocery-new>
+
+    <app-grocery-edit
+      *ngIf="showGroceryItemEdit"
+      [(visible)]="showGroceryItemEdit"
+      [groceryItem]="groceryItemEdit"
+      [itemsData]="itemsData"
+      [categoriesData]="categoriesData"
+      (onEdited)="editedGroceryItem($event)"
+      (onDeleted)="deletedShelfItem($event)"
+    >
+    </app-grocery-edit>
+  `,
 })
 export class GroceryComponent {
-  listItemsData: ListItemsData = new ListItemsData()
-  categoriesData: CategoriesData = new CategoriesData()
-  itemsData: ItemsData = new ItemsData()
-  dataStateHandler: DataStateHandler = new DataStateHandler()
+  groceryItemsData: GroceryItemsData = new GroceryItemsData();
+  categoriesData: CategoriesData = new CategoriesData();
+  itemsData: ItemsData = new ItemsData();
+  dataStateHandler: DataStateHandler = new DataStateHandler();
 
-  showListItemNew = false
-  listItemNew: ListItem = ListItem.new()
+  showGroceryItemNew = false;
+  //groceryItemNew: GroceryItem = GroceryItem.new();
 
-  showListItemEdit = false
-  listItemEdit: ListItem
+  showGroceryItemEdit = false;
+  groceryItemEdit: GroceryItem;
 
-  showListItemDelete = false
-  listItemDelete: ListItem
-
-  showCategoryFilter = false
+  showCategoryFilter = false;
 
   constructor(
-    public dataService: DataService,
+    public apiService: ApiService,
     private toastService: ToastService
   ) {
-    this.initLoad()
+    this.initLoad();
   }
 
   initLoad() {
     forkJoin({
-      listItems: this.getListItems(),
+      groceryItems: this.getGroceryItems(),
       categories: this.getCategories(),
-      items: this.getItems()
+      items: this.getItems(),
     }).subscribe({
       next: (results) => {
-        this.toastService.handleResults(results)
-      }
-    })
+        this.toastService.handleResults(results);
+      },
+    });
   }
 
-  getListItems() {
-    this.dataStateHandler.addAndLoading(this.listItemsData)
-    
-    return this.dataService.getListItems().pipe(
-      tap((listItems) => {
-        this.listItemsData.init(listItems)
-        this.dataStateHandler.setSuccess(this.listItemsData)
-      }),
-      catchError((error: HttpErrorResponse) => {
-        this.dataStateHandler.setError(this.listItemsData)
-        return of(error)
-      })
-    )
+  getGroceryItems() {
+    return this.apiService.fetchData(
+      this.groceryItemsData,
+      this.dataStateHandler,
+      () => this.apiService.getGroceryItems()
+    );
   }
 
   getCategories() {
-    this.dataStateHandler.addAndLoading(this.categoriesData)
-
-    return this.dataService.getCategories().pipe(
-      tap((categories) => {
-        this.categoriesData.init(categories)
-        this.dataStateHandler.setSuccess(this.categoriesData)
-      }),
-      catchError((error: HttpErrorResponse) => {
-        this.dataStateHandler.setError(this.categoriesData)
-        return of(error)
-      })
-    )
+    return this.apiService.fetchData(
+      this.categoriesData,
+      this.dataStateHandler,
+      () => this.apiService.getCategories()
+    );
   }
-  
+
   getItems() {
-    this.dataStateHandler.addAndLoading(this.itemsData)
-
-    return this.dataService.getItems().pipe(
-      tap((items) => {
-        this.itemsData.init(items)
-        this.dataStateHandler.setSuccess(this.itemsData)
-      }),
-      catchError((error: HttpErrorResponse) => {
-        this.dataStateHandler.setError(this.itemsData)
-        return of(error)
-      })
-    )
+    return this.apiService.fetchData(
+      this.itemsData,
+      this.dataStateHandler,
+      () => this.apiService.getItems()
+    );
   }
 
-  // FILTERS
+  // HANDLES
 
   onSearchTextChanged(searchText: string) {
-    this.listItemsData.searchText = searchText
-    this.listItemsData.filter()
+    this.groceryItemsData.searchText = searchText;
+    this.groceryItemsData.filter();
   }
 
-  // TOGGLE
-
-  toggleShowListItemNew() {
-    this.listItemNew = ListItem.new()
-    this.showListItemNew = !this.showListItemNew
+  onNew() {
+    this.showGroceryItemNew = true;
   }
 
-  toggleShowListItemEdit() {
-    this.showListItemEdit = !this.showListItemEdit
+  onEdit(groceryItem: GroceryItem) {
+    this.groceryItemEdit = groceryItem.deepcopy();
+    this.showGroceryItemEdit = true;
   }
-
-  toggleShowListItemDelete() {
-    this.showListItemDelete = !this.showListItemDelete
-  }
-
-  toggleShowCategoryFilter() {
-    this.showCategoryFilter = !this.showCategoryFilter
-  }
-
-  // HANDLE ACTIONS
-
-  onEdit(listItem: ListItem) {
-    this.listItemEdit = listItem.deepcopy()
-    this.toggleShowListItemEdit()
-  }
-
-  onDelete(listItem: ListItem) {
-    this.listItemDelete = listItem.deepcopy()
-    this.toggleShowListItemDelete()
-  }  
 
   onApplyCategoryFilter(categories: Category[]) {
-    this.listItemsData.selectedCategories = [...categories]
-    this.listItemsData.filter()
-    this.toggleShowCategoryFilter()
+    this.groceryItemsData.selectedCategories = [...categories];
+    this.groceryItemsData.filter();
+    this.showCategoryFilter = true;
   }
 
-  onCheck(listItem: ListItem) {
-    listItem.inCart = true
+  onCheck(groceryItem: GroceryItem, check: boolean) {
+    const data = {
+      id: groceryItem.id,
+      itemId: groceryItem.item.id,
+      quantity: groceryItem.quantity,
+      insertionDate: groceryItem.insertionDate,
+      note: groceryItem.note,
+      inCart: check,
+    };
 
-    this.dataService.editListItem(listItem).subscribe({
-      next: () => {
-        // this.toastService.handleSuccess("List items checked!")
-        // this.getListItems().subscribe()
+    this.apiService.editGroceryItem(groceryItem.id, data).subscribe({
+      next: (groceryItem: GroceryItem) => {
+        this.toastService.handleSuccess('List items checked!');
+        this.groceryItemsData.update([groceryItem]);
       },
       error: (error: HttpErrorResponse) => {
-        this.toastService.handleError(error, "Error List items checked")
-      }
-    })
-  }
-
-  onUncheck(listItem: ListItem) {
-    listItem.inCart = false
-
-    this.dataService.editListItem(listItem).subscribe({
-      next: () => {
-        // this.toastService.handleSuccess("List items checked!")
-        // this.getListItems().subscribe()
+        this.toastService.handleError(error, 'Error List items checked');
       },
-      error: (error: HttpErrorResponse) => {
-        this.toastService.handleError(error, "Error List items checked")
-      }
-    })
+    });
   }
 
   onFinish() {
-    this.dataService.deleteAndSaveInShelf().subscribe({
+    this.apiService.endGrocery().subscribe({
       next: () => {
-        this.toastService.handleSuccess("List items moved in shelf!")
-        this.getListItems().subscribe()
+        this.toastService.handleSuccess('List items moved in shelf!');
+        this.getGroceryItems().subscribe();
       },
       error: (error: HttpErrorResponse) => {
-        this.toastService.handleError(error, "Error moving List items in shelf")
-      }
-    })
+        this.toastService.handleError(
+          error,
+          'Error moving List items in shelf'
+        );
+      },
+    });
   }
 
   // ACTIONS
 
-  save() {
-    this.dataService.saveListItem(this.listItemNew).subscribe({
-      next: () => {
-        this.toastService.handleSuccess("List Item saved")
-        this.getListItems().subscribe()
-        this.toggleShowListItemNew()
-      },
-      error: (error: HttpErrorResponse) => {
-        this.toastService.handleError(error, "Error save List Item")
-      }
-    })
+  editedGroceryItem(groceryItem: GroceryItem) {
+    this.groceryItemsData.update([groceryItem]);
   }
 
-  edit() {
-    this.dataService.editListItem(this.listItemEdit).subscribe({
-      next: () => {
-        this.toastService.handleSuccess("List Item saved")
-        this.getListItems().subscribe()
-        this.toggleShowListItemEdit()
-      },
-      error: (error: HttpErrorResponse) => {
-        this.toastService.handleError(error, "Error edit List Item")
-      }
-    })
+  savedGroceryItems(groceryItems: GroceryItem[]) {
+    this.groceryItemsData.update(groceryItems);
   }
 
-  delete() {
-    this.dataService.deleteListItem(this.listItemDelete).subscribe({
-      next: () => {
-        this.toastService.handleSuccess("List Item deleted")
-        this.getListItems().subscribe()
-        this.toggleShowListItemDelete()
-        this.toggleShowListItemEdit()
-      },
-      error: (error: HttpErrorResponse) => {
-        this.toastService.handleError(error, "Error delete List Item")
-      }
-    })
+  deletedShelfItem(groceryItem: GroceryItem) {
+    this.groceryItemsData.delete([groceryItem]);
   }
- 
 }
