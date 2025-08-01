@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
   template: `
 
     <app-round-top-container>
-      <app-title [title]="shelfData.shelf?.name" [defaultTitle]="'Shelf'" [onPrimary]="true"/> v1
+      <app-title [title]="shelfData.shelf?.name" [defaultTitle]="'Shelf'" [onPrimary]="true"/> v1.1
     </app-round-top-container>
 
     <!-- <app-appbar>

@@ -28,6 +28,7 @@ import { ItemsData } from '../../data/data';
         [dropdown]="true"
         [showEmptyMessage]="false"
         (completeMethod)="onInput($event)"
+        (input)="onInputEmpty($event)"
         (onDropdownClick)="onDropdownClick($event)"
         (onSelect)="onSelect($event)"
         optionLabel="name"
@@ -50,9 +51,21 @@ export class ItemAutocompleteDropdownComponent {
   @ViewChild('autocompleteItem') autocompleteItem!: AutoComplete;
 
   onInput(event: AutoCompleteCompleteEvent) {
-    this.itemsData.filter(event.query);
+    const value = event.query;
 
-    if (event.query !== '') this.selectedItemChange.emit(event.query);
+    if (value.trim() === '')
+      return;
+
+    this.itemsData.filter(value);
+    this.selectedItemChange.emit(value);
+  }
+
+  onInputEmpty(event: any) {
+    const value = event.target.value;
+
+    if (value.trim() === '') {
+      this.selectedItemChange.emit(value);
+    }
   }
 
   onDropdownClick(event: AutoCompleteDropdownClickEvent) {
@@ -73,6 +86,7 @@ export class ItemAutocompleteDropdownComponent {
   }
 
   onClear() {
+    console.log("clear ")
     this.selectedItemChange.emit(undefined);
   }
 
