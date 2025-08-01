@@ -53,7 +53,7 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
 
     ::ng-deep .bottom-sheet .p-dialog {
       width: 100vw;
-      height: calc(-60px + 100vh);
+      height: calc(100dvh - 60px);
       border-radius: 12px 12px 0px 0px;
       margin: 0;
       max-height: none;
