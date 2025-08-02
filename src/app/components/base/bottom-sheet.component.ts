@@ -5,7 +5,7 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
   template: `
     <p-dialog
       #dialog
-      (onShow)="initDrag2()"
+      (onShow)="initDragSmooth()"
       [(visible)]="visible"
       [draggable]="false"
       [resizable]="false"
