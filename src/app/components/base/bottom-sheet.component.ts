@@ -165,6 +165,20 @@ export class BottomSheetComponent {
         animationFrameId = requestAnimationFrame(animate);
       };
 
+      const applyNoPullToRefreshStyles = () => {
+        document.documentElement.style.overscrollBehaviorY = 'contain';
+        document.documentElement.style.touchAction = 'pan-x';
+        document.body.style.overscrollBehaviorY = 'contain';
+        document.body.style.touchAction = 'pan-x';
+      }
+
+      const resetPullToRefreshStyles = () => {
+        document.documentElement.style.overscrollBehaviorY = '';
+        document.documentElement.style.touchAction = '';
+        document.body.style.overscrollBehaviorY = '';
+        document.body.style.touchAction = '';
+      }
+
       const onMouseDown = (e: MouseEvent | TouchEvent) => {
         (document.activeElement as HTMLElement)?.blur();
 
@@ -173,9 +187,11 @@ export class BottomSheetComponent {
         currentY = startY;
         dialogPanel.style.transition = 'none'; // remove transition during drag
 
+        applyNoPullToRefreshStyles();
+
         document.addEventListener('mousemove', onMouseMove);
         document.addEventListener('mouseup', onMouseUp);
-        document.addEventListener('touchmove', onMouseMove, { passive: false });
+        document.addEventListener('touchmove', onMouseMove);
         document.addEventListener('touchend', onMouseUp);
 
         animate();
@@ -186,9 +202,9 @@ export class BottomSheetComponent {
         currentY = ('touches' in e) ? e.touches[0].clientY : e.clientY;
         deltaY = Math.max(0, currentY - startY);
 
-        if ('touches' in e && deltaY > 0) {
-          e.preventDefault();
-        }
+        // if ('touches' in e && deltaY > 0) {
+        //   e.preventDefault();
+        // }
       };
 
       const onMouseUp = () => {
@@ -204,6 +220,7 @@ export class BottomSheetComponent {
         document.removeEventListener('touchend', onMouseUp);
 
         if (deltaY > dialogPanelHeight * 0.3) {
+          resetPullToRefreshStyles();
           this.visibleChange.emit(false);
         } else {
           dialogPanel.style.transition = 'transform 0.2s ease-out';
@@ -214,6 +231,6 @@ export class BottomSheetComponent {
       };
 
       header.addEventListener('mousedown', onMouseDown);
-      header.addEventListener('touchstart', onMouseDown, { passive: false });
+      header.addEventListener('touchstart', onMouseDown);
     }
 }
