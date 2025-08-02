@@ -5,7 +5,7 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
   template: `
     <p-dialog
       #dialog
-      (onShow)="initDrag()"
+      (onShow)="initDrag2()"
       [(visible)]="visible"
       [draggable]="false"
       [resizable]="false"
@@ -29,8 +29,7 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
       <ng-template pTemplate="footer">
         <ng-content select="[footer]"></ng-content>
       </ng-template>
-    </p-dialog>
-    
+    </p-dialog>    
   `,
   styles: [`
     .bottom-sheet .dialog-header {
@@ -98,6 +97,8 @@ export class BottomSheetComponent {
       let dragging = false;
   
       const onMouseDown = (e: MouseEvent | TouchEvent) => {
+        (document.activeElement as HTMLElement)?.blur();
+
         dragging = true;
         startY = ('touches' in e) ? e.touches[0].clientY : e.clientY;
         currentY = startY
@@ -137,5 +138,78 @@ export class BottomSheetComponent {
   
       header.addEventListener('mousedown', onMouseDown);
       header.addEventListener('touchstart', onMouseDown);
+    }
+
+    initDragSmooth() {
+      const dialogEl: HTMLElement = this.dialogRef?.el?.nativeElement;
+      if (!dialogEl) return;
+
+      const header = dialogEl.querySelector('.p-dialog-header') as HTMLElement;
+      if (!header) return;
+
+      const dialogPanel = dialogEl.querySelector('.p-dialog') as HTMLElement;
+      if (!dialogPanel) return;
+
+      let startY = 0;
+      let currentY = 0;
+      let deltaY = 0;
+      let dragging = false;
+      let animationFrameId: number;
+
+      const setTransform = (y: number) => {
+        dialogPanel.style.transform = `translateY(${y}px)`;
+      };
+
+      const animate = () => {
+        setTransform(deltaY);
+        animationFrameId = requestAnimationFrame(animate);
+      };
+
+      const onMouseDown = (e: MouseEvent | TouchEvent) => {
+        (document.activeElement as HTMLElement)?.blur();
+
+        dragging = true;
+        startY = ('touches' in e) ? e.touches[0].clientY : e.clientY;
+        currentY = startY;
+        dialogPanel.style.transition = 'none'; // remove transition during drag
+
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+        document.addEventListener('touchmove', onMouseMove);
+        document.addEventListener('touchend', onMouseUp);
+
+        animate();
+      };
+
+      const onMouseMove = (e: MouseEvent | TouchEvent) => {
+        if (!dragging) return;
+        currentY = ('touches' in e) ? e.touches[0].clientY : e.clientY;
+        deltaY = Math.max(0, currentY - startY);
+      };
+
+      const onMouseUp = () => {
+        if (!dragging) return;
+        dragging = false;
+        cancelAnimationFrame(animationFrameId);
+
+        const dialogPanelHeight = dialogPanel.offsetHeight;
+
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+        document.removeEventListener('touchmove', onMouseMove);
+        document.removeEventListener('touchend', onMouseUp);
+
+        if (deltaY > dialogPanelHeight * 0.3) {
+          this.visibleChange.emit(false);
+        } else {
+          dialogPanel.style.transition = 'transform 0.2s ease-out';
+          setTransform(0);
+        }
+
+        deltaY = 0;
+      };
+
+      header.addEventListener('mousedown', onMouseDown);
+      header.addEventListener('touchstart', onMouseDown, { passive: true });
     }
 }

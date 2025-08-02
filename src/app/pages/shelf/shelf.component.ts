@@ -17,21 +17,9 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-shelf',
   template: `
-
     <app-round-top-container>
-      <app-title [title]="shelfData.shelf?.name" [defaultTitle]="'Shelf'" [onPrimary]="true"/> v1.1
+      <app-title [title]="shelfData.shelf?.name" [defaultTitle]="'Shelf'" [onPrimary]="true"/> v1.2
     </app-round-top-container>
-
-    <!-- <app-appbar>
-        <div style="display: flex; gap: 8px;">
-            <app-search-bar (searchTextChanged)="onSearchTextChanged($event)" style="flex: 1;"></app-search-bar>
-            
-            <app-filter-button
-                [selectedCategories]="shelfItemsData.selectedCategories" 
-                (toggleFilter)="toggleShowCategoryFilter()" >
-            </app-filter-button>
-        </div>
-    </app-appbar> -->
 
     <app-container [padding]="'16px 24px'" *ngIf="dataStateHandler.isSuccess()">
       <app-list>
@@ -83,7 +71,7 @@ import { Router } from '@angular/router';
       (onDeleted)="deletedShelfItem($event)"
     >
     </app-shelf-edit>
-  `,
+  `
 })
 export class ShelfComponent implements OnInit {
   shelfItemsData: ShelfItemsData = new ShelfItemsData();

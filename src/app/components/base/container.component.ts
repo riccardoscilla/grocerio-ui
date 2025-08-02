@@ -41,11 +41,7 @@ export class ContainerComponent implements AfterContentInit {
       this.renderer.addClass(item.nativeElement, 'p-flex')
     );
     if (this.padding) {
-      this.renderer.setStyle(
-        this.hostRef.nativeElement,
-        'padding',
-        this.padding
-      );
+      this.renderer.setStyle(this.hostRef.nativeElement, 'padding', this.padding);
     }
     if (this.height) {
       this.renderer.setStyle(this.hostRef.nativeElement, 'height', this.height);

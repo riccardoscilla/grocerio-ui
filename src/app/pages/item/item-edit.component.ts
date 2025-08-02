@@ -69,8 +69,7 @@ import { HttpErrorResponse } from '@angular/common/http';
       [item]="itemDelete"
       (onDeleted)="deletedItem($event)"
     ></app-item-delete>
-  `,
-  styles: [],
+  `
 })
 export class ItemEditComponent implements OnInit {
   @Input() item: Item;

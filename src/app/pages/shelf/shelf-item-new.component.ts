@@ -71,8 +71,7 @@ import { HttpErrorResponse } from '@angular/common/http';
       [categoriesData]="categoriesData"
       (onSaved)="savedItem($event)"
     ></app-item-new>
-  `,
-  styles: [],
+  `
 })
 export class ShelfNewComponent implements OnInit {
   @Input() itemsData: ItemsData;
