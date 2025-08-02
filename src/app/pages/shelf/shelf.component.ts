@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ShelfItem } from '../../model/shelfItem';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ToastService } from '../../services/toast.service';
 import {
   CategoriesData,
@@ -18,7 +17,7 @@ import { Router } from '@angular/router';
   selector: 'app-shelf',
   template: `
     <app-round-top-container>
-      <app-title [title]="shelfData.shelf?.name" [defaultTitle]="'Shelf'" [onPrimary]="true"/> v1.3
+      <app-title [title]="shelfData.shelf?.name" [defaultTitle]="'Shelf'" [onPrimary]="true"/> v1.3.1
     </app-round-top-container>
 
     <app-container [padding]="'16px 24px'" *ngIf="dataStateHandler.isSuccess()">

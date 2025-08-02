@@ -175,7 +175,7 @@ export class BottomSheetComponent {
 
         document.addEventListener('mousemove', onMouseMove);
         document.addEventListener('mouseup', onMouseUp);
-        document.addEventListener('touchmove', onMouseMove, { passive: false });
+        document.addEventListener('touchmove', onMouseMove, { passive: true });
         document.addEventListener('touchend', onMouseUp);
 
         animate();
@@ -214,6 +214,6 @@ export class BottomSheetComponent {
       };
 
       header.addEventListener('mousedown', onMouseDown);
-      header.addEventListener('touchstart', onMouseDown, { passive: false });
+      header.addEventListener('touchstart', onMouseDown, { passive: true });
     }
 }
