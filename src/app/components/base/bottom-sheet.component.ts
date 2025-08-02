@@ -175,7 +175,7 @@ export class BottomSheetComponent {
 
         document.addEventListener('mousemove', onMouseMove);
         document.addEventListener('mouseup', onMouseUp);
-        document.addEventListener('touchmove', onMouseMove);
+        document.addEventListener('touchmove', onMouseMove, { passive: false });
         document.addEventListener('touchend', onMouseUp);
 
         animate();
@@ -185,6 +185,10 @@ export class BottomSheetComponent {
         if (!dragging) return;
         currentY = ('touches' in e) ? e.touches[0].clientY : e.clientY;
         deltaY = Math.max(0, currentY - startY);
+
+        if ('touches' in e && deltaY > 0) {
+          e.preventDefault();
+        }
       };
 
       const onMouseUp = () => {
@@ -210,6 +214,6 @@ export class BottomSheetComponent {
       };
 
       header.addEventListener('mousedown', onMouseDown);
-      header.addEventListener('touchstart', onMouseDown, { passive: true });
+      header.addEventListener('touchstart', onMouseDown, { passive: false });
     }
 }
