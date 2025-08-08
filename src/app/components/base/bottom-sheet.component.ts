@@ -146,8 +146,8 @@ export class BottomSheetComponent {
     const dialogEl: HTMLElement = this.dialogRef?.el?.nativeElement;
     if (!dialogEl) return;
 
-    const header = dialogEl.querySelector('.p-dialog-header') as HTMLElement;
-    if (!header) return;
+    const dragZone = dialogEl.querySelector('.p-dialog-header') as HTMLElement;
+    if (!dragZone) return;
 
     const dialogPanel = dialogEl.querySelector('.p-dialog') as HTMLElement;
     if (!dialogPanel) return;
@@ -220,8 +220,8 @@ export class BottomSheetComponent {
       deltaY = 0;
     };
 
-    header.addEventListener('mousedown', onMouseDown);
-    header.addEventListener('touchstart', onMouseDown);
+    dragZone.addEventListener('mousedown', onMouseDown);
+    dragZone.addEventListener('touchstart', onMouseDown);
   }
 
   applyNoPullToRefreshStyles() {

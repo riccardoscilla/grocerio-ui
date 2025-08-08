@@ -29,7 +29,7 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, Renderer2, ViewChild }
     :host {
       display: flex;
       flex-direction: column;
-      height: 100%;
+      height: 100dvh;
       width: 100%;
 
       // position: relative;
@@ -56,11 +56,11 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, Renderer2, ViewChild }
       // flex: 1 1 auto;
       overflow-y: auto;
 
-      &::-webkit-scrollbar {
-          display: none;
-      }
-      -ms-overflow-style: none;  /* For Internet Explorer and Edge */
-      scrollbar-width: none;    /* For Firefox */
+      // &::-webkit-scrollbar {
+      //     display: none;
+      // }
+      // -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+      // scrollbar-width: none;    /* For Firefox */
     }
   `]
 })

@@ -18,7 +18,7 @@ import { Router } from '@angular/router';
   template: `
     <app-scaffold>
       <app-round-top-container appbar>
-        <app-title [title]="shelfData.shelf?.name" [defaultTitle]="'Shelf'" [onPrimary]="true"/> v1.3.1
+        <app-title [title]="shelfData.shelf?.name" [defaultTitle]="'Shelf'" [onPrimary]="true"/> v1.3.2
       </app-round-top-container>
       
       <app-container content [padding]="'16px 24px'" *ngIf="dataStateHandler.isSuccess()">

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ShelfItem } from '../../model/shelfItem';
 import { Item } from '../../model/item';
 import { CategoriesData, ItemsData } from '../../data/data';
@@ -15,6 +15,19 @@ import { HttpErrorResponse } from '@angular/common/http';
       (visibleChange)="visibleChange.emit($event)"
     >
       <app-container content>
+        <app-list>
+          <app-list-item
+            *ngFor="let item of itemsData.filteredItems"
+            [icon]="item.icon"
+            [favourite]="item.favourite"
+            [showCheckbox]="true"
+            (check)="onCheck(item, $event)"
+            [contentText]="item.name"
+          >
+          </app-list-item>
+        </app-list>
+      </app-container>
+      <!-- <app-container content>
         <app-row label="Item">
           <app-item-autocomplete-dropdown
             #fullflex
@@ -52,15 +65,10 @@ import { HttpErrorResponse } from '@angular/common/http';
             (delete)="onRemoveFromShelf(item.id)"
           />
         </app-list>
-      </app-container>
+      </app-container> -->
 
       <app-row footer>
-        <p-button
-          #fullflex
-          label="Save"
-          (click)="save()"
-          [disabled]="disabledSave()"
-        />
+        <p-button #fullflex label="Save" (click)="save()" [disabled]="disabledSave()"/>
       </app-row>
     </app-bottom-sheet>
 
@@ -83,7 +91,7 @@ export class ShelfNewComponent implements OnInit {
 
   // FORM
   selectedItem: Item | string;
-  itemsToAdd: any[] = [];
+  itemsToAdd: Item[] = [];
 
   showItemNew: boolean = false;
   itemNew: Item;
@@ -133,7 +141,7 @@ export class ShelfNewComponent implements OnInit {
       name: this.selectedItem.name,
       icon: this.selectedItem.icon,
     };
-    this.itemsToAdd.push(data);
+    // this.itemsToAdd.push(data);
     this.selectedItem = '';
   }
 
@@ -142,6 +150,13 @@ export class ShelfNewComponent implements OnInit {
   }
 
   // ACTIONS
+
+  onCheck(item: Item, check: boolean) {
+    if (check)
+      this.itemsToAdd.push(item);
+    else 
+      this.itemsToAdd = this.itemsToAdd.filter(i => i.id != item.id);
+  }
 
   disabledAddInShelf() {
     if (typeof this.selectedItem === 'string') return true;
