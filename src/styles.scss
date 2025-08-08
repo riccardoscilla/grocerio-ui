@@ -5,7 +5,7 @@
 @import "style/theme.scss";
 
 html { 
-    height: 100vh;
+    height: 100dvh;
 
     &::-webkit-scrollbar {
         display: none;
@@ -14,17 +14,14 @@ html {
     scrollbar-width: none;    /* For Firefox */
 }
 body { 
-    height: 100vh;
+    height: 100dvh;
     margin: 0; 
     padding: 0; 
     user-select: none;
     -webkit-tap-highlight-color: transparent; // remove highlight tap
     -webkit-tap-callout: none;
     position: relative;
-
 }
-
-
 
 @media (min-width: 500px) { 
     html {
@@ -34,10 +31,4 @@ body {
     body {
         width: 500px;
     }
-
-    // .p-sidebar-bottom {
-    //     width: 500px !important;
-    //     left: 50%;
-    //     transform: translateX(-50%);
-    // }
 }

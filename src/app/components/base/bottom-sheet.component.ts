@@ -59,7 +59,9 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
     }
 
     ::ng-deep .bottom-sheet > .p-dialog-mask {
-      backdrop-filter: blur(1px);
+      // backdrop-filter: blur(1px);
+      background-color: rgba(0, 0, 0, 0.2) !important;
+
     }
 
     ::ng-deep .bottom-sheet .p-dialog-header-icons {
