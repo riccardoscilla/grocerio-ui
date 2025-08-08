@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1754135774815,
+  "timestamp": 1754643041075,
   "index": "/grocerio-ui/index.html",
   "assetGroups": [
     {
@@ -13,10 +13,10 @@
       "urls": [
         "/grocerio-ui/favicon.ico",
         "/grocerio-ui/index.html",
-        "/grocerio-ui/main-SAZX7WPD.js",
+        "/grocerio-ui/main-L5NX43FS.js",
         "/grocerio-ui/manifest.webmanifest",
         "/grocerio-ui/polyfills-6EAL64PA.js",
-        "/grocerio-ui/styles-2M6P3PZ5.css",
+        "/grocerio-ui/styles-XYD22OB6.css",
         "/grocerio-ui/worker-3NCFLVFN.js"
       ],
       "patterns": []
@@ -112,8 +112,8 @@
     "/grocerio-ui/assets/svg/trash-xmark.svg": "8076df79a1c227d9dfb4222daec18a35523399b9",
     "/grocerio-ui/assets/sw.js": "b4711a0866a580fcb886607c9526443b4fed678c",
     "/grocerio-ui/favicon.ico": "84d20f10a40f14d5323b7f2b3525cac4839542f6",
-    "/grocerio-ui/index.html": "4ab8f5a21cb5e2302b72fd26a755566e476d7445",
-    "/grocerio-ui/main-SAZX7WPD.js": "f11302b1be2acd711c948a0619a7b398b3cc4e55",
+    "/grocerio-ui/index.html": "c79f4ef6a4f44ab519e18bbdb2ceacc0bee129e3",
+    "/grocerio-ui/main-L5NX43FS.js": "c7f6559b95220ef16857859c83d7e18df145827f",
     "/grocerio-ui/manifest.webmanifest": "54cd5e64af7ea5ee94031cc1b5054792739ce38a",
     "/grocerio-ui/media/Inter-italic.var-SWFAXF2C.woff2": "6f20a046917bf86d4b6cc29c4e2515bd64d2cb9b",
     "/grocerio-ui/media/Inter-roman.var-WIJJYAE4.woff2": "7a2602d2ebb08ce895e33addb6fe595f1029431e",
@@ -124,7 +124,7 @@
     "/grocerio-ui/media/primeicons-GEFHGEHP.ttf": "3b878ca7e88945a8ec25814810b95367d8977ae6",
     "/grocerio-ui/media/primeicons-P53SE5CV.woff": "361e3af71bb4e515feead2f787348a92a5527158",
     "/grocerio-ui/polyfills-6EAL64PA.js": "d874147a12a6570d9b44e99935e9de8b7f3cabbc",
-    "/grocerio-ui/styles-2M6P3PZ5.css": "84b252a18a9300c0f1296482a7dbe8aceb1c7701",
+    "/grocerio-ui/styles-XYD22OB6.css": "452f165f81146c91e0c1323821b9b1ef4fcbfcfb",
     "/grocerio-ui/worker-3NCFLVFN.js": "756a43891df3952ba22651337f9d728ade940814"
   },
   "navigationUrls": [
