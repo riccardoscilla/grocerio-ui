@@ -26,7 +26,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       const vh = this.height * 0.01;
       document.documentElement.style.setProperty('--real-vh', `${vh}px`);
       
-      this.toastService.handleSuccess(`${vh}px`)
+      // this.toastService.handleSuccess(`${vh}px`)
     };
 
 

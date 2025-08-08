@@ -5,7 +5,7 @@
 @import "style/theme.scss";
 
 html { 
-    height: 100dvh;
+    height: 100svh;
 
     &::-webkit-scrollbar {
         display: none;
@@ -14,7 +14,7 @@ html {
     scrollbar-width: none;    /* For Firefox */
 }
 body { 
-    height: 100dvh;
+    height: 100svh;
     margin: 0; 
     padding: 0; 
     user-select: none;
