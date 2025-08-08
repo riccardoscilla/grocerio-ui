@@ -1,10 +1,34 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
-  title = 'grocerio-ui';
+export class AppComponent implements AfterViewInit, OnDestroy {
+  title = 'grocerio-ui'; 
+
+  private onResizeVh = () => {};
+
+  ngAfterViewInit(): void {
+    this.initResizeVh();
+  }
+
+  initResizeVh() {
+    this.onResizeVh = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--real-vh', `${vh}px`);
+    };
+
+    this.onResizeVh();
+
+    window.addEventListener("resize", this.onResizeVh);
+    window.addEventListener("orientationchange", this.onResizeVh);
+  }
+
+  ngOnDestroy(): void {
+    window.removeEventListener("resize", this.onResizeVh);
+    window.removeEventListener("orientationchange", this.onResizeVh);
+  }
+
 }
