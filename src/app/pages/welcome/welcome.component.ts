@@ -47,8 +47,10 @@ export class WelcomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (!this.authService.isLoggedIn())
+    if (!this.authService.isLoggedIn()) {
+      this.showButtons = true;
       return;
+    }
     
     
     this.apiService.getShelf().subscribe({

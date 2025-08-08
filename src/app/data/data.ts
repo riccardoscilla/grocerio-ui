@@ -54,7 +54,6 @@ export class ItemsData extends DataState<Item[]> {
   }
 
   filter(itemName?: string) {
-    if (itemName) this.itemName = itemName;
 
     this.init(this.items);
 
@@ -65,12 +64,12 @@ export class ItemsData extends DataState<Item[]> {
       );
     }
 
-    if (this.itemName.length > 0) {
+    if (itemName && itemName.trim().length > 0) {
       this.filteredItems = this.filteredItems.filter((item) =>
         item.name
           .toLowerCase()
           .trim()
-          .includes(this.itemName.toLowerCase().trim())
+          .includes(itemName.toLowerCase().trim())
       );
     }
   }

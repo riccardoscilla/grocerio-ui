@@ -15,14 +15,24 @@ import { HttpErrorResponse } from '@angular/common/http';
       (visibleChange)="visibleChange.emit($event)"
     >
       <app-container content>
+        <p-iconField #fullflex iconPosition="right">
+          <p-inputIcon styleClass="pi pi-search" />
+          <input type="text" pInputText placeholder="Search" [(ngModel)]="searchText" (ngModelChange)="onSearch(searchText)" />
+        </p-iconField>
+
+        <!-- <app-row>
+          <app-chip [label]="'All'" />
+        </app-row> -->
+
         <app-list>
           <app-list-item
             *ngFor="let item of itemsData.filteredItems"
             [icon]="item.icon"
             [favourite]="item.favourite"
-            [showCheckbox]="true"
-            (check)="onCheck(item, $event)"
             [contentText]="item.name"
+            [showCheckbox]="true"
+            [checked]="inItemsToAdd(item)"
+            (check)="onCheck(item, $event)"
           >
           </app-list-item>
         </app-list>
@@ -90,6 +100,8 @@ export class ShelfNewComponent implements OnInit {
   @Output() onSaved = new EventEmitter<ShelfItem[]>();
 
   // FORM
+  searchText: string
+
   selectedItem: Item | string;
   itemsToAdd: Item[] = [];
 
@@ -149,7 +161,15 @@ export class ShelfNewComponent implements OnInit {
     this.itemsToAdd = this.itemsToAdd.filter((item) => item.id !== id);
   }
 
+  inItemsToAdd(item: Item) {
+    return this.itemsToAdd.filter(i => i.id == item.id).length > 0
+  }
+
   // ACTIONS
+
+  onSearch(searchText: string) {
+    this.itemsData.filter(searchText);
+  }
 
   onCheck(item: Item, check: boolean) {
     if (check)

@@ -41,7 +41,8 @@ import {
     p-dropdown.p-flex > div:first-child,
     p-calendar.p-flex span,
     p-password.p-flex div,
-    p-password.p-flex div input {
+    p-password.p-flex div input,
+    p-iconfield.p-flex input {
       width: 100%;
     }
     // .p-flex > div:first-child,

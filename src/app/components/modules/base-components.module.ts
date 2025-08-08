@@ -16,6 +16,7 @@ import { RoundTopContainerComponent } from '../app/round-top-container.component
 import { BottomSheetComponent } from '../base/bottom-sheet.component';
 import { TimerComponent } from '../base/timer.component';
 import { ScaffoldComponent } from '../base/scaffold.component';
+import { ChipComponent } from '../base/chip.component';
 
 export const BaseComponentsModule =[
     SvgComponent,
@@ -36,5 +37,6 @@ export const BaseComponentsModule =[
     ListLoadingComponent,
     BottomSheetComponent,
     TimerComponent,
-    ScaffoldComponent
+    ScaffoldComponent,
+    ChipComponent,
 ];

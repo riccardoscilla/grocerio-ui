@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { ToastService } from './services/toast.service';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,10 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   height: number;
 
+  constructor(
+        private toastService: ToastService,
+  ) {}
+
   private onResizeVh = () => {};
 
   ngAfterViewInit(): void {
@@ -20,7 +25,10 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     this.onResizeVh = () => {
       const vh = this.height * 0.01;
       document.documentElement.style.setProperty('--real-vh', `${vh}px`);
+      
+      this.toastService.handleSuccess(`${vh}px`)
     };
+
 
     this.height = window.innerHeight;
 
