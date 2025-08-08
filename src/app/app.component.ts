@@ -8,6 +8,8 @@ import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 export class AppComponent implements AfterViewInit, OnDestroy {
   title = 'grocerio-ui'; 
 
+  height: number;
+
   private onResizeVh = () => {};
 
   ngAfterViewInit(): void {
@@ -16,9 +18,11 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   initResizeVh() {
     this.onResizeVh = () => {
-      const vh = window.innerHeight * 0.01;
+      const vh = this.height * 0.01;
       document.documentElement.style.setProperty('--real-vh', `${vh}px`);
     };
+
+    this.height = window.innerHeight;
 
     this.onResizeVh();
 
