@@ -12,20 +12,18 @@ import { HttpErrorResponse } from '@angular/common/http';
       <app-row [center]="true">
         <app-gif [path]="'grocery.gif'" [size]="200"></app-gif>
       </app-row>
-      <app-row [center]="true">
-        <div class="title">Welcome to Grocerio</div>
-      </app-row>
-      <app-row>
-        <p-button #fullflex label="Login" (click)="gotoLogin()" />
-      </app-row>
-      <app-row>
-        <p-button
-          #fullflex
-          label="Register"
-          [outlined]="true"
-          (click)="gotoRegister()"
-        />
-      </app-row>
+
+      <app-container *ngIf="showButtons">
+        <app-row [center]="true">
+          <div class="title">Welcome to Grocerio</div>
+        </app-row>
+        <app-row>
+          <p-button #fullflex label="Login" (click)="gotoLogin()" />
+        </app-row>
+        <app-row>
+          <p-button #fullflex label="Register" [outlined]="true" (click)="gotoRegister()"/>
+        </app-row>
+      </app-container>
     </app-container>
   `,
   styles: [
@@ -39,6 +37,9 @@ import { HttpErrorResponse } from '@angular/common/http';
   ],
 })
 export class WelcomeComponent implements OnInit {
+
+  showButtons = false;
+
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -49,11 +50,13 @@ export class WelcomeComponent implements OnInit {
     if (!this.authService.isLoggedIn())
       return;
     
+    
     this.apiService.getShelf().subscribe({
       next: (_: any) => {
         this.router.navigate(['shelf']);
       },
       error: (error: HttpErrorResponse) => {
+       this.showButtons = true; 
         // this.toastService.handleError(error, 'Error delete Category');
       },
     });

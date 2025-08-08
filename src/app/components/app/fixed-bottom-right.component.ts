@@ -11,7 +11,7 @@ import { Component, HostListener } from '@angular/core';
     .fixed {
         position: fixed;
         bottom: 76px;
-        width: 100vw;
+        right: 0;
         padding: 0 16px;
 
         display: flex;

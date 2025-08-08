@@ -11,41 +11,30 @@ import { catchError, forkJoin, of, tap } from 'rxjs';
 @Component({
   selector: 'app-item',
   template: `
-    <app-title [title]="'Items'" [back]="'/more'"></app-title>
+    <app-scaffold>
+      <app-title appbar [title]="'Items'" [back]="'/more'"/>
 
-    <!-- <app-appbar>
-        <div style="display: flex; gap: 8px;">
-            <app-search-bar (searchTextChanged)="onSearchTextChanged($event)" style="flex: 1;"></app-search-bar>
-            
-            <app-filter-button
-                [selectedCategories]="itemsData.selectedCategories" 
-                (toggleFilter)="toggleShowCategoryFilter()" >
-            </app-filter-button>
-        </div>
-    </app-appbar> -->
+      <app-container content [padding]="'16px'" *ngIf="dataStateHandler.isSuccess()">
+        <app-list>
+          <app-list-item
+            *ngFor="let item of itemsData.filteredItems"
+            [icon]="item.icon"
+            [favourite]="item.favourite"
+            [contentText]="item.name"
+            (edit)="onEdit(item)"
+          >
+          </app-list-item>
+        </app-list>
 
-    <app-container [padding]="'16px'" *ngIf="dataStateHandler.isSuccess()">
-      <app-list>
-        <app-list-item
-          *ngFor="let item of itemsData.filteredItems"
-          [icon]="item.icon"
-          [favourite]="item.favourite"
-          [contentText]="item.name"
-          (edit)="onEdit(item)"
-        >
-        </app-list-item>
-      </app-list>
+        <app-row *ngIf="itemsData.isEmpty()">No Items</app-row>
+      </app-container>
 
-      <app-row *ngIf="itemsData.isEmpty()">No Items</app-row>
-    </app-container>
+      <app-list-loading content *ngIf="dataStateHandler.isLoading()"></app-list-loading>
 
-    <app-list-loading *ngIf="dataStateHandler.isLoading()"></app-list-loading>
+      <app-new-button fab (toggleShowNew)="onNew()"></app-new-button>
 
-    <app-fixed-bottom-right>
-      <app-new-button (toggleShowNew)="onNew()"></app-new-button>
-    </app-fixed-bottom-right>
-
-    <app-menu-bottom></app-menu-bottom>
+      <app-menu-bottom bottomtabbar />
+    </app-scaffold>
 
     <app-item-new
       *ngIf="showItemNew"
@@ -53,7 +42,7 @@ import { catchError, forkJoin, of, tap } from 'rxjs';
       [item]="itemNew"
       [categoriesData]="categoriesData"
       (onSaved)="savedItem($event)"
-    ></app-item-new>
+    />
 
     <app-item-edit
       *ngIf="showItemEdit"
@@ -62,8 +51,7 @@ import { catchError, forkJoin, of, tap } from 'rxjs';
       [categoriesData]="categoriesData"
       (onEdited)="editedItem($event)"
       (onDeleted)="deletedItem($event)"
-    >
-    </app-item-edit>
+    />
   `,
 })
 export class ItemComponent implements OnInit {

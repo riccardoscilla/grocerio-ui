@@ -6,9 +6,7 @@ import {
   AfterContentInit,
   Renderer2,
   ElementRef,
-  ViewChildren,
   ViewEncapsulation,
-  HostBinding,
   ViewChild,
 } from '@angular/core';
 
@@ -17,7 +15,7 @@ import {
   encapsulation: ViewEncapsulation.None,
   template: `
     <div *ngIf="label">{{ label }}</div>
-    <div class="content" #content><ng-content></ng-content></div>
+    <div class="row-content" #content><ng-content></ng-content></div>
   `,
   styles: `
     app-row {
@@ -27,7 +25,7 @@ import {
       width: 100%;
     }
 
-    .content {
+    .row-content {
       display: flex;
       width: 100%;
       height: 100%;

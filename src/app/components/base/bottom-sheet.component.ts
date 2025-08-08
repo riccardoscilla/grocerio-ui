@@ -74,163 +74,165 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
   `]
 })
 export class BottomSheetComponent {
-    @Input() visible: boolean;
-    @Output() visibleChange = new EventEmitter<boolean>();
+  @Input() visible: boolean;
+  @Output() visibleChange = new EventEmitter<boolean>();
 
-    @Input() header: string;
+  @Input() header: string;
 
-    @ViewChild('dialog') dialogRef!: any;
-  
-    initDrag() {
-      const dialogEl: HTMLElement = this.dialogRef?.el?.nativeElement;
-      if (!dialogEl) return;
-      
-      const header = dialogEl.querySelector('.p-dialog-header') as HTMLElement;
-      if (!header) return;
-  
-      const dialogPanel = dialogEl.querySelector('.p-dialog') as HTMLElement;
-      if (!dialogPanel) return;
-  
-      let startY = 0;
-      let currentY = 0;
-      let dialogPanelHeight = dialogPanel.offsetHeight;
-      let dragging = false;
-  
-      const onMouseDown = (e: MouseEvent | TouchEvent) => {
-        (document.activeElement as HTMLElement)?.blur();
+  @ViewChild('dialog') dialogRef!: any;
 
-        dragging = true;
-        startY = ('touches' in e) ? e.touches[0].clientY : e.clientY;
-        currentY = startY
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseup', onMouseUp);
-        document.addEventListener('touchmove', onMouseMove);
-        document.addEventListener('touchend', onMouseUp);
-      };
-  
-      const onMouseMove = (e: MouseEvent | TouchEvent) => {
-        if (!dragging) return;
-  
-        currentY = ('touches' in e) ? e.touches[0].clientY : e.clientY;
-        const deltaY = currentY - startY;
-        if (deltaY > 0) {
-          dialogPanel.style.transform = `translateY(${deltaY}px)`
-        }
-      };
-  
-      const onMouseUp = () => {
-        if (!dragging) return;
-        dragging = false;
-  
-        const deltaY = currentY - startY;      
-        if (deltaY > dialogPanelHeight * 0.3) {
-          this.visibleChange.emit(false)
-        }
-        else {
-          dialogPanel.style.transform = ``
-        }
-  
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('mouseup', onMouseUp);
-        document.removeEventListener('touchmove', onMouseMove);
-        document.removeEventListener('touchend', onMouseUp);
-      };
-  
-      header.addEventListener('mousedown', onMouseDown);
-      header.addEventListener('touchstart', onMouseDown);
-    }
+  initDrag() {
+    const dialogEl: HTMLElement = this.dialogRef?.el?.nativeElement;
+    if (!dialogEl) return;
+    
+    const header = dialogEl.querySelector('.p-dialog-header') as HTMLElement;
+    if (!header) return;
 
-    initDragSmooth() {
-      const dialogEl: HTMLElement = this.dialogRef?.el?.nativeElement;
-      if (!dialogEl) return;
+    const dialogPanel = dialogEl.querySelector('.p-dialog') as HTMLElement;
+    if (!dialogPanel) return;
 
-      const header = dialogEl.querySelector('.p-dialog-header') as HTMLElement;
-      if (!header) return;
+    let startY = 0;
+    let currentY = 0;
+    let dialogPanelHeight = dialogPanel.offsetHeight;
+    let dragging = false;
 
-      const dialogPanel = dialogEl.querySelector('.p-dialog') as HTMLElement;
-      if (!dialogPanel) return;
+    const onMouseDown = (e: MouseEvent | TouchEvent) => {
+      (document.activeElement as HTMLElement)?.blur();
 
-      let startY = 0;
-      let currentY = 0;
-      let deltaY = 0;
-      let dragging = false;
-      let animationFrameId: number;
+      dragging = true;
+      startY = ('touches' in e) ? e.touches[0].clientY : e.clientY;
+      currentY = startY
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+      document.addEventListener('touchmove', onMouseMove);
+      document.addEventListener('touchend', onMouseUp);
+    };
 
-      const setTransform = (y: number) => {
-        dialogPanel.style.transform = `translateY(${y}px)`;
-      };
+    const onMouseMove = (e: MouseEvent | TouchEvent) => {
+      if (!dragging) return;
 
-      const animate = () => {
-        setTransform(deltaY);
-        animationFrameId = requestAnimationFrame(animate);
-      };
+      currentY = ('touches' in e) ? e.touches[0].clientY : e.clientY;
+      const deltaY = currentY - startY;
+      if (deltaY > 0) {
+        dialogPanel.style.transform = `translateY(${deltaY}px)`
+      }
+    };
 
-      const applyNoPullToRefreshStyles = () => {
-        document.documentElement.style.overscrollBehaviorY = 'contain';
-        document.documentElement.style.touchAction = 'pan-x';
-        document.body.style.overscrollBehaviorY = 'contain';
-        document.body.style.touchAction = 'pan-x';
+    const onMouseUp = () => {
+      if (!dragging) return;
+      dragging = false;
+
+      const deltaY = currentY - startY;      
+      if (deltaY > dialogPanelHeight * 0.3) {
+        this.visibleChange.emit(false)
+      }
+      else {
+        dialogPanel.style.transform = ``
       }
 
-      const resetPullToRefreshStyles = () => {
-        document.documentElement.style.overscrollBehaviorY = '';
-        document.documentElement.style.touchAction = '';
-        document.body.style.overscrollBehaviorY = '';
-        document.body.style.touchAction = '';
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+      document.removeEventListener('touchmove', onMouseMove);
+      document.removeEventListener('touchend', onMouseUp);
+    };
+
+    header.addEventListener('mousedown', onMouseDown);
+    header.addEventListener('touchstart', onMouseDown);
+  }
+
+  initDragSmooth() {
+    const dialogEl: HTMLElement = this.dialogRef?.el?.nativeElement;
+    if (!dialogEl) return;
+
+    const header = dialogEl.querySelector('.p-dialog-header') as HTMLElement;
+    if (!header) return;
+
+    const dialogPanel = dialogEl.querySelector('.p-dialog') as HTMLElement;
+    if (!dialogPanel) return;
+    
+    this.applyNoPullToRefreshStyles()
+
+    let startY = 0;
+    let currentY = 0;
+    let deltaY = 0;
+    let dragging = false;
+    let animationFrameId: number;
+
+    const setTransform = (y: number) => {
+      dialogPanel.style.transform = `translateY(${y}px)`;
+    };
+
+    const animate = () => {
+      setTransform(deltaY);
+      animationFrameId = requestAnimationFrame(animate);
+    };      
+
+    const onMouseDown = (e: MouseEvent | TouchEvent) => {
+      (document.activeElement as HTMLElement)?.blur();
+
+      dragging = true;
+      startY = ('touches' in e) ? e.touches[0].clientY : e.clientY;
+      currentY = startY;
+      dialogPanel.style.transition = 'none'; // remove transition during drag
+      dialogPanel.style.willChange = 'transform';
+
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+      document.addEventListener('touchmove', onMouseMove);
+      document.addEventListener('touchend', onMouseUp);
+
+      animate();
+    };
+
+    const onMouseMove = (e: MouseEvent | TouchEvent) => {
+      if (!dragging) return;
+      currentY = ('touches' in e) ? e.touches[0].clientY : e.clientY;
+      deltaY = Math.max(0, currentY - startY);
+
+      // if ('touches' in e && deltaY > 0) {
+      //   e.preventDefault();
+      // }
+    };
+
+    const onMouseUp = () => {
+      if (!dragging) return;
+      dragging = false;
+      cancelAnimationFrame(animationFrameId);
+
+      const dialogPanelHeight = dialogPanel.offsetHeight;
+
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+      document.removeEventListener('touchmove', onMouseMove);
+      document.removeEventListener('touchend', onMouseUp);
+
+      if (deltaY > dialogPanelHeight * 0.3) {
+        this.resetPullToRefreshStyle();
+        this.visibleChange.emit(false);
+      } else {
+        dialogPanel.style.transition = 'transform 0.2s ease-out';
+        dialogPanel.style.willChange = '';
+        setTransform(0);
       }
 
-      const onMouseDown = (e: MouseEvent | TouchEvent) => {
-        (document.activeElement as HTMLElement)?.blur();
+      deltaY = 0;
+    };
 
-        dragging = true;
-        startY = ('touches' in e) ? e.touches[0].clientY : e.clientY;
-        currentY = startY;
-        dialogPanel.style.transition = 'none'; // remove transition during drag
+    header.addEventListener('mousedown', onMouseDown);
+    header.addEventListener('touchstart', onMouseDown);
+  }
 
-        applyNoPullToRefreshStyles();
+  applyNoPullToRefreshStyles() {
+    document.documentElement.style.overscrollBehaviorY = 'contain';
+    document.documentElement.style.touchAction = 'pan-x';
+    document.body.style.overscrollBehaviorY = 'contain';
+    document.body.style.touchAction = 'pan-x';
+  }
 
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseup', onMouseUp);
-        document.addEventListener('touchmove', onMouseMove);
-        document.addEventListener('touchend', onMouseUp);
-
-        animate();
-      };
-
-      const onMouseMove = (e: MouseEvent | TouchEvent) => {
-        if (!dragging) return;
-        currentY = ('touches' in e) ? e.touches[0].clientY : e.clientY;
-        deltaY = Math.max(0, currentY - startY);
-
-        // if ('touches' in e && deltaY > 0) {
-        //   e.preventDefault();
-        // }
-      };
-
-      const onMouseUp = () => {
-        if (!dragging) return;
-        dragging = false;
-        cancelAnimationFrame(animationFrameId);
-
-        const dialogPanelHeight = dialogPanel.offsetHeight;
-
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('mouseup', onMouseUp);
-        document.removeEventListener('touchmove', onMouseMove);
-        document.removeEventListener('touchend', onMouseUp);
-
-        if (deltaY > dialogPanelHeight * 0.3) {
-          resetPullToRefreshStyles();
-          this.visibleChange.emit(false);
-        } else {
-          dialogPanel.style.transition = 'transform 0.2s ease-out';
-          setTransform(0);
-        }
-
-        deltaY = 0;
-      };
-
-      header.addEventListener('mousedown', onMouseDown);
-      header.addEventListener('touchstart', onMouseDown);
-    }
+  resetPullToRefreshStyle() {
+    document.documentElement.style.overscrollBehaviorY = '';
+    document.documentElement.style.touchAction = '';
+    document.body.style.overscrollBehaviorY = '';
+    document.body.style.touchAction = '';
+  }
 }

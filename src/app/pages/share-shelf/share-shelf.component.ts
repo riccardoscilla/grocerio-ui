@@ -6,7 +6,29 @@ import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-share-shelf',
-  templateUrl: './share-shelf.component.html',
+  template: `
+    <app-scaffold>
+      <app-title appbar [title]="'Share Shelf'" [back]="'/more'"></app-title>
+      
+      <app-container content [padding]="'16px'">
+        <app-row [label]="'Share Id'">
+          <p-inputGroup>
+            <input type="text" pInputText [(ngModel)]="shareId"/>
+            <button type="button" pButton label="Generate" (click)="getShareId()"></button>
+          </p-inputGroup>
+        </app-row>
+
+        <app-row [label]="'Join Shelf'">
+          <p-inputGroup>
+            <input type="text" pInputText [(ngModel)]="joinShareId"/>
+            <button type="button" pButton label="Join" (click)="joinShelf()"></button>
+          </p-inputGroup>
+        </app-row>
+      </app-container>
+
+      <app-menu-bottom bottomtabbar />
+  </app-scaffold>
+  `,
 })
 export class ShareShelfComponent {
   shareId: string;

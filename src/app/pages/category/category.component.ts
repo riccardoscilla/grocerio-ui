@@ -9,44 +9,44 @@ import { forkJoin } from 'rxjs';
 @Component({
   selector: 'app-category',
   template: `
-    <app-title [title]="'Categories'" [back]="'/more'"></app-title>
+    <app-scaffold>
+      <app-title appbar [title]="'Categories'" [back]="'/more'"></app-title>
 
-    <app-container [padding]="'16px'" *ngIf="dataStateHandler.isSuccess()">
-      <app-list>
-        <app-list-item
-          *ngFor="let category of categoriesData.filteredCategories"
-          [icon]="category.icon"
-          [contentText]="category.name"
-          (edit)="onEdit(category)"
-        >
-        </app-list-item>
-      </app-list>
+      <app-container content [padding]="'16px'" *ngIf="dataStateHandler.isSuccess()">
+        <app-list>
+          <app-list-item
+            *ngFor="let category of categoriesData.filteredCategories"
+            [icon]="category.icon"
+            [contentText]="category.name"
+            (edit)="onEdit(category)"
+          >
+          </app-list-item>
+        </app-list>
 
-      <app-row *ngIf="categoriesData.isEmpty()">No Categories</app-row>
-    </app-container>
+        <app-row *ngIf="categoriesData.isEmpty()">No Categories</app-row>
+      </app-container>
 
-    <app-list-loading *ngIf="dataStateHandler.isLoading()"></app-list-loading>
+      <app-list-loading content *ngIf="dataStateHandler.isLoading()"></app-list-loading>
 
-    <app-fixed-bottom-right>
-      <app-new-button (toggleShowNew)="onNew()"></app-new-button>
-    </app-fixed-bottom-right>
+      <app-new-button fab (toggleShowNew)="onNew()"></app-new-button>
 
-    <app-menu-bottom></app-menu-bottom>
+      <app-menu-bottom bottomtabbar />
+    </app-scaffold>
 
     <app-category-new
       *ngIf="showCategoryNew"
       [(visible)]="showCategoryNew"
       [category]="categoryNew"
       (onSaved)="savedCategory($event)"
-    ></app-category-new>
+    />
 
     <app-category-edit
       *ngIf="showCategoryEdit"
       [(visible)]="showCategoryEdit"
       [category]="categoryEdit"
       (onEdited)="editedCategory($event)"
-    ></app-category-edit>
-  `,
+    />
+    `,
 })
 export class CategoryComponent {
   categoriesData: CategoriesData = new CategoriesData();

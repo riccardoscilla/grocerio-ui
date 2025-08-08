@@ -11,35 +11,35 @@ import { Category } from '../../model/category';
 @Component({
   selector: 'app-grocery',
   template: `
-    <app-round-top-container>
-      <app-title [title]="'Grocery List'" [onPrimary]="true" />
-    </app-round-top-container>
+    <app-scaffold>
+      <app-round-top-container appbar>
+        <app-title [title]="'Grocery List'" [onPrimary]="true" />
+      </app-round-top-container>
+      
+      <app-container content [padding]="'16px 24px'" *ngIf="dataStateHandler.isSuccess()">
+        <app-list>
+          <app-list-item
+            *ngFor="let groceryItem of groceryItemsData.filteredGroceryItems"
+            [icon]="groceryItem.icon"
+            [favourite]="groceryItem.item.favourite"
+            [contentText]="groceryItem.name"
+            (edit)="onEdit(groceryItem)"
+            [showCheckbox]="true"
+            [checked]="groceryItem.inCart"
+            (check)="onCheck(groceryItem, $event)"
+          >
+          </app-list-item>
+        </app-list>
 
-    <app-container [padding]="'16px 24px'" *ngIf="dataStateHandler.isSuccess()">
-      <app-list>
-        <app-list-item
-          *ngFor="let groceryItem of groceryItemsData.filteredGroceryItems"
-          [icon]="groceryItem.icon"
-          [favourite]="groceryItem.item.favourite"
-          [contentText]="groceryItem.name"
-          (edit)="onEdit(groceryItem)"
-          [showCheckbox]="true"
-          [checked]="groceryItem.inCart"
-          (check)="onCheck(groceryItem, $event)"
-        >
-        </app-list-item>
-      </app-list>
+        <app-row *ngIf="groceryItemsData.isEmpty()">No Grocery Items</app-row>
+      </app-container>
 
-      <app-row *ngIf="groceryItemsData.isEmpty()">No Grocery Items</app-row>
-    </app-container>
+      <app-list-loading content *ngIf="dataStateHandler.isLoading()"></app-list-loading>
 
-    <app-list-loading *ngIf="dataStateHandler.isLoading()"></app-list-loading>
+      <app-new-button fab (toggleShowNew)="onNew()"></app-new-button>
 
-    <app-fixed-bottom-right>
-      <app-new-button (toggleShowNew)="onNew()"></app-new-button>
-    </app-fixed-bottom-right>
-
-    <app-menu-bottom></app-menu-bottom>
+      <app-menu-bottom bottomtabbar />
+    </app-scaffold>
 
     <app-grocery-new
       *ngIf="showGroceryItemNew"
@@ -47,8 +47,7 @@ import { Category } from '../../model/category';
       [itemsData]="itemsData"
       [categoriesData]="categoriesData"
       (onSaved)="savedGroceryItems($event)"
-    >
-    </app-grocery-new>
+    />
 
     <app-grocery-edit
       *ngIf="showGroceryItemEdit"
@@ -58,8 +57,7 @@ import { Category } from '../../model/category';
       [categoriesData]="categoriesData"
       (onEdited)="editedGroceryItem($event)"
       (onDeleted)="deletedShelfItem($event)"
-    >
-    </app-grocery-edit>
+    />
   `,
 })
 export class GroceryComponent {

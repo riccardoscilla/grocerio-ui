@@ -4,13 +4,18 @@ import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-timer-page',
-  template: ` <app-title [title]="'Timer'"></app-title>
+  template: ` 
+    <app-scaffold>
+      <app-title appbar [title]="'Timer'" [back]="'/more'"></app-title>
+      
+      <app-container content [padding]="'16px'">
+        <app-timer></app-timer>
+        {{ notificationPermissionInfo }}
+      </app-container>
 
-    <app-container [padding]="'16px'">
-      <app-timer></app-timer>
-      {{ notificationPermissionInfo }}
-    </app-container>
-    <app-menu-bottom></app-menu-bottom>`,
+      <app-menu-bottom bottomtabbar />
+    </app-scaffold>
+  `,
 })
 export class TimerPageComponent implements OnInit {
   notificationPermissionInfo: string;

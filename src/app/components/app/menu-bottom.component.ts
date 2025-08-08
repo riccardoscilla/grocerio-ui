@@ -11,7 +11,7 @@ interface MenuItem {
 @Component({
   selector: 'app-menu-bottom',
   template: `
-    <app-fixed>
+    <!-- <app-fixed> -->
       <app-row class="menu">
         <div
           #fullflex
@@ -28,7 +28,7 @@ interface MenuItem {
           <div class="text">{{ menuItem.text }}</div>
         </div>
       </app-row>
-    </app-fixed>
+    <!-- </app-fixed> -->
   `,
   styles: `
     .menu {

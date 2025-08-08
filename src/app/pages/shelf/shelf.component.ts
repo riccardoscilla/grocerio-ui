@@ -16,49 +16,48 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-shelf',
   template: `
-    <app-round-top-container>
-      <app-title [title]="shelfData.shelf?.name" [defaultTitle]="'Shelf'" [onPrimary]="true"/> v1.3.1
-    </app-round-top-container>
+    <app-scaffold>
+      <app-round-top-container appbar>
+        <app-title [title]="shelfData.shelf?.name" [defaultTitle]="'Shelf'" [onPrimary]="true"/> v1.3.1
+      </app-round-top-container>
+      
+      <app-container content [padding]="'16px 24px'" *ngIf="dataStateHandler.isSuccess()">
+        <app-list>
+          <app-list-item
+            *ngFor="let shelfItem of shelfItemsData.filteredShelfItems"
+            [icon]="shelfItem.icon"
+            [favourite]="shelfItem.item.favourite"
+            [contentText]="shelfItem.name"
+            (edit)="onEdit(shelfItem)"
+          >
+          </app-list-item>
+        </app-list>
 
-    <app-container [padding]="'16px 24px'" *ngIf="dataStateHandler.isSuccess()">
-      <app-list>
-        <app-list-item
-          *ngFor="let shelfItem of shelfItemsData.filteredShelfItems"
-          [icon]="shelfItem.icon"
-          [favourite]="shelfItem.item.favourite"
-          [contentText]="shelfItem.name"
-          (edit)="onEdit(shelfItem)"
-        >
-        </app-list-item>
-      </app-list>
+        <app-row *ngIf="shelfItemsData.isEmpty() && !categoriesData.isEmpty()">
+          No Shelf Items
+        </app-row>
 
-      <app-row *ngIf="shelfItemsData.isEmpty() && !categoriesData.isEmpty()">
-        No Shelf Items
-      </app-row>
+        <app-row *ngIf="categoriesData.isEmpty()">
+          <p-button #fullflex (click)="gotoCategories()">
+            Start here to add new Categories
+          </p-button>
+        </app-row>
+      </app-container>
 
-      <app-row *ngIf="categoriesData.isEmpty()">
-        <p-button #fullflex (click)="gotoCategories()">
-          Start here to add new Categories
-        </p-button>
-      </app-row>
-    </app-container>
+      <app-list-loading content *ngIf="dataStateHandler.isLoading()"></app-list-loading>
 
-    <app-list-loading *ngIf="dataStateHandler.isLoading()"></app-list-loading>
+      <app-new-button fab (toggleShowNew)="onNew()"></app-new-button>
 
-    <app-fixed-bottom-right *ngIf="!categoriesData.isEmpty()">
-      <app-new-button (toggleShowNew)="onNew()"></app-new-button>
-    </app-fixed-bottom-right>
-
-    <app-menu-bottom></app-menu-bottom>
-
+      <app-menu-bottom bottomtabbar />
+    </app-scaffold>
+  
     <app-shelf-new
       *ngIf="showShelfItemNew"
       [(visible)]="showShelfItemNew"
       [itemsData]="itemsData"
       [categoriesData]="categoriesData"
       (onSaved)="savedShelfItems($event)"
-    >
-    </app-shelf-new>
+    />
 
     <app-shelf-edit
       *ngIf="showShelfItemEdit"
@@ -68,8 +67,7 @@ import { Router } from '@angular/router';
       [categoriesData]="categoriesData"
       (onEdited)="editedShelfItem($event)"
       (onDeleted)="deletedShelfItem($event)"
-    >
-    </app-shelf-edit>
+    />
   `
 })
 export class ShelfComponent implements OnInit {
