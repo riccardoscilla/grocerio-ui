@@ -16,7 +16,7 @@ import { Category } from '../../model/category';
         <app-title [title]="'Grocery List'" [onPrimary]="true" />
       </app-round-top-container>
       
-      <app-container content [padding]="'16px 24px'" *ngIf="dataStateHandler.isSuccess()">
+      <app-container content [padding]="'16px'" *ngIf="dataStateHandler.isSuccess()">
         <app-list>
           <app-list-item
             *ngFor="let groceryItem of groceryItemsData.filteredGroceryItems"

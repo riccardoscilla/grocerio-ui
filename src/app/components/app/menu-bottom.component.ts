@@ -11,24 +11,22 @@ interface MenuItem {
 @Component({
   selector: 'app-menu-bottom',
   template: `
-    <!-- <app-fixed> -->
-      <app-row class="menu">
-        <div
-          #fullflex
-          class="item"
-          *ngFor="let menuItem of menuItems"
-          [class.selected]="isRoute(menuItem)"
-          (click)="goTo(menuItem.url)"
-        >
-          <!-- <ng-component class="select-bar"></ng-component> -->
-          <app-svg
-            [color]="getIconColor(menuItem)"
-            [path]="menuItem.icon"
-          ></app-svg>
-          <div class="text">{{ menuItem.text }}</div>
-        </div>
-      </app-row>
-    <!-- </app-fixed> -->
+    <app-row class="menu">
+      <div
+        #fullflex
+        class="item"
+        *ngFor="let menuItem of menuItems"
+        [class.selected]="isRoute(menuItem)"
+        (click)="goTo(menuItem.url)"
+      >
+        <ng-component class="select-bar"></ng-component>
+        <app-svg
+          [color]="getIconColor(menuItem)"
+          [path]="menuItem.icon"
+        ></app-svg>
+        <div class="text">{{ menuItem.text }}</div>
+      </div>
+    </app-row>
   `,
   styles: `
     .menu {
@@ -46,7 +44,7 @@ interface MenuItem {
       flex-direction: column;
       align-items: center;
       justify-content: space-evenly;
-      gap: 4px;
+      gap: 2px;
 
       position: relative;
     }
@@ -64,7 +62,7 @@ interface MenuItem {
     }
 
     .text {
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 500;
     }
 
@@ -82,19 +80,9 @@ interface MenuItem {
 export class MenuBottomComponent {
   menuItems: MenuItem[] = [
     { url: '/shelf', text: 'Shelf', icon: 'home.svg', urlColor: [] },
-    {
-      url: '/grocery',
-      text: 'Grocery',
-      icon: 'grocery-basket.svg',
-      urlColor: [],
-    },
+    {  url: '/grocery', text: 'Grocery', icon: 'grocery-basket.svg', urlColor: [] },
     // { url: '/recipe', text: 'Recipes', icon: 'recipe-book.svg', urlColor: [] },
-    {
-      url: '/more',
-      text: 'More',
-      icon: 'menu-dots.svg',
-      urlColor: ['/items', '/categories', '/share-shelf', '/timer'],
-    },
+    { url: '/more', text: 'More', icon: 'menu-dots.svg', urlColor: ['/items', '/categories', '/share-shelf', '/timer'] },
   ];
 
   constructor(private router: Router) {}

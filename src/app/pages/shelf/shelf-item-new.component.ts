@@ -36,7 +36,13 @@ import { HttpErrorResponse } from '@angular/common/http';
           >
           </app-list-item>
         </app-list>
+
+        <app-row *ngIf="searchText && itemsData.isEmpty()">
+          <p-button #fullflex [label]="'Add Item '+formattedSearchText()" icon="pi pi-plus" [outlined]="true" (click)="onNewItem()" />
+        </app-row>
       </app-container>
+
+
       <!-- <app-container content>
         <app-row label="Item">
           <app-item-autocomplete-dropdown
@@ -119,56 +125,24 @@ export class ShelfNewComponent implements OnInit {
 
   // HANDLES
 
-  showAddNewItem() {
-    if (this.itemsData.isEmpty()) return true;
-
-    const name =
-      typeof this.selectedItem === 'string'
-        ? this.selectedItem
-        : this.selectedItem.name;
-
-    if (name.trim().length === 0) return false;
-
-    if (this.itemsData.existByName(name)) return false;
-
-    return true;
-  }
-
-  onNewItem() {
-    const name =
-      typeof this.selectedItem === 'string'
-        ? this.selectedItem
-        : this.selectedItem.name;
-
-    this.itemNew = Item.new();
-    this.itemNew.name = name;
-    this.showItemNew = true;
-  }
-
-  onAddInShelf() {
-    if (typeof this.selectedItem === 'string') return;
-
-    const data = {
-      id: this.selectedItem.id,
-      name: this.selectedItem.name,
-      icon: this.selectedItem.icon,
-    };
-    // this.itemsToAdd.push(data);
-    this.selectedItem = '';
-  }
-
-  onRemoveFromShelf(id: string) {
-    this.itemsToAdd = this.itemsToAdd.filter((item) => item.id !== id);
-  }
-
   inItemsToAdd(item: Item) {
     return this.itemsToAdd.filter(i => i.id == item.id).length > 0
+  }
+
+  formattedSearchText() {
+    return this.searchText.charAt(0).toUpperCase() + this.searchText.slice(1).toLowerCase();
   }
 
   // ACTIONS
 
   onSearch(searchText: string) {
     this.itemsData.filter(searchText);
+  }
+
+  onNewItem() {
+    this.itemNew = Item.new();
+    this.itemNew.name = this.formattedSearchText();
+    this.showItemNew = true;
   }
 
   onCheck(item: Item, check: boolean) {

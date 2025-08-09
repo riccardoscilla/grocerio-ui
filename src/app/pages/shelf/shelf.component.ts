@@ -1,12 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ShelfItem } from '../../model/shelfItem';
 import { ToastService } from '../../services/toast.service';
-import {
-  CategoriesData,
-  ItemsData,
-  ShelfData,
-  ShelfItemsData,
-} from '../../data/data';
+import { CategoriesData, ItemsData, ShelfData, ShelfItemsData } from '../../data/data';
 import { DataStateHandler } from '../../data/dataStateHandler';
 import { forkJoin } from 'rxjs';
 import { ApiService } from '../../services/api.service';
@@ -18,10 +13,10 @@ import { Router } from '@angular/router';
   template: `
     <app-scaffold>
       <app-round-top-container appbar>
-        <app-title [title]="shelfData.shelf?.name" [defaultTitle]="'Shelf'" [onPrimary]="true"/> v1.3.4
+        <app-title [title]="shelfData.shelf?.name" [defaultTitle]="'Shelf'" [onPrimary]="true"/> v1.3.5
       </app-round-top-container>
       
-      <app-container content [padding]="'16px 24px'" *ngIf="dataStateHandler.isSuccess()">
+      <app-container content [padding]="'16px'" *ngIf="dataStateHandler.isSuccess()">
         <app-list>
           <app-list-item
             *ngFor="let shelfItem of shelfItemsData.filteredShelfItems"
