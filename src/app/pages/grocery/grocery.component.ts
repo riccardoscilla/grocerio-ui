@@ -7,28 +7,23 @@ import { forkJoin } from 'rxjs';
 import { GroceryItem } from '../../model/groceryItem';
 import { ApiService } from '../../services/api.service';
 import { Category } from '../../model/category';
+import { CheckboxChangeEvent } from 'primeng/checkbox';
 
 @Component({
   selector: 'app-grocery',
   template: `
-    <app-scaffold>
+    <app-scaffold (onRefresh)="initLoad()">
       <app-round-top-container appbar>
         <app-title [title]="'Grocery List'" [onPrimary]="true" />
       </app-round-top-container>
       
       <app-container content [padding]="'16px'" *ngIf="dataStateHandler.isSuccess()">
         <app-list>
-          <app-list-item
-            *ngFor="let groceryItem of groceryItemsData.filteredGroceryItems"
-            [icon]="groceryItem.icon"
-            [favourite]="groceryItem.item.favourite"
-            [contentText]="groceryItem.name"
-            (edit)="onEdit(groceryItem)"
-            [showCheckbox]="true"
-            [checked]="groceryItem.inCart"
-            (check)="onCheck(groceryItem, $event)"
-          >
-          </app-list-item>
+          <app-list-tile *ngFor="let groceryItem of groceryItemsData.filteredGroceryItems">
+            <app-category-icon leading [icon]="groceryItem.icon" [favourite]="groceryItem.item.favourite" />
+            <div content>{{groceryItem.name}}</div>
+            <p-checkbox trailing [(ngModel)]="groceryItem.inCart" (onChange)="onCheck(groceryItem, $event)" [binary]="true"/>
+          </app-list-tile>
         </app-list>
 
         <app-row *ngIf="groceryItemsData.isEmpty()">No Grocery Items</app-row>
@@ -43,18 +38,18 @@ import { Category } from '../../model/category';
 
     <app-grocery-new
       *ngIf="showGroceryItemNew"
-      [(visible)]="showGroceryItemNew"
       [itemsData]="itemsData"
       [categoriesData]="categoriesData"
+      (onClosed)="showGroceryItemNew = false"
       (onSaved)="savedGroceryItems($event)"
     />
 
     <app-grocery-edit
       *ngIf="showGroceryItemEdit"
-      [(visible)]="showGroceryItemEdit"
       [groceryItem]="groceryItemEdit"
       [itemsData]="itemsData"
       [categoriesData]="categoriesData"
+      (onClosed)="showGroceryItemEdit = false"
       (onEdited)="editedGroceryItem($event)"
       (onDeleted)="deletedShelfItem($event)"
     />
@@ -139,19 +134,19 @@ export class GroceryComponent {
     this.showCategoryFilter = true;
   }
 
-  onCheck(groceryItem: GroceryItem, check: boolean) {
+  onCheck(groceryItem: GroceryItem, check: CheckboxChangeEvent) {
     const data = {
       id: groceryItem.id,
       itemId: groceryItem.item.id,
       quantity: groceryItem.quantity,
       insertionDate: groceryItem.insertionDate,
       note: groceryItem.note,
-      inCart: check,
+      inCart: check.checked === true,
     };
 
     this.apiService.editGroceryItem(groceryItem.id, data).subscribe({
       next: (groceryItem: GroceryItem) => {
-        this.toastService.handleSuccess('List items checked!');
+        // this.toastService.handleSuccess('List items checked!');
         this.groceryItemsData.update([groceryItem]);
       },
       error: (error: HttpErrorResponse) => {

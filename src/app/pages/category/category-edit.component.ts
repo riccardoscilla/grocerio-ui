@@ -8,9 +8,9 @@ import { ToastService } from '../../services/toast.service';
   selector: 'app-category-edit',
   template: `
     <app-bottom-sheet
+      *ngIf="visible"
       [header]="'Edit Category'"
-      [visible]="visible"
-      (visibleChange)="visibleChange.emit($event)"
+      (closed)="closed()"
     >
       <app-container content>
         <app-row label="Name">
@@ -50,11 +50,12 @@ import { ToastService } from '../../services/toast.service';
 })
 export class CategoryEditComponent implements OnInit {
   @Input() category: Category;
-  @Input() visible: boolean;
-
-  @Output() visibleChange = new EventEmitter<boolean>();
+  
+  @Output() onClosed = new EventEmitter<void>();
   @Output() onEdited = new EventEmitter<Category>();
   @Output() onDeleted = new EventEmitter<Category>();
+
+  visible = true;
 
   showCategoryDelete = false;
   categoryDelete: Category;
@@ -88,8 +89,8 @@ export class CategoryEditComponent implements OnInit {
     this.apiService.editCategory(this.category.id, data).subscribe({
       next: (category: Category) => {
         this.toastService.handleSuccess('Category saved');
-        this.visibleChange.emit(false);
         this.onEdited.emit(category);
+        this.onClosed.emit();
       },
       error: (error: HttpErrorResponse) => {
         this.toastService.handleError(error, 'Error save Category');
@@ -99,12 +100,17 @@ export class CategoryEditComponent implements OnInit {
 
   deletedCategory(category: Category) {
     this.onDeleted.emit(category);
-    this.visibleChange.emit(false);
+    this.onClosed.emit();
   }
 
   disabledSave() {
     if (this.name === undefined || this.name.trim() === '') return true;
     if (this.icon === undefined || this.name.trim() === '') return true;
     return false;
+  }
+
+  closed() {
+    this.visible = false;
+    this.onClosed.emit();
   }
 }

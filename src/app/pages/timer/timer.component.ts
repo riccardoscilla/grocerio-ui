@@ -5,7 +5,7 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-timer-page',
   template: ` 
-    <app-scaffold>
+    <app-scaffold [refresh]="false">
       <app-title appbar [title]="'Timer'" [back]="'/more'"></app-title>
       
       <app-container content [padding]="'16px'">

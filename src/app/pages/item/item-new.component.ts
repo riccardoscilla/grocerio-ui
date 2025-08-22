@@ -10,9 +10,9 @@ import { HttpErrorResponse } from '@angular/common/http';
   selector: 'app-item-new',
   template: `
     <app-bottom-sheet
+      *ngIf="visible"
       [header]="'New Item'"
-      [visible]="visible"
-      (visibleChange)="visibleChange.emit($event)"
+      (closed)="closed()"
     >
       <app-container content>
         <app-row label="Name">
@@ -61,10 +61,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class ItemNewComponent implements OnInit {
   @Input() item: Item;
   @Input() categoriesData: CategoriesData;
-  @Input() visible: boolean;
-
-  @Output() visibleChange = new EventEmitter<boolean>();
+  
+  @Output() onClosed = new EventEmitter<void>();
   @Output() onSaved = new EventEmitter<Item>();
+
+  visible = true;
 
   // form
   name: string;
@@ -91,8 +92,8 @@ export class ItemNewComponent implements OnInit {
     this.apiService.saveItem(data).subscribe({
       next: (item: Item) => {
         this.toastService.handleSuccess('Item saved');
-        this.visibleChange.emit(false);
         this.onSaved.emit(item);
+        this.onClosed.emit();
       },
       error: (error: HttpErrorResponse) => {
         this.toastService.handleError(error, 'Error save Item');
@@ -104,5 +105,10 @@ export class ItemNewComponent implements OnInit {
     if (this.name === undefined || this.name.trim() === '') return true;
     if (this.category === undefined) return true;
     return false;
+  }
+
+  closed() {
+    this.visible = false;
+    this.onClosed.emit();
   }
 }

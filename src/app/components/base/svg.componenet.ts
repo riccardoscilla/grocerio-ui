@@ -11,6 +11,7 @@ import { Component, HostBinding, Input } from '@angular/core';
 
         width: 24px;
         height: 24px;
+        background-color: var(--background-text-color);
     }
   `]
 })
@@ -19,7 +20,7 @@ export class SvgComponent {
     private _path!: string;
   
     @HostBinding('style.background-color')
-    private _color!: string;
+    private _color!: string
   
     @HostBinding('style.width')
     private _width!: string;

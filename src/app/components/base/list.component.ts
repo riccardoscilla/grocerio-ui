@@ -7,13 +7,12 @@ import { Component } from '@angular/core';
   `,
   styles: [`
     :host {
-      // padding: 0 16px;
       display: flex;
       flex-direction: column;
     }
 
     :host ::ng-deep > * {
-      border-bottom: 2px solid var(--background-border-color);
+      border-bottom: 1px solid var(--background-border-color);
     }
 
     :host ::ng-deep > *:last-child {

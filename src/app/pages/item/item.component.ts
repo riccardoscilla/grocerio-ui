@@ -11,19 +11,15 @@ import { catchError, forkJoin, of, tap } from 'rxjs';
 @Component({
   selector: 'app-item',
   template: `
-    <app-scaffold>
+    <app-scaffold (onRefresh)="initLoad()">
       <app-title appbar [title]="'Items'" [back]="'/more'"/>
 
       <app-container content [padding]="'16px'" *ngIf="dataStateHandler.isSuccess()">
         <app-list>
-          <app-list-item
-            *ngFor="let item of itemsData.filteredItems"
-            [icon]="item.icon"
-            [favourite]="item.favourite"
-            [contentText]="item.name"
-            (edit)="onEdit(item)"
-          >
-          </app-list-item>
+          <app-list-tile *ngFor="let item of itemsData.filteredItems" (onClick)="onEdit(item)">
+            <app-category-icon leading [icon]="item.icon" [favourite]="item.favourite" />
+            <div content>{{item.name}}</div>
+          </app-list-tile>
         </app-list>
 
         <app-row *ngIf="itemsData.isEmpty()">No Items</app-row>
@@ -38,17 +34,17 @@ import { catchError, forkJoin, of, tap } from 'rxjs';
 
     <app-item-new
       *ngIf="showItemNew"
-      [(visible)]="showItemNew"
       [item]="itemNew"
       [categoriesData]="categoriesData"
+      (onClosed)="showItemNew = false"
       (onSaved)="savedItem($event)"
     />
 
     <app-item-edit
       *ngIf="showItemEdit"
-      [(visible)]="showItemEdit"
       [item]="itemEdit"
       [categoriesData]="categoriesData"
+      (onClosed)="showItemEdit = false"
       (onEdited)="editedItem($event)"
       (onDeleted)="deletedItem($event)"
     />

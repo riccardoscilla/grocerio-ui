@@ -1,12 +1,4 @@
-import {
-  AfterContentInit,
-  Component,
-  ContentChildren,
-  ElementRef,
-  Input,
-  QueryList,
-  Renderer2,
-} from '@angular/core';
+import { AfterContentInit, Component, ContentChildren, ElementRef, Input, QueryList, Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-container',
@@ -30,6 +22,7 @@ import {
 export class ContainerComponent implements AfterContentInit {
   @Input() padding = '';
   @Input() height = '';
+  @Input() gap = '16px';
 
   constructor(private hostRef: ElementRef, private renderer: Renderer2) {}
 
@@ -45,6 +38,9 @@ export class ContainerComponent implements AfterContentInit {
     }
     if (this.height) {
       this.renderer.setStyle(this.hostRef.nativeElement, 'height', this.height);
+    }
+    if (this.gap) {
+      this.renderer.setStyle(this.hostRef.nativeElement, 'gap', this.gap);   
     }
   }
 }

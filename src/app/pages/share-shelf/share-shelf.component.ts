@@ -7,7 +7,7 @@ import { ToastService } from '../../services/toast.service';
 @Component({
   selector: 'app-share-shelf',
   template: `
-    <app-scaffold>
+    <app-scaffold [refresh]="false">
       <app-title appbar [title]="'Share Shelf'" [back]="'/more'"></app-title>
       
       <app-container content [padding]="'16px'">

@@ -5,31 +5,46 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-more',
   template: ` 
-    <app-scaffold>
+    <app-scaffold [refresh]="false">
       <app-title appbar [title]="'More'"></app-title>
 
       <app-container content [padding]="'16px'">
         <app-list>
-          <app-list-item
-            [contentText]="'Items'"
-            [angleRightButton]="true"
-            [url]="'/items'"
-          ></app-list-item>
-          <app-list-item
-            [contentText]="'Categories'"
-            [angleRightButton]="true"
-            [url]="'/categories'"
-          ></app-list-item>
-          <app-list-item
-            [contentText]="'Share Shelf'"
-            [angleRightButton]="true"
-            [url]="'/share-shelf'"
-          ></app-list-item>
-          <app-list-item
-            [contentText]="'Timer'"
-            [angleRightButton]="true"
-            [url]="'/timer'"
-          ></app-list-item>
+          <app-list-tile>
+            <div content>Items</div>
+            <p-button trailing [text]="true" [rounded]="true" (onClick)="goto('/items')">
+              <ng-template pTemplate="icon">
+                <app-svg [color]="'black'" [size]="18" [path]="'angle-small-right.svg'"></app-svg>
+              </ng-template>
+            </p-button>
+          </app-list-tile>
+
+          <app-list-tile>
+            <div content>Categories</div>
+            <p-button trailing [text]="true" [rounded]="true" (onClick)="goto('/categories')">
+              <ng-template pTemplate="icon">
+                <app-svg [color]="'black'" [size]="18" [path]="'angle-small-right.svg'"></app-svg>
+              </ng-template>
+            </p-button>
+          </app-list-tile>
+
+          <app-list-tile>
+            <div content>Share Shelf</div>
+            <p-button trailing [text]="true" [rounded]="true" (onClick)="goto('/share-shelf')">
+              <ng-template pTemplate="icon">
+                <app-svg [color]="'black'" [size]="18" [path]="'angle-small-right.svg'"></app-svg>
+              </ng-template>
+            </p-button>
+          </app-list-tile>
+
+          <app-list-tile>
+            <div content>Timer</div>
+            <p-button trailing [text]="true" [rounded]="true" (onClick)="goto('/timer')">
+              <ng-template pTemplate="icon">
+                <app-svg [color]="'black'" [size]="18" [path]="'angle-small-right.svg'"></app-svg>
+              </ng-template>
+            </p-button>
+          </app-list-tile>
         </app-list>
         
         <p-button [outlined]="true" label="Logout" (click)="logout()" />
@@ -44,6 +59,10 @@ export class MoreComponent {
 
   logout() {
     this.authService.removeAuthResponse();
-    this.router.navigateByUrl(`/welcome`);
+    this.router.navigateByUrl('/welcome');
+  }
+
+  goto(url: string) {
+    this.router.navigateByUrl(url);
   }
 }

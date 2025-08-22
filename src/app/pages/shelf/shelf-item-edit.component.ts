@@ -10,9 +10,9 @@ import { CategoriesData, ItemsData } from '../../data/data';
   selector: 'app-shelf-edit',
   template: `
     <app-bottom-sheet
+      *ngIf="visible"
       [header]="'Edit Shelf Item'"
-      [visible]="visible"
-      (visibleChange)="visibleChange.emit($event)"
+      (closed)="closed()"
     >
       <app-container content>
         <app-row label="Item">
@@ -97,16 +97,16 @@ import { CategoriesData, ItemsData } from '../../data/data';
 
     <app-item-new
       *ngIf="showItemNew"
-      [(visible)]="showItemNew"
       [item]="itemNew"
       [categoriesData]="categoriesData"
+      (onClosed)="showItemNew = false"
       (onSaved)="savedItem($event)"
     ></app-item-new>
 
     <app-shelf-delete
       *ngIf="showShelfItemDelete"
-      [(visible)]="showShelfItemDelete"
       [shelfItem]="shelfItemDelete"
+      (onClosed)="showShelfItemDelete = false"
       (onDeleted)="deletedShelfItem($event)"
     ></app-shelf-delete>
   `,
@@ -116,11 +116,12 @@ export class ShelfEditComponent implements OnInit {
   @Input() shelfItem: ShelfItem;
   @Input() itemsData: ItemsData;
   @Input() categoriesData: CategoriesData;
-  @Input() visible: boolean;
-
-  @Output() visibleChange = new EventEmitter<boolean>();
+  
+  @Output() onClosed = new EventEmitter<void>();
   @Output() onEdited = new EventEmitter<ShelfItem>();
   @Output() onDeleted = new EventEmitter<ShelfItem>();
+
+  visible = true;
 
   showItemNew: boolean = false;
   itemNew: Item;
@@ -174,6 +175,11 @@ export class ShelfEditComponent implements OnInit {
     this.showItemNew = true;
   }
 
+  closed() {
+    this.visible = false;
+    this.onClosed.emit();
+  }
+
   onDelete() {
     this.shelfItemDelete = this.shelfItem.deepcopy();
     this.showShelfItemDelete = true;
@@ -205,8 +211,9 @@ export class ShelfEditComponent implements OnInit {
     this.apiService.editShelfItem(this.shelfItem.id, data).subscribe({
       next: (shelfItem: ShelfItem) => {
         this.toastService.handleSuccess('Shelf Item saved');
-        this.visibleChange.emit(false);
+        // this.visibleChange.emit(false);
         this.onEdited.emit(shelfItem);
+        this.onClosed.emit();
       },
       error: (error: HttpErrorResponse) => {
         this.toastService.handleError(error, 'Error edit Shelf Item');
@@ -215,7 +222,8 @@ export class ShelfEditComponent implements OnInit {
   }
 
   deletedShelfItem(shelfItem: ShelfItem) {
-    this.onDeleted.emit(shelfItem);
-    this.visibleChange.emit(false);
+    // this.visibleChange.emit(false);
+    this.onDeleted.emit(shelfItem); 
+    this.onClosed.emit();
   }
 }

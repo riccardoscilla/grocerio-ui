@@ -45,21 +45,14 @@ import {
     p-iconfield.p-flex input {
       width: 100%;
     }
-    // .p-flex > div:first-child,
-    // .p-flex > span:first-child,
-    // .p-flex > span:first-child,
-    // .p-flex > input:first-child
-    // .p-flex > button:first-child {
-    // .p-flex > *:first-child {
-    //   width: 100%;
-    // }
   `,
 })
 export class RowComponent implements AfterContentInit {
   @Input() padding = '';
+  @Input() height = '';
   @Input() center = false;
   @Input() reverse = false;
-  @Input() label: string;
+  @Input() label = '';
 
   @ViewChild('content', { static: true }) content!: ElementRef;
   @ContentChildren('fullflex', { descendants: true, read: ElementRef })
@@ -71,24 +64,13 @@ export class RowComponent implements AfterContentInit {
     this.fullflexItems.forEach((item) =>
       this.renderer.addClass(item.nativeElement, 'p-flex')
     );
-    if (this.reverse)
-      this.renderer.setStyle(
-        this.content.nativeElement,
-        'flex-direction',
-        'row-reverse'
-      );
+    if (this.padding)
+      this.renderer.setStyle(this.hostRef.nativeElement, 'padding', this.padding);
+    if (this.height)
+      this.renderer.setStyle(this.hostRef.nativeElement, 'height', this.height);
     if (this.center)
-      this.renderer.setStyle(
-        this.content.nativeElement,
-        'justify-content',
-        'center'
-      );
-    if (this.padding) {
-      this.renderer.setStyle(
-        this.hostRef.nativeElement,
-        'padding',
-        this.padding
-      );
-    }
+      this.renderer.setStyle(this.content.nativeElement, 'justify-content', 'center');
+    if (this.reverse)
+      this.renderer.setStyle(this.content.nativeElement, 'flex-direction', 'row-reverse');
   }
 }

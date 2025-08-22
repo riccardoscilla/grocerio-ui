@@ -8,47 +8,34 @@ import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-shelf-delete',
   template: `
-    <p-dialog
-      [(visible)]="visible"
-      [draggable]="false"
-      [resizable]="false"
-      [modal]="true"
-      [closable]="true"
-      [dismissableMask]="true"
+    <app-bottom-sheet
       [header]="'Delete Shelf Item'"
-      (onHide)="visibleChange.emit(false)"
-      position="bottom"
-      class="bottom-sheet"
+      (closed)="onClosed.emit()"
     >
-      <app-container>
+      <app-container content>
         Delete shelf item {{ shelfItem.icon }} {{ shelfItem.name }}?
       </app-container>
 
-      <ng-template pTemplate="footer">
-        <app-container>
-          <app-row>
-            <p-button
-              #fullflex
-              label="Delete"
-              [outlined]="true"
-              severity="danger"
-              (click)="delete()"
-            />
-          </app-row>
-          <app-row>
-            <p-button #fullflex label="Delete and save in Grocery List" (click)="deleteAndSaveInList()" />
-          </app-row>
-        </app-container>
-      </ng-template>
-    </p-dialog>
+      <app-container footer>
+        <app-row>
+          <p-button #fullflex label="Delete" [outlined]="true" severity="danger" (click)="delete()"/>
+        </app-row>
+        <app-row>
+          <p-button #fullflex label="Delete and save in Grocery List" (click)="deleteAndSaveInList()" />
+        </app-row>
+      </app-container>
+      
+    </app-bottom-sheet>
   `,
   styles: [],
 })
 export class ShelfDeleteComponent {
   @Input() shelfItem: ShelfItem;
-  @Input() visible: boolean;
+  // @Input() visible: boolean;
+  visible = true
 
-  @Output() visibleChange = new EventEmitter<boolean>();
+  // @Output() visibleChange = new EventEmitter<boolean>();
+  @Output() onClosed = new EventEmitter<void>();
   @Output() onDeleted = new EventEmitter<ShelfItem>();
 
   constructor(
@@ -61,7 +48,7 @@ export class ShelfDeleteComponent {
       next: (shelfItem: ShelfItem) => {
         this.toastService.handleSuccess('Shelf Item deleted');
         this.onDeleted.emit(shelfItem);
-        this.visibleChange.emit(false);
+        // this.visibleChange.emit(false);
       },
       error: (error: HttpErrorResponse) => {
         this.toastService.handleError(error, 'Error delete Shelf Item');
@@ -74,11 +61,16 @@ export class ShelfDeleteComponent {
       next: (shelfItem: ShelfItem) => {
         this.toastService.handleSuccess('Shelf Item deleted and saved in Grocery List');
         this.onDeleted.emit(shelfItem);
-        this.visibleChange.emit(false);
+        // this.visibleChange.emit(false);
       },
       error: (error: HttpErrorResponse) => {
         this.toastService.handleError(error, 'Error delete Shelf Item and save in Grocery List');
       },
     });
+  }
+
+  handleClosed() {
+    this.visible = false;
+    this.onClosed.emit();
   }
 }

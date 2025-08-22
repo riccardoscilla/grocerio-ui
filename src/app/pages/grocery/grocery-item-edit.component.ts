@@ -10,9 +10,9 @@ import { CategoriesData, ItemsData } from '../../data/data';
   selector: 'app-grocery-edit',
   template: `
     <app-bottom-sheet
+      *ngIf="visible"
       [header]="'Edit Grocery Item'"
-      [visible]="visible"
-      (visibleChange)="visibleChange.emit($event)"
+      (closed)="closed()"
     >
       <app-container content>
         <app-row label="Item">
@@ -97,9 +97,9 @@ import { CategoriesData, ItemsData } from '../../data/data';
 
     <app-item-new
       *ngIf="showItemNew"
-      [(visible)]="showItemNew"
       [item]="itemNew"
       [categoriesData]="categoriesData"
+      (onClosed)="showItemNew = false"
       (onSaved)="savedItem($event)"
     ></app-item-new>
 
@@ -115,11 +115,12 @@ export class GroceryEditComponent implements OnInit {
   @Input() groceryItem: GroceryItem;
   @Input() itemsData: ItemsData;
   @Input() categoriesData: CategoriesData;
-  @Input() visible: boolean;
 
-  @Output() visibleChange = new EventEmitter<boolean>();
+  @Output() onClosed = new EventEmitter<void>();
   @Output() onEdited = new EventEmitter<GroceryItem>();
   @Output() onDeleted = new EventEmitter<GroceryItem>();
+
+  visible = true;
 
   showItemNew: boolean = false;
   itemNew: Item;  
@@ -206,8 +207,8 @@ export class GroceryEditComponent implements OnInit {
     this.apiService.editGroceryItem(this.groceryItem.id, data).subscribe({
       next: (groceryItem: GroceryItem) => {
         this.toastService.handleSuccess('Shelf Item saved');
-        this.visibleChange.emit(false);
         this.onEdited.emit(groceryItem);
+        this.onClosed.emit();
       },
       error: (error: HttpErrorResponse) => {
         this.toastService.handleError(error, 'Error edit Shelf Item');
@@ -217,7 +218,11 @@ export class GroceryEditComponent implements OnInit {
 
   deletedGroceryItem(groceryItem: GroceryItem) {
     this.onDeleted.emit(groceryItem);
-    this.visibleChange.emit(false);
+    this.onClosed.emit();
   }
 
+  closed() {
+    this.visible = false;
+    this.onClosed.emit();
+  }
 }

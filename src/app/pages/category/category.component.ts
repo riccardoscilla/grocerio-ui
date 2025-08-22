@@ -9,18 +9,15 @@ import { forkJoin } from 'rxjs';
 @Component({
   selector: 'app-category',
   template: `
-    <app-scaffold>
+    <app-scaffold (onRefresh)="initLoad()">
       <app-title appbar [title]="'Categories'" [back]="'/more'"></app-title>
 
       <app-container content [padding]="'16px'" *ngIf="dataStateHandler.isSuccess()">
         <app-list>
-          <app-list-item
-            *ngFor="let category of categoriesData.filteredCategories"
-            [icon]="category.icon"
-            [contentText]="category.name"
-            (edit)="onEdit(category)"
-          >
-          </app-list-item>
+          <app-list-tile *ngFor="let category of categoriesData.filteredCategories" (onClick)="onEdit(category)">
+            <app-category-icon leading [icon]="category.icon"/>
+            <div content>{{category.name}}</div>
+          </app-list-tile>
         </app-list>
 
         <app-row *ngIf="categoriesData.isEmpty()">No Categories</app-row>
@@ -35,15 +32,15 @@ import { forkJoin } from 'rxjs';
 
     <app-category-new
       *ngIf="showCategoryNew"
-      [(visible)]="showCategoryNew"
       [category]="categoryNew"
+      (onClosed)="showCategoryNew = false"
       (onSaved)="savedCategory($event)"
     />
 
     <app-category-edit
       *ngIf="showCategoryEdit"
-      [(visible)]="showCategoryEdit"
       [category]="categoryEdit"
+      (onClosed)="showCategoryEdit = false"
       (onEdited)="editedCategory($event)"
     />
     `,

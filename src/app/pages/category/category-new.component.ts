@@ -8,9 +8,9 @@ import { HttpErrorResponse } from '@angular/common/http';
   selector: 'app-category-new',
   template: `
     <app-bottom-sheet
+      *ngIf="visible"
       [header]="'Edit Grocery Item'"
-      [visible]="visible"
-      (visibleChange)="visibleChange.emit($event)"
+      (closed)="closed()"
     >
       <app-container content>
         <app-row label="Name">
@@ -36,10 +36,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class CategoryNewComponent implements OnInit {
   @Input() category: Category;
-  @Input() visible: boolean;
 
-  @Output() visibleChange = new EventEmitter<boolean>();
+  @Output() onClosed = new EventEmitter<void>();
   @Output() onSaved = new EventEmitter<Category>();
+
+  visible = true;
 
   // form
   name: string;
@@ -63,8 +64,8 @@ export class CategoryNewComponent implements OnInit {
     this.apiService.saveCategory(data).subscribe({
       next: (category: Category) => {
         this.toastService.handleSuccess('Category saved');
-        this.visibleChange.emit(false);
         this.onSaved.emit(category);
+        this.onClosed.emit();
       },
       error: (error: HttpErrorResponse) => {
         this.toastService.handleError(error, 'Error save Category');
@@ -76,5 +77,10 @@ export class CategoryNewComponent implements OnInit {
     if (this.name === undefined || this.name.trim() === '') return true;
     if (this.icon === undefined || this.name.trim() === '') return true;
     return false;
+  }
+
+  closed() {
+    this.visible = false;
+    this.onClosed.emit();
   }
 }

@@ -13,6 +13,7 @@ export class Item implements IModel {
   name: string;
   category: Category;
   favourite: boolean = false;
+  checked: boolean = false;
 
   static fromInterface(i: IItem) {
     const item = new Item();

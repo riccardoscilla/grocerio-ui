@@ -11,21 +11,19 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-shelf',
   template: `
-    <app-scaffold>
+    <app-scaffold (onRefresh)="initLoad()">
       <app-round-top-container appbar>
-        <app-title [title]="shelfData.shelf?.name" [defaultTitle]="'Shelf'" [onPrimary]="true"/> v1.3.5
+        <app-title [title]="shelfData.shelf?.name" [defaultTitle]="'Shelf'" [onPrimary]="true"/> v1.3.9
       </app-round-top-container>
       
       <app-container content [padding]="'16px'" *ngIf="dataStateHandler.isSuccess()">
         <app-list>
-          <app-list-item
-            *ngFor="let shelfItem of shelfItemsData.filteredShelfItems"
-            [icon]="shelfItem.icon"
-            [favourite]="shelfItem.item.favourite"
-            [contentText]="shelfItem.name"
-            (edit)="onEdit(shelfItem)"
-          >
-          </app-list-item>
+          <app-list-tile *ngFor="let shelfItem of shelfItemsData.filteredShelfItems" (onClick)="onEdit(shelfItem)">
+            <app-category-icon leading [icon]="shelfItem.icon" [favourite]="shelfItem.item.favourite" />
+            <div content>{{shelfItem.name}}</div>
+            <div subcontent>{{shelfItem.purchaseDate | date:'EEEE, dd MMMM yyyy'}}</div>
+            <div trailing>{{shelfItem.quantity}}</div>
+          </app-list-tile>
         </app-list>
 
         <app-row *ngIf="shelfItemsData.isEmpty() && !categoriesData.isEmpty()">
@@ -48,18 +46,18 @@ import { Router } from '@angular/router';
   
     <app-shelf-new
       *ngIf="showShelfItemNew"
-      [(visible)]="showShelfItemNew"
       [itemsData]="itemsData"
       [categoriesData]="categoriesData"
+      (onClosed)="showShelfItemNew = false"
       (onSaved)="savedShelfItems($event)"
     />
 
     <app-shelf-edit
       *ngIf="showShelfItemEdit"
-      [(visible)]="showShelfItemEdit"
       [shelfItem]="shelfItemEdit"
       [itemsData]="itemsData"
       [categoriesData]="categoriesData"
+      (onClosed)="showShelfItemEdit = false"
       (onEdited)="editedShelfItem($event)"
       (onDeleted)="deletedShelfItem($event)"
     />

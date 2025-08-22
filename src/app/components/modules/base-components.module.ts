@@ -8,15 +8,15 @@ import { FixedBottomRightComponent } from '../app/fixed-bottom-right.component';
 import { RowComponent } from '../base/row.component';
 import { ContainerComponent } from '../base/container.component';
 import { ListComponent } from '../base/list.component';
-import { ListItemComponent } from '../app/list-item.component';
 import { TitleComponent } from '../app/title.component';
 import { AppBarComponent } from '../base/appbar.component';
 import { ListLoadingComponent } from '../app/list-loading.component';
 import { RoundTopContainerComponent } from '../app/round-top-container.component';
-import { BottomSheetComponent } from '../base/bottom-sheet.component';
 import { TimerComponent } from '../base/timer.component';
 import { ScaffoldComponent } from '../base/scaffold.component';
 import { ChipComponent } from '../base/chip.component';
+import { BottomSheetComponent } from '../base/bottom-sheet.component';
+import { ListTileComponent } from '../base/list-tile.component';
 
 export const BaseComponentsModule =[
     SvgComponent,
@@ -29,7 +29,7 @@ export const BaseComponentsModule =[
     RowComponent,
 
     ListComponent,
-    ListItemComponent,
+    ListTileComponent,
 
     TitleComponent,
     RoundTopContainerComponent,

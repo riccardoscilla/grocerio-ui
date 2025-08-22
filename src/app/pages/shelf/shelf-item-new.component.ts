@@ -5,14 +5,15 @@ import { CategoriesData, ItemsData } from '../../data/data';
 import { ApiService } from '../../services/api.service';
 import { ToastService } from '../../services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CheckboxChangeEvent } from 'primeng/checkbox';
 
 @Component({
   selector: 'app-shelf-new',
   template: `
     <app-bottom-sheet
+      *ngIf="visible"
       [header]="'Add Shelf Item'"
-      [visible]="visible"
-      (visibleChange)="visibleChange.emit($event)"
+      (closed)="closed()"
     >
       <app-container content>
         <p-iconField #fullflex iconPosition="right">
@@ -21,67 +22,22 @@ import { HttpErrorResponse } from '@angular/common/http';
         </p-iconField>
 
         <!-- <app-row>
-          <app-chip [label]="'All'" />
+          <app-chip [label]="'All'" [selected]="true" />
+          <app-chip [label]="'Not in Shelf'" />
         </app-row> -->
 
         <app-list>
-          <app-list-item
-            *ngFor="let item of itemsData.filteredItems"
-            [icon]="item.icon"
-            [favourite]="item.favourite"
-            [contentText]="item.name"
-            [showCheckbox]="true"
-            [checked]="inItemsToAdd(item)"
-            (check)="onCheck(item, $event)"
-          >
-          </app-list-item>
+          <app-list-tile *ngFor="let item of itemsData.filteredItems">
+            <app-category-icon leading [icon]="item.icon" [favourite]="item.favourite" />
+            <div content>{{item.name}}</div>
+            <p-checkbox trailing [(ngModel)]="item.checked" (onChange)="onCheck(item, $event)" [binary]="true"/>
+          </app-list-tile>
         </app-list>
 
         <app-row *ngIf="searchText && itemsData.isEmpty()">
           <p-button #fullflex [label]="'Add Item '+formattedSearchText()" icon="pi pi-plus" [outlined]="true" (click)="onNewItem()" />
         </app-row>
       </app-container>
-
-
-      <!-- <app-container content>
-        <app-row label="Item">
-          <app-item-autocomplete-dropdown
-            #fullflex
-            [itemsData]="itemsData"
-            [(selectedItem)]="selectedItem"
-          >
-          </app-item-autocomplete-dropdown>
-
-          <p-button
-            icon="pi pi-plus"
-            *ngIf="showAddNewItem()"
-            (click)="onNewItem()"
-          />
-        </app-row>
-
-        <app-row>
-          <p-button
-            #fullflex
-            label="Add in shelf"
-            [outlined]="true"
-            (click)="onAddInShelf()"
-            [disabled]="disabledAddInShelf()"
-          />
-        </app-row>
-
-        <app-row *ngIf="itemsToAdd.length !== 0">
-          Items to insert in shelf
-        </app-row>
-        <app-list *ngIf="itemsToAdd.length !== 0">
-          <app-list-item
-            *ngFor="let item of itemsToAdd"
-            [icon]="item.icon"
-            [contentText]="item.name"
-            [deleteButton]="true"
-            (delete)="onRemoveFromShelf(item.id)"
-          />
-        </app-list>
-      </app-container> -->
 
       <app-row footer>
         <p-button #fullflex label="Save" (click)="save()" [disabled]="disabledSave()"/>
@@ -90,9 +46,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 
     <app-item-new
       *ngIf="showItemNew"
-      [(visible)]="showItemNew"
       [item]="itemNew"
       [categoriesData]="categoriesData"
+      (onClosed)="showItemNew = false"
       (onSaved)="savedItem($event)"
     ></app-item-new>
   `
@@ -100,15 +56,14 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class ShelfNewComponent implements OnInit {
   @Input() itemsData: ItemsData;
   @Input() categoriesData: CategoriesData;
-  @Input() visible: boolean;
-
-  @Output() visibleChange = new EventEmitter<boolean>();
+  
+  @Output() onClosed = new EventEmitter<void>();
   @Output() onSaved = new EventEmitter<ShelfItem[]>();
+
+  visible = true;
 
   // FORM
   searchText: string
-
-  selectedItem: Item | string;
   itemsToAdd: Item[] = [];
 
   showItemNew: boolean = false;
@@ -120,13 +75,8 @@ export class ShelfNewComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.selectedItem = '';
-  }
-
-  // HANDLES
-
-  inItemsToAdd(item: Item) {
-    return this.itemsToAdd.filter(i => i.id == item.id).length > 0
+    this.itemsData.items.forEach(i => i.checked = false);
+    this.itemsData.filter();
   }
 
   formattedSearchText() {
@@ -145,16 +95,11 @@ export class ShelfNewComponent implements OnInit {
     this.showItemNew = true;
   }
 
-  onCheck(item: Item, check: boolean) {
-    if (check)
+  onCheck(item: Item, check: CheckboxChangeEvent) {
+    if (check.checked === true)
       this.itemsToAdd.push(item);
     else 
       this.itemsToAdd = this.itemsToAdd.filter(i => i.id != item.id);
-  }
-
-  disabledAddInShelf() {
-    if (typeof this.selectedItem === 'string') return true;
-    return false;
   }
 
   disabledSave() {
@@ -164,7 +109,6 @@ export class ShelfNewComponent implements OnInit {
 
   savedItem(item: Item) {
     this.itemsData.update([item]);
-    this.selectedItem = item.deepcopy();
   }
 
   save() {
@@ -180,12 +124,17 @@ export class ShelfNewComponent implements OnInit {
     this.apiService.saveShelfItems(data).subscribe({
       next: (shelfItems: ShelfItem[]) => {
         this.toastService.handleSuccess('Shelf Item saved');
-        this.visibleChange.emit(false);
         this.onSaved.emit(shelfItems);
+        this.onClosed.emit();
       },
       error: (error: HttpErrorResponse) => {
         this.toastService.handleError(error, 'Error save Shelf Item');
       },
     });
+  }
+
+  closed() {
+    this.visible = false;
+    this.onClosed.emit();
   }
 }

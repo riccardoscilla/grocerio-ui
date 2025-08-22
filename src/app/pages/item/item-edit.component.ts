@@ -10,9 +10,9 @@ import { HttpErrorResponse } from '@angular/common/http';
   selector: 'app-item-edit',
   template: `
     <app-bottom-sheet
+      *ngIf="visible"
       [header]="'Edit Item'"
-      [visible]="visible"
-      (visibleChange)="visibleChange.emit($event)"
+      (closed)="closed()"
     >
       <app-container content>
         <app-row label="Name">
@@ -74,11 +74,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class ItemEditComponent implements OnInit {
   @Input() item: Item;
   @Input() categoriesData: CategoriesData;
-  @Input() visible: boolean;
 
-  @Output() visibleChange = new EventEmitter<boolean>();
+  @Output() onClosed = new EventEmitter<void>();
   @Output() onEdited = new EventEmitter<Item>();
   @Output() onDeleted = new EventEmitter<Item>();
+
+  visible = true;
   
   showItemDelete = false;
   itemDelete: Item;
@@ -116,8 +117,8 @@ export class ItemEditComponent implements OnInit {
     this.apiService.editItem(this.item.id, data).subscribe({
       next: (item: Item) => {
         this.toastService.handleSuccess('Item saved');
-        this.visibleChange.emit(false);
         this.onEdited.emit(item);
+        this.onClosed.emit();
       },
       error: (error: HttpErrorResponse) => {
         this.toastService.handleError(error, 'Error save Item');
@@ -127,12 +128,17 @@ export class ItemEditComponent implements OnInit {
 
   deletedItem(item: Item) {
     this.onDeleted.emit(item);
-    this.visibleChange.emit(false);
+    this.onClosed.emit();
   }
 
   invaliEdit() {
     if (this.name === undefined || this.name.trim() === '') return true;
     if (this.category === undefined) return true;
     return false;
+  }
+
+  closed() {
+    this.visible = false;
+    this.onClosed.emit();
   }
 }

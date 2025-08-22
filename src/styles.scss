@@ -20,6 +20,7 @@ body {
     user-select: none;
     -webkit-tap-highlight-color: transparent; // remove highlight tap
     -webkit-tap-callout: none;
+    overscroll-behavior: contain;
     position: relative;
 }
 
