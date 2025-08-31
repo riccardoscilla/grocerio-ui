@@ -144,7 +144,7 @@ export class ApiService {
       .pipe(map((i) => ShelfItem.fromInterface(i)));
   }
 
-  deleteAndSaveInList(id: string): Observable<ShelfItem> {
+  moveShelfItemInGrocery(id: string): Observable<ShelfItem> {
     return this.http
       .delete<IShelfItem>(`${this.apiUrl}/${this.shelfItemPath}/${id}/move-in-grocery`)
       .pipe(map((i) => ShelfItem.fromInterface(i)));
@@ -176,13 +176,7 @@ export class ApiService {
       .pipe(map((i) => GroceryItem.fromInterface(i)));
   }
 
-  deleteAndSaveInShelf(id: string): Observable<GroceryItem> {
-    return this.http
-      .delete<IGroceryItem>(`${this.apiUrl}/${this.groceryItemPath}/${id}/move-in-shelf`)
-      .pipe(map((i) => GroceryItem.fromInterface(i)));
-  }
-
-  endGrocery(): Observable<void> {
+  moveCartInShelf(): Observable<void> {
     return this.http
       .post<void>(`${this.apiUrl}/${this.groceryItemPath}/move-cart-in-shelf`, {});
   }

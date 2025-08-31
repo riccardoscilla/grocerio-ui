@@ -16,10 +16,12 @@ import { catchError, forkJoin, of, tap } from 'rxjs';
 
       <app-container content [padding]="'16px'" *ngIf="dataStateHandler.isSuccess()">
         <app-list>
-          <app-list-tile *ngFor="let item of itemsData.filteredItems" (onClick)="onEdit(item)">
-            <app-category-icon leading [icon]="item.icon" [favourite]="item.favourite" />
+          @for (item of itemsData.filteredItems; track item.id) {
+            <app-list-tile>
+              <app-category-icon leading [icon]="item.icon" [favourite]="item.favourite" />
             <div content>{{item.name}}</div>
-          </app-list-tile>
+            </app-list-tile>
+          }
         </app-list>
 
         <app-row *ngIf="itemsData.isEmpty()">No Items</app-row>

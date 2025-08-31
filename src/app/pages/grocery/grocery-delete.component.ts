@@ -62,17 +62,4 @@ export class GroceryDeleteComponent {
       },
     });
   }
-  
-  deleteAndSaveInList() {
-    this.apiService.deleteAndSaveInShelf(this.groceryItem.id).subscribe({
-      next: (groceryItem: GroceryItem) => {
-        this.toastService.handleSuccess('Grocery Item deleted and saved in Shelf');
-        this.onDeleted.emit(groceryItem);
-        this.visibleChange.emit(false);
-      },
-      error: (error: HttpErrorResponse) => {
-        this.toastService.handleError(error, 'Error delete Grocery Item and save in Shelf');
-      },
-    });
-  }
 }

@@ -14,10 +14,12 @@ import { forkJoin } from 'rxjs';
 
       <app-container content [padding]="'16px'" *ngIf="dataStateHandler.isSuccess()">
         <app-list>
-          <app-list-tile *ngFor="let category of categoriesData.filteredCategories" (onClick)="onEdit(category)">
-            <app-category-icon leading [icon]="category.icon"/>
-            <div content>{{category.name}}</div>
-          </app-list-tile>
+          @for (category of categoriesData.filteredCategories; track category.id) {
+            <app-list-tile (onClick)="onEdit(category)">
+              <app-category-icon leading [icon]="category.icon"/>
+              <div content>{{category.name}}</div>
+            </app-list-tile>
+          }
         </app-list>
 
         <app-row *ngIf="categoriesData.isEmpty()">No Categories</app-row>

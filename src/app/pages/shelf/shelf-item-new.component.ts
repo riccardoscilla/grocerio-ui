@@ -27,11 +27,13 @@ import { CheckboxChangeEvent } from 'primeng/checkbox';
         </app-row> -->
 
         <app-list>
-          <app-list-tile *ngFor="let item of itemsData.filteredItems">
-            <app-category-icon leading [icon]="item.icon" [favourite]="item.favourite" />
-            <div content>{{item.name}}</div>
-            <p-checkbox trailing [(ngModel)]="item.checked" (onChange)="onCheck(item, $event)" [binary]="true"/>
-          </app-list-tile>
+          @for (item of itemsData.filteredItems; track item.id) {
+            <app-list-tile>
+              <app-category-icon leading [icon]="item.icon" [favourite]="item.favourite" />
+              <div content>{{item.name}}</div>
+              <p-checkbox trailing [(ngModel)]="item.checked" (onChange)="onCheck(item, $event)" [binary]="true"/>
+            </app-list-tile>
+          }
         </app-list>
 
         <app-row *ngIf="searchText && itemsData.isEmpty()">

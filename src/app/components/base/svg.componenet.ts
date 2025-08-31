@@ -5,13 +5,17 @@ import { Component, HostBinding, Input } from '@angular/core';
   template: ``,
   styles: [`
     :host {
-        mask-size: contain;
-        mask-position: center;
-        mask-repeat: no-repeat;
+      display: inline-block;
+      mask-size: contain;
+      mask-position: center;
+      mask-repeat: no-repeat;
+      -webkit-mask-size: contain;
+      -webkit-mask-position: center;
+      -webkit-mask-repeat: no-repeat;
 
-        width: 24px;
-        height: 24px;
-        background-color: var(--background-text-color);
+      width: 24px;
+      height: 24px;
+      background-color: var(--background-text-color);
     }
   `]
 })

@@ -12,6 +12,7 @@ import { CategoryComponent } from './pages/category/category.component';
 import { TimerPageComponent } from './pages/timer/timer.component';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { ShelfJoinComponent } from './pages/register/shelf-join.component';
+import { TestComponent } from './components/base/_test.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
@@ -32,6 +33,9 @@ const routes: Routes = [
   { path: 'categories', component: CategoryComponent, canActivate: [AuthGuard] },
 
   { path: 'timer', component: TimerPageComponent, canActivate: [AuthGuard] },
+
+  
+  { path: 'test', component: TestComponent },
 ];
 
 @NgModule({

@@ -19,11 +19,13 @@ import { CheckboxChangeEvent } from 'primeng/checkbox';
       
       <app-container content [padding]="'16px'" *ngIf="dataStateHandler.isSuccess()">
         <app-list>
-          <app-list-tile *ngFor="let groceryItem of groceryItemsData.filteredGroceryItems">
-            <app-category-icon leading [icon]="groceryItem.icon" [favourite]="groceryItem.item.favourite" />
-            <div content>{{groceryItem.name}}</div>
-            <p-checkbox trailing [(ngModel)]="groceryItem.inCart" (onChange)="onCheck(groceryItem, $event)" [binary]="true"/>
-          </app-list-tile>
+          @for (groceryItem of groceryItemsData.filteredGroceryItems; track groceryItem.id) {
+            <app-list-tile>
+              <app-category-icon leading [icon]="groceryItem.icon" [favourite]="groceryItem.item.favourite" />
+              <div content>{{groceryItem.name}}</div>
+              <p-checkbox trailing [(ngModel)]="groceryItem.inCart" (onChange)="onCheck(groceryItem, $event)" [binary]="true"/>
+            </app-list-tile>
+          }
         </app-list>
 
         <app-row *ngIf="groceryItemsData.isEmpty()">No Grocery Items</app-row>
@@ -32,6 +34,11 @@ import { CheckboxChangeEvent } from 'primeng/checkbox';
       <app-list-loading content *ngIf="dataStateHandler.isLoading()"></app-list-loading>
 
       <app-new-button fab (toggleShowNew)="onNew()"></app-new-button>
+      <p-button fab2 (click)="onFinish()">
+          <ng-template pTemplate="icon">
+              <app-svg [color]="'white'" [size]="20" [path]="'cart-shopping-fast.svg'"></app-svg>
+          </ng-template>
+      </p-button>
 
       <app-menu-bottom bottomtabbar />
     </app-scaffold>
@@ -141,7 +148,7 @@ export class GroceryComponent {
       quantity: groceryItem.quantity,
       insertionDate: groceryItem.insertionDate,
       note: groceryItem.note,
-      inCart: check.checked === true,
+      inCart: check.checked,
     };
 
     this.apiService.editGroceryItem(groceryItem.id, data).subscribe({
@@ -151,21 +158,20 @@ export class GroceryComponent {
       },
       error: (error: HttpErrorResponse) => {
         this.toastService.handleError(error, 'Error List items checked');
+        // rollback
+        groceryItem.inCart = !check.checked;
       },
     });
   }
 
   onFinish() {
-    this.apiService.endGrocery().subscribe({
+    this.apiService.moveCartInShelf().subscribe({
       next: () => {
         this.toastService.handleSuccess('List items moved in shelf!');
         this.getGroceryItems().subscribe();
       },
       error: (error: HttpErrorResponse) => {
-        this.toastService.handleError(
-          error,
-          'Error moving List items in shelf'
-        );
+        this.toastService.handleError(error, 'Error moving List items in shelf');
       },
     });
   }

@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, Output, Renderer2, ViewChild } from '@angular/core';
+import { GestureUtils } from '../utils/GestureUtils';
 
 @Component({
   selector: 'app-scaffold',
@@ -23,6 +24,7 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, O
       <ng-content select="[bottomtabbar]"></ng-content>
       
       <div #fabContainer class="scaffold-fab" *ngIf="showFab">
+        <ng-content select="[fab2]"></ng-content>
         <ng-content select="[fab]"></ng-content>
       </div>
     </div>
@@ -66,6 +68,11 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, O
     .scaffold-fab {
       position: absolute;
       right: 16px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
     }
   `]
 })
@@ -116,34 +123,50 @@ export class ScaffoldComponent implements AfterViewInit, OnDestroy {
 
   initPullToRefresh() {
     const content = this.contentRef?.nativeElement;
+    const refresh = this.refreshRef.nativeElement;
+    const refreshIcon = this.refreshIconRef.nativeElement;
+    const gestureId = GestureUtils.getGestureId();
 
+    let startX = 0;
     let startY = 0;
     let currentY = 0;
     let deltaY = 0;
-    let applyPullToRefresh = false
+    let applyPullToRefresh = false;
+    let invalidPullToRefresh = false;
     
     const onMouseDown = (e: MouseEvent | TouchEvent) => {
-      if (content.scrollTop !== 0) 
-        return;
+      if (content.scrollTop !== 0) return; // only if on top of page
+
       applyPullToRefresh = true;
-      startY = ('touches' in e) ? e.touches[0].clientY : e.clientY;
+      invalidPullToRefresh = false;
+      startX = GestureUtils.getX(e);
+      startY = GestureUtils.getY(e);
       currentY = startY;
       deltaY = 0;
-      document.addEventListener('mousemove', onMouseMove);
-      document.addEventListener('mouseup', onMouseUp);
-      document.addEventListener('touchmove', onMouseMove);
-      document.addEventListener('touchend', onMouseUp);
+
+      content.addEventListener('mousemove', onMouseMove);
+      content.addEventListener('mouseup', onMouseUp);
+      content.addEventListener('touchmove', onMouseMove);
+      content.addEventListener('touchend', onMouseUp);
     };
 
     const onMouseMove = (e: MouseEvent | TouchEvent) => {
       if(!applyPullToRefresh) return;
-      const refresh = this.refreshRef.nativeElement;
-      const refreshIcon = this.refreshIconRef.nativeElement;
-      currentY = ('touches' in e) ? e.touches[0].clientY : e.clientY;
-      deltaY = Math.min(currentY - startY, 100);
-      if (deltaY < -50)
-        return;
+      if(invalidPullToRefresh) return;
+      
+      if (!GestureUtils.lock && GestureUtils.isVerticalDrag(e, startX, startY)) {
+        GestureUtils.lock = gestureId;
+      }
+      if (!GestureUtils.lock) return;
+      if (GestureUtils.lock && GestureUtils.lock != gestureId) return;
 
+      currentY = GestureUtils.getY(e);
+      deltaY = GestureUtils.clamp(currentY - startY, -50, 100);
+      if (deltaY === -50) {
+        invalidPullToRefresh = true;
+        return;
+      }
+      
       const rotationDeg = (deltaY * 270 / 100);
       refresh.style.top = `${-50 + deltaY}px`;   
       refreshIcon.style.transform = `rotate(${rotationDeg}deg)`;
@@ -151,14 +174,15 @@ export class ScaffoldComponent implements AfterViewInit, OnDestroy {
 
     const onMouseUp = () => {
       if(!applyPullToRefresh) return;
+      if (GestureUtils.lock != gestureId) return;
       applyPullToRefresh = false;
+      GestureUtils.lock = null;
 
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseup', onMouseUp);
-      document.removeEventListener('touchmove', onMouseMove);
-      document.removeEventListener('touchend', onMouseUp);
+      content.removeEventListener('mousemove', onMouseMove);
+      content.removeEventListener('mouseup', onMouseUp);
+      content.removeEventListener('touchmove', onMouseMove);
+      content.removeEventListener('touchend', onMouseUp);
 
-      const refresh = this.refreshRef.nativeElement;
       refresh.style.top = `${-50}px`;
 
       if (deltaY === 100) {

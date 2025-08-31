@@ -228,10 +228,11 @@ export class GroceryItemsData extends DataState<GroceryItem[]> {
 
   update(groceryItems: GroceryItem[]) {
     const updatedIds = new Set(groceryItems.map(groceryItem => groceryItem.id));
-    this.init([
-      ...this.groceryItems.filter(groceryItem => !updatedIds.has(groceryItem.id)),
-      ...groceryItems,
-    ]);
+    this.init(
+      this.groceryItems
+        .filter(groceryItem => !updatedIds.has(groceryItem.id))
+        .concat(groceryItems)
+    );
   }
 
   delete(groceryItems: GroceryItem[]) {

@@ -57,7 +57,7 @@ export class ShelfDeleteComponent {
   }
 
   deleteAndSaveInList() {
-    this.apiService.deleteAndSaveInList(this.shelfItem.id).subscribe({
+    this.apiService.moveShelfItemInGrocery(this.shelfItem.id).subscribe({
       next: (shelfItem: ShelfItem) => {
         this.toastService.handleSuccess('Shelf Item deleted and saved in Grocery List');
         this.onDeleted.emit(shelfItem);

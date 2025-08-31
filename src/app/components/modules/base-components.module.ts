@@ -17,8 +17,12 @@ import { ScaffoldComponent } from '../base/scaffold.component';
 import { ChipComponent } from '../base/chip.component';
 import { BottomSheetComponent } from '../base/bottom-sheet.component';
 import { ListTileComponent } from '../base/list-tile.component';
+import { TestComponent } from '../base/_test.component';
+import { ButtonComponent } from '../base/button.component';
 
-export const BaseComponentsModule =[
+export const BaseComponentsModule = [
+    ButtonComponent,
+    
     SvgComponent,
     GifComponent,
     FixedComponent,
@@ -39,4 +43,6 @@ export const BaseComponentsModule =[
     TimerComponent,
     ScaffoldComponent,
     ChipComponent,
+
+    TestComponent
 ];

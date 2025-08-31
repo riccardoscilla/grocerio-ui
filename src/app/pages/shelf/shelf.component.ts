@@ -13,17 +13,19 @@ import { Router } from '@angular/router';
   template: `
     <app-scaffold (onRefresh)="initLoad()">
       <app-round-top-container appbar>
-        <app-title [title]="shelfData.shelf?.name" [defaultTitle]="'Shelf'" [onPrimary]="true"/> v1.3.9
+        <app-title [title]="shelfData.shelf?.name" [defaultTitle]="'Shelf'" [onPrimary]="true"/> v1.3.6
       </app-round-top-container>
       
       <app-container content [padding]="'16px'" *ngIf="dataStateHandler.isSuccess()">
         <app-list>
-          <app-list-tile *ngFor="let shelfItem of shelfItemsData.filteredShelfItems" (onClick)="onEdit(shelfItem)">
-            <app-category-icon leading [icon]="shelfItem.icon" [favourite]="shelfItem.item.favourite" />
-            <div content>{{shelfItem.name}}</div>
-            <div subcontent>{{shelfItem.purchaseDate | date:'EEEE, dd MMMM yyyy'}}</div>
-            <div trailing>{{shelfItem.quantity}}</div>
-          </app-list-tile>
+          @for (shelfItem of shelfItemsData.filteredShelfItems; track shelfItem.id) {
+            <app-list-tile (onClick)="onEdit(shelfItem)">
+              <app-category-icon leading [icon]="shelfItem.icon" [favourite]="shelfItem.item.favourite" />
+              <div content>{{shelfItem.name}}</div>
+              <div subcontent>{{shelfItem.purchaseDate | date:'EEEE, dd MMMM yyyy'}}</div>
+              <div trailing>{{shelfItem.quantity}}</div>
+            </app-list-tile>
+          }
         </app-list>
 
         <app-row *ngIf="shelfItemsData.isEmpty() && !categoriesData.isEmpty()">
