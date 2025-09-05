@@ -24,13 +24,12 @@ export class ApiService {
 
   constructor(private http: HttpClient) {}
 
-  fetchData<T extends DataState>(
-    dataState: T,
+  fetchData<T>(
+    dataState: DataState<T>,
     handler: DataStateHandler,
-    request: () => Observable<any>
-  ): Observable<any> {
+    request: () => Observable<T[] | T>
+  ): Observable<T[] | T | HttpErrorResponse> {
     handler.addAndLoading(dataState);
-
     return request().pipe(
       tap((data) => {
         dataState.init(data);

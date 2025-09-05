@@ -1,16 +1,15 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
-import { RowComponent } from './row.component';
 import { GestureUtils } from '../utils/GestureUtils';
 
 @Component({
   selector: 'app-list-tile',
   template: `
-    <app-row #tile [padding]="'0'" [height]="'56px'">
-      <div #dragBox class="drag-box"></div>
+    <app-row #tile padding="0 8px" height="56px" >
+      <!-- <div #dragBox class="drag-box"></div> -->
 
       <ng-content select="[leading]"></ng-content>
 
-      <div class="list-tile-content-container" #fullflex (click)="onClick.emit()">
+      <div class="list-tile-content-container" #fullflex>
         <div class="list-tile-content">
           <ng-content select="[content]"></ng-content>
         </div>
@@ -23,6 +22,12 @@ import { GestureUtils } from '../utils/GestureUtils';
   `,
   styles: [`
     :host {
+      app-row {
+        border-radius: 8px;
+        &:active {
+          background-color: var(--background-highlight-color);
+        }
+      }
     }
 
     .list-tile-content-container {
@@ -53,10 +58,53 @@ export class ListTileComponent implements AfterViewInit {
   @ViewChild('dragBox') dragBoxRef!: ElementRef<HTMLDivElement>;
 
   @Output() onClick = new EventEmitter<void>();
+  @Output() onLongPress = new EventEmitter<void>();
 
   ngAfterViewInit() {
-    this.initDrag();
-    this.initClickOutside();
+    // this.initDrag();
+    // this.initClickOutside();
+    this.initClick();
+  }
+
+  initClick() {
+    const tile = this.tileRef?.nativeElement;
+    
+    let clickTime = 0;
+    let clickX = 0;
+    let clickY = 0;
+    let clicking = false;
+    let target: EventTarget | null = null;
+
+    const onMouseDown = (e: MouseEvent | TouchEvent) => {
+      clicking = true;
+      clickTime = GestureUtils.getTimestamp(e);
+      clickX = GestureUtils.getX(e);
+      clickY = GestureUtils.getY(e);
+
+      tile.addEventListener('mouseup', onMouseUp);
+      tile.addEventListener('touchend', onMouseUp);
+    };
+
+    const onMouseUp = (e: MouseEvent | TouchEvent) => {
+      if(!clicking) return;
+      clicking = false;
+
+      const samePosition = clickX === GestureUtils.getX(e) && clickY === GestureUtils.getY(e);
+      
+      if (samePosition) {
+        const diffTime = GestureUtils.getTimestamp(e) - clickTime;
+        if (diffTime > 500)
+          this.onLongPress.emit();
+        else 
+          this.onClick.emit();
+      }
+
+      tile.removeEventListener('mouseup', onMouseUp);
+      tile.removeEventListener('touchend', onMouseUp);
+    };
+
+    tile.addEventListener('mousedown', onMouseDown);
+    tile.addEventListener('touchstart', onMouseDown);
   }
 
   initDrag() {

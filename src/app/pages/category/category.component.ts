@@ -14,8 +14,8 @@ import { forkJoin } from 'rxjs';
 
       <app-container content [padding]="'16px'" *ngIf="dataStateHandler.isSuccess()">
         <app-list>
-          @for (category of categoriesData.filteredCategories; track category.id) {
-            <app-list-tile (onClick)="onEdit(category)">
+          @for (category of categoriesData.filter(); track category.id) {
+            <app-list-tile (onClick)="onOpenEdit(category)">
               <app-category-icon leading [icon]="category.icon"/>
               <div content>{{category.name}}</div>
             </app-list-tile>
@@ -27,7 +27,7 @@ import { forkJoin } from 'rxjs';
 
       <app-list-loading content *ngIf="dataStateHandler.isLoading()"></app-list-loading>
 
-      <app-new-button fab (toggleShowNew)="onNew()"></app-new-button>
+      <app-button fab icon="plus.svg" shape="round" size="large" iconSize="20" (onClick)="onOpenNew()"/>
 
       <app-menu-bottom bottomtabbar />
     </app-scaffold>
@@ -36,14 +36,12 @@ import { forkJoin } from 'rxjs';
       *ngIf="showCategoryNew"
       [category]="categoryNew"
       (onClosed)="showCategoryNew = false"
-      (onSaved)="savedCategory($event)"
     />
 
     <app-category-edit
       *ngIf="showCategoryEdit"
       [category]="categoryEdit"
       (onClosed)="showCategoryEdit = false"
-      (onEdited)="editedCategory($event)"
     />
     `,
 })
@@ -84,27 +82,13 @@ export class CategoryComponent {
 
   // HANDLES
 
-  onNew() {
+  onOpenNew() {
     this.categoryNew = Category.new();
     this.showCategoryNew = true;
   }
 
-  onEdit(category: Category) {
+  onOpenEdit(category: Category) {
     this.categoryEdit = category.deepcopy();
     this.showCategoryEdit = true;
-  }
-
-  // ACTIONS
-
-  editedCategory(category: Category) {
-    this.categoriesData.update([category]);
-  }
-
-  savedCategory(category: Category) {
-    this.categoriesData.update([category]);
-  }
-
-  deletedCategory(category: Category) {
-    this.categoriesData.delete([category]);
   }
 }

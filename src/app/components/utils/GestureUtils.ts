@@ -2,16 +2,24 @@ export class GestureUtils {
 
     public static lock: string | null = null;
 
+    public static onStable(callback: () => void) {
+        Promise.resolve().then(callback);
+    }
+
     public static getGestureId() {
         return Math.random().toString(36).substring(2);
     }
 
     public static getX(e: MouseEvent | TouchEvent) {
-        return ('touches' in e) ? e.touches[0].clientX : e.clientX;
+        return ('touches' in e) ? e.changedTouches[0].clientX : e.clientX;
     }
 
     public static getY(e: MouseEvent | TouchEvent) {
-        return ('touches' in e) ? e.touches[0].clientY : e.clientY;
+        return ('touches' in e) ? e.changedTouches[0].clientY : e.clientY;
+    }
+
+    public static getTimestamp(e: MouseEvent | TouchEvent) {
+        return e.timeStamp;
     }
 
     public static clamp(num: number, from: number, to: number) {

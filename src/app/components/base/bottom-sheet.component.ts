@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { AfterContentInit, AfterViewChecked, AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { GestureUtils } from '../utils/GestureUtils';
 
 @Component({
@@ -81,31 +81,62 @@ import { GestureUtils } from '../utils/GestureUtils';
     }
   `]
 })
-export class BottomSheetComponent implements AfterViewInit {
+export class BottomSheetComponent implements OnChanges {
   @Input() header: string;
+  @Input() visible: boolean;
   @Output() closed = new EventEmitter<void>();
 
-  @ViewChild('bottomSheet') dialogRef!: ElementRef<HTMLDivElement>;;
-  @ViewChild('dragZone') dragZoneRef!: ElementRef<HTMLDivElement>;;
+  @ViewChild('bottomSheet', { static: false }) bottomSheetRef!: ElementRef<HTMLDivElement>;
+  @ViewChild('dragZone') dragZoneRef!: ElementRef<HTMLDivElement>;
 
-  ngAfterViewInit() {
-    this.openSheet();
-    this.initDrag();
+  sheetOpen = false;
+
+  ngOnChanges() {
+    if (this.visible) {
+      GestureUtils.onStable(() => {
+        this.openSheet();
+        this.initDrag();
+        this.initClickOutside();
+      });
+    }
   }
 
   openSheet() {
-    const sheet = this.dialogRef?.nativeElement;
-    if (!sheet) return;    
+    const sheet = this.bottomSheetRef?.nativeElement;
+    if (!sheet) return;   
+    
+    const onTransitionEnd = () => {
+      sheet.removeEventListener('transitionend', onTransitionEnd);
+      this.sheetOpen = true;
+    };
+
+    sheet.addEventListener('transitionend', onTransitionEnd);
 
     requestAnimationFrame(() => {
       sheet.style.transition = 'transform 0.2s ease-out';
       sheet.style.transform = 'translateY(0)';
     })
+  }
 
+  closeSheet() {
+    const sheet = this.bottomSheetRef?.nativeElement;
+    if (!sheet) return;    
+
+    const onTransitionEnd = () => {
+      sheet.removeEventListener('transitionend', onTransitionEnd);
+      this.closed.emit();
+    };
+
+    sheet.addEventListener('transitionend', onTransitionEnd);
+
+    requestAnimationFrame(() => {
+      sheet.style.transition = 'transform 0.1s ease-out';
+      sheet.style.transform = 'translateY(100%)';
+    });
   }
 
   initDrag() {
-    const sheet = this.dialogRef?.nativeElement;
+    const sheet = this.bottomSheetRef?.nativeElement;
     if (!sheet) return;
     
     const dragZone = this.dragZoneRef?.nativeElement;
@@ -149,18 +180,28 @@ export class BottomSheetComponent implements AfterViewInit {
       if (deltaY > sheet.offsetHeight * 0.15) {
         dragZone.removeEventListener('mousedown', onMouseDown);
         dragZone.removeEventListener('touchstart', onMouseDown);
-        this.closed.emit();
+        this.closeSheet();
       } else {
         deltaY = 0;
-
-        requestAnimationFrame(() => {
-          sheet.style.transition = 'transform 0.2s ease-out';
-          sheet.style.transform = `translateY(${deltaY}px)`;
-        })
+        this.openSheet();
       }
     };
 
     dragZone.addEventListener('mousedown', onMouseDown);
     dragZone.addEventListener('touchstart', onMouseDown);
+  }
+
+  initClickOutside() {
+    const sheet = this.bottomSheetRef?.nativeElement;
+
+    const onMouseDown = (e: MouseEvent | TouchEvent) => {
+      if (!this.sheetOpen) return;
+      if (!sheet.contains(e.target as Node)) {
+        this.closeSheet();
+      }
+    };
+
+    document.addEventListener('mousedown', onMouseDown);
+    document.addEventListener('touchstart', onMouseDown);
   }
 }

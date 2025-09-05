@@ -1,25 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, computed, OnInit } from '@angular/core';
 import { ShelfItem } from '../../model/shelfItem';
 import { ToastService } from '../../services/toast.service';
-import { CategoriesData, ItemsData, ShelfData, ShelfItemsData } from '../../data/data';
 import { DataStateHandler } from '../../data/dataStateHandler';
 import { forkJoin } from 'rxjs';
 import { ApiService } from '../../services/api.service';
-import { Category } from '../../model/category';
 import { Router } from '@angular/router';
+import { SharedDataService } from '../../services/shared-data.service';
 
 @Component({
   selector: 'app-shelf',
   template: `
     <app-scaffold (onRefresh)="initLoad()">
       <app-round-top-container appbar>
-        <app-title [title]="shelfData.shelf?.name" [defaultTitle]="'Shelf'" [onPrimary]="true"/> v1.3.6
+        <app-title [title]="sharedDataService.shelfData.getData()?.name" [defaultTitle]="'Shelf'" [onPrimary]="true"/> v1.3.3
       </app-round-top-container>
       
       <app-container content [padding]="'16px'" *ngIf="dataStateHandler.isSuccess()">
         <app-list>
-          @for (shelfItem of shelfItemsData.filteredShelfItems; track shelfItem.id) {
-            <app-list-tile (onClick)="onEdit(shelfItem)">
+          @for (shelfItem of filteredShelfItems(); track shelfItem.id) {
+            <app-list-tile (onClick)="onOpenEdit(shelfItem)">
               <app-category-icon leading [icon]="shelfItem.icon" [favourite]="shelfItem.item.favourite" />
               <div content>{{shelfItem.name}}</div>
               <div subcontent>{{shelfItem.purchaseDate | date:'EEEE, dd MMMM yyyy'}}</div>
@@ -28,59 +27,47 @@ import { Router } from '@angular/router';
           }
         </app-list>
 
-        <app-row *ngIf="shelfItemsData.isEmpty() && !categoriesData.isEmpty()">
+        <app-row *ngIf="sharedDataService.shelfItemsData.isEmpty() && !sharedDataService.categoriesData.isEmpty()">
           No Shelf Items
         </app-row>
 
-        <app-row *ngIf="categoriesData.isEmpty()">
-          <p-button #fullflex (click)="gotoCategories()">
-            Start here to add new Categories
-          </p-button>
+        <app-row *ngIf="sharedDataService.categoriesData.isEmpty()">
+          <app-button #fullflex label="Start here to add new Categories" (onClick)="gotoCategories()" />
         </app-row>
       </app-container>
 
       <app-list-loading content *ngIf="dataStateHandler.isLoading()"></app-list-loading>
 
-      <app-new-button fab (toggleShowNew)="onNew()"></app-new-button>
+      <app-button fab icon="plus.svg" shape="round" size="large" iconSize="20" (onClick)="onOpenNew()"/>
 
       <app-menu-bottom bottomtabbar />
     </app-scaffold>
   
     <app-shelf-new
       *ngIf="showShelfItemNew"
-      [itemsData]="itemsData"
-      [categoriesData]="categoriesData"
       (onClosed)="showShelfItemNew = false"
-      (onSaved)="savedShelfItems($event)"
     />
 
     <app-shelf-edit
       *ngIf="showShelfItemEdit"
       [shelfItem]="shelfItemEdit"
-      [itemsData]="itemsData"
-      [categoriesData]="categoriesData"
       (onClosed)="showShelfItemEdit = false"
-      (onEdited)="editedShelfItem($event)"
-      (onDeleted)="deletedShelfItem($event)"
     />
   `
 })
 export class ShelfComponent implements OnInit {
-  shelfItemsData: ShelfItemsData = new ShelfItemsData();
-  categoriesData: CategoriesData = new CategoriesData();
-  itemsData: ItemsData = new ItemsData();
-  shelfData: ShelfData = new ShelfData();
   dataStateHandler: DataStateHandler = new DataStateHandler();
 
   showShelfItemNew = false;
-  //shelfItemNew: ShelfItem = ShelfItem.new();
-
   showShelfItemEdit = false;
   shelfItemEdit: ShelfItem;
 
-  showCategoryFilter = false;
+  filteredShelfItems = computed(() =>
+    this.sharedDataService.shelfItemsData.filter()
+  );
 
   constructor(
+    public sharedDataService: SharedDataService,
     public apiService: ApiService,
     private toastService: ToastService,
     private router: Router
@@ -105,7 +92,7 @@ export class ShelfComponent implements OnInit {
 
   getShelf() {
     return this.apiService.fetchData(
-      this.shelfData,
+      this.sharedDataService.shelfData,
       this.dataStateHandler,
       () => this.apiService.getShelf()
     );
@@ -113,7 +100,7 @@ export class ShelfComponent implements OnInit {
 
   getShelfItems() {
     return this.apiService.fetchData(
-      this.shelfItemsData,
+      this.sharedDataService.shelfItemsData,
       this.dataStateHandler,
       () => this.apiService.getShelfItems()
     );
@@ -121,7 +108,7 @@ export class ShelfComponent implements OnInit {
 
   getCategories() {
     return this.apiService.fetchData(
-      this.categoriesData,
+      this.sharedDataService.categoriesData,
       this.dataStateHandler,
       () => this.apiService.getCategories()
     );
@@ -129,7 +116,7 @@ export class ShelfComponent implements OnInit {
 
   getItems() {
     return this.apiService.fetchData(
-      this.itemsData,
+      this.sharedDataService.itemsData,
       this.dataStateHandler,
       () => this.apiService.getItems()
     );
@@ -137,42 +124,18 @@ export class ShelfComponent implements OnInit {
 
   // HANDLES
 
-  onSearchTextChanged(searchText: string) {
-    this.shelfItemsData.searchText = searchText;
-    this.shelfItemsData.filter();
-  }
-
-  onNew() {
+  onOpenNew() {
     this.showShelfItemNew = true;
   }
 
-  onEdit(shelfItem: ShelfItem) {
+  onOpenEdit(shelfItem: ShelfItem) {
     this.shelfItemEdit = shelfItem.deepcopy();
     this.showShelfItemEdit = true;
-  }
-
-  onApplyCategoryFilter(categories: Category[]) {
-    this.shelfItemsData.selectedCategories = [...categories];
-    this.shelfItemsData.filter();
-    this.showCategoryFilter = false;
   }
 
   // ACTIONS
 
   gotoCategories() {
     this.router.navigate(['categories']);
-  }
-
-  
-  editedShelfItem(shelfItem: ShelfItem) {
-    this.shelfItemsData.update([shelfItem]);
-  }
-
-  savedShelfItems(shelfItems: ShelfItem[]) {
-    this.shelfItemsData.update(shelfItems);
-  }
-
-  deletedShelfItem(shelfItem: ShelfItem) {
-    this.shelfItemsData.delete([shelfItem]);
   }
 }

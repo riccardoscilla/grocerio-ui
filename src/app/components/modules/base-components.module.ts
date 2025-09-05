@@ -19,6 +19,8 @@ import { BottomSheetComponent } from '../base/bottom-sheet.component';
 import { ListTileComponent } from '../base/list-tile.component';
 import { TestComponent } from '../base/_test.component';
 import { ButtonComponent } from '../base/button.component';
+import { AutocompleteComponent } from '../base/autocomplete-dropdown';
+import { DropdownComponent } from '../base/dropdown';
 
 export const BaseComponentsModule = [
     ButtonComponent,
@@ -43,6 +45,8 @@ export const BaseComponentsModule = [
     TimerComponent,
     ScaffoldComponent,
     ChipComponent,
+    AutocompleteComponent,
+    DropdownComponent,
 
     TestComponent
 ];

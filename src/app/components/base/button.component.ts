@@ -4,15 +4,15 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, View
   selector: 'app-button',
   template: `
     <button #button
-      [ngClass]="['button', type, variant, shape]"
+      [ngClass]="['button', type, variant, shape, size]"
       [class.disabled]="disabled"
       (click)="click()">
       
-      <app-svg *ngIf="iconLeft" [path]="iconLeft" [size]="16"></app-svg>
+      <app-svg *ngIf="iconLeft" [path]="iconLeft" [size]="+iconSize"></app-svg>
 
-      <div *ngIf="label" class="button-label">
-        {{ label }}
-      </div>
+      <app-svg *ngIf="icon" [path]="icon" [size]="+iconSize"></app-svg>
+
+      <div *ngIf="label" class="button-label"> {{ label }}</div>
     </button>
   `,
   styles: [`
@@ -23,7 +23,10 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, View
       border: 1px solid;
       cursor: pointer;
       transition: background-color 0.2s;
-      line-height: 1;      
+      // line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .button.disabled {
@@ -31,7 +34,7 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, View
       cursor: auto;
     }
     
-    .button.normal {
+    .button {
       padding: 0.5rem 1rem;
       border-radius: 8px;
 
@@ -40,14 +43,17 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, View
       align-items: center;
       gap: 8px;
 
-      min-height: 37px;
-      min-width: 40px;
+      min-height: 2.25rem;
+      min-width: 2.25rem;
+
+      &.large {
+        min-height: 3rem;
+        min-width: 3rem;
+      }
     }
 
     .button.round {
       border-radius: 50%;
-      min-height: 37px;
-      min-width: 39px;
     }
 
     /* ---------- PRIMARY ---------- */
@@ -179,11 +185,14 @@ export class ButtonComponent implements AfterViewInit {
   @ViewChild('button', { read: ElementRef }) buttonRef!: ElementRef<HTMLElement>;
   
   @Input() label: string;
+  @Input() icon: string;
   @Input() iconLeft: string;
+  @Input() iconSize: string = '16';
 
   @Input() variant: 'filled' | 'outlined' | 'text' = 'filled';
   @Input() type: 'primary' | 'error' | 'warning' | 'success' = 'primary';
-  @Input() shape: 'normal' | 'round' = 'normal';
+  @Input() shape:  '' | 'round' = '';
+  @Input() size: 'normal' | 'large' = 'normal';
 
   @Input() disabled = false;
 

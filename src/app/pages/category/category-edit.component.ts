@@ -3,14 +3,15 @@ import { Category } from '../../model/category';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ApiService } from '../../services/api.service';
 import { ToastService } from '../../services/toast.service';
+import { SharedDataService } from '../../services/shared-data.service';
 
 @Component({
   selector: 'app-category-edit',
   template: `
     <app-bottom-sheet
-      *ngIf="visible"
-      [header]="'Edit Category'"
-      (closed)="closed()"
+      [visible]="visible"
+      header="Edit Category"
+      (closed)="onClosed.emit()"
     >
       <app-container content>
         <app-row label="Name">
@@ -23,39 +24,25 @@ import { ToastService } from '../../services/toast.service';
       </app-container>
 
       <app-row footer>
-        <p-button
-          #fullflex
-          label="Delete"
-          [outlined]="true"
-          (click)="onDelete()"
-          severity="danger"
-        />
-        <p-button
-          #fullflex
-          label="Save"
-          [disabled]="disabledSave()"
-          (click)="save()"
-        />
+        <app-button #fullflex label="Delete" variant="outlined" type="error" (onClick)="onOpenDelete()" />
+        <app-button #fullflex label="Save" (onClick)="edit()" [disabled]="disabledEdit()" />
       </app-row>
     </app-bottom-sheet>
 
     <app-category-delete
       *ngIf="showCategoryDelete"
-      [(visible)]="showCategoryDelete"
       [category]="categoryDelete"
-      (onDeleted)="deletedCategory($event)"
+      (onClosed)="showCategoryDelete = false"
+      (onDeleted)="onClosed.emit()"
     ></app-category-delete>
   `,
   styles: [],
 })
 export class CategoryEditComponent implements OnInit {
   @Input() category: Category;
-  
   @Output() onClosed = new EventEmitter<void>();
-  @Output() onEdited = new EventEmitter<Category>();
-  @Output() onDeleted = new EventEmitter<Category>();
 
-  visible = true;
+  visible = false;
 
   showCategoryDelete = false;
   categoryDelete: Category;
@@ -65,6 +52,7 @@ export class CategoryEditComponent implements OnInit {
   icon: string;
 
   constructor(
+    public sharedDataService: SharedDataService,
     public apiService: ApiService,
     private toastService: ToastService
   ) {}
@@ -72,14 +60,16 @@ export class CategoryEditComponent implements OnInit {
   ngOnInit(): void {
     this.name = this.category.name;
     this.icon = this.category.icon;
+
+    this.visible = true;
   }
 
-  onDelete() {
+  onOpenDelete() {
     this.categoryDelete = this.category.deepcopy();
     this.showCategoryDelete = true;
   }
 
-  save() {
+  edit() {
     const data = {
       id: this.category.id,
       name: this.name,
@@ -89,7 +79,7 @@ export class CategoryEditComponent implements OnInit {
     this.apiService.editCategory(this.category.id, data).subscribe({
       next: (category: Category) => {
         this.toastService.handleSuccess('Category saved');
-        this.onEdited.emit(category);
+        this.sharedDataService.categoriesData.update([category]);
         this.onClosed.emit();
       },
       error: (error: HttpErrorResponse) => {
@@ -98,19 +88,9 @@ export class CategoryEditComponent implements OnInit {
     });
   }
 
-  deletedCategory(category: Category) {
-    this.onDeleted.emit(category);
-    this.onClosed.emit();
-  }
-
-  disabledSave() {
+  disabledEdit() {
     if (this.name === undefined || this.name.trim() === '') return true;
     if (this.icon === undefined || this.name.trim() === '') return true;
     return false;
-  }
-
-  closed() {
-    this.visible = false;
-    this.onClosed.emit();
   }
 }

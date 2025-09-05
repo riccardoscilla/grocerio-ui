@@ -21,11 +21,11 @@ import { HttpErrorResponse } from '@angular/common/http';
         <p-password #fullflex [(ngModel)]="repeatedPassword" [feedback]="false" [toggleMask]="true" placeholder="Repeat Password" />
       </app-row>
       <app-row>
-        <p-button #fullflex label="Register" (click)="register()" styleClass="p-button-rounded p-button-lg" />
+        <app-button #fullflex label="Register" (onClick)="register()" />
       </app-row>
       <app-row>
-        <span style="margin-right: 8px;">Already have an account?</span>
-        <p-button #fullflex label="Login" [link]="true" (click)="gotoLogin()" />
+        <span>Already have an account?</span>
+        <app-button #fullflex label="Login" (onClick)="gotoLogin()" />
       </app-row>
     </app-container>
   `,

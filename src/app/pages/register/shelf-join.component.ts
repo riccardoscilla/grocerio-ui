@@ -27,7 +27,7 @@ import { ApiService } from '../../services/api.service';
           <input #fullflex type="text" pInputText [(ngModel)]="shelfName" />
         </app-row>
         <app-row>
-          <p-button label="Create new Shelf" (click)="createNewShelf()" />
+          <app-button #fullflex label="Create new Shelf" (onClick)="createNewShelf()" />
         </app-row>
       </app-container>
 
@@ -36,7 +36,7 @@ import { ApiService } from '../../services/api.service';
           <input #fullflex type="text" pInputText [(ngModel)]="shareId" />
         </app-row>
         <app-row>
-          <p-button label="Join existing Shelf" (click)="joinShelf()" />
+          <app-button #fullflex label="Join existing Shelf" (onClick)="joinShelf()" />
         </app-row>
       </app-container>
     </app-container>

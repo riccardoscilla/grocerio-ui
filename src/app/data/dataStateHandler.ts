@@ -1,35 +1,36 @@
+import { DataState } from "./dataState"
 
 export class DataStateHandler {
-    states = new Map<any, any>()
+  private states = new Map<DataState<any>, DataState<any>>();
 
-    add(obj: any) {
-        this.states.set(obj, obj)
-    }
+  add<T>(obj: DataState<T>) {
+    this.states.set(obj, obj);
+  }
 
-    addAndLoading(obj: any) {
-        obj.setLoading()
-        this.states.set(obj, obj)
-    }
+  addAndLoading<T>(obj: DataState<T>) {
+    obj.setLoading();
+    this.states.set(obj, obj);
+  }
 
-    setSuccess(obj: any) {
-        this.states.get(obj)!.setSuccess()
-    }
+  setSuccess<T>(obj: DataState<T>) {
+    const state = this.states.get(obj);
+    state?.setSuccess();
+  }
 
-    setError(obj: any) {
-        this.states.get(obj)!.setError()
-    }
+  setError<T>(obj: DataState<T>) {
+    const state = this.states.get(obj);
+    state?.setError();
+  }
 
-    isLoading() {
-        return Array.from(this.states.values()).some(value => value.loading === true)
-    }
+  isLoading(): boolean {
+    return Array.from(this.states.values()).some(value => value.getStatus()() === 'loading');
+  }
 
-    isSuccess() {
-        return Array.from(this.states.values()).every(value => value.success === true)
-    }
+  isSuccess(): boolean {
+    return Array.from(this.states.values()).every(value => value.getStatus()() === 'success');
+  }
 
-    isError() {
-        return Array.from(this.states.values()).some(value => value.error === true)
-    }
-
-    
+  isError(): boolean {
+    return Array.from(this.states.values()).some(value => value.getStatus()() === 'error');
+  }
 }

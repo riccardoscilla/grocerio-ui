@@ -1,30 +1,25 @@
-export class DataState<T = any> {
-    idle = true
-    loading = false
-    success = false
-    error = false
+import { signal } from "@angular/core";
 
-    init(data: T) {}
+export type DataStatus = 'idle' | 'loading' | 'success' | 'error';
+
+export abstract  class DataState<T> {
+    private status = signal<DataStatus>('idle');
+
+    abstract init(data: T | T[]): void;
 
     setLoading() {
-        this.idle = false
-        this.loading = true
-        this.success = false
-        this.error = false
+        this.status.set('loading');
     }
 
     setSuccess() {
-        this.idle = false
-        this.loading = false
-        this.success = true
-        this.error = false
+        this.status.set('success');
     }
 
     setError() {
-        this.idle = false
-        this.loading = false
-        this.success = false
-        this.error = true
+        this.status.set('error');
     }
 
+    getStatus() {
+        return this.status.asReadonly();
+    }
 }

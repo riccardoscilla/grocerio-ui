@@ -1,14 +1,4 @@
-import {
-  Component,
-  ContentChildren,
-  Input,
-  QueryList,
-  AfterContentInit,
-  Renderer2,
-  ElementRef,
-  ViewEncapsulation,
-  ViewChild,
-} from '@angular/core';
+import { Component, ContentChildren, Input, QueryList, AfterContentInit, Renderer2, ElementRef, ViewEncapsulation, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-row',
@@ -38,6 +28,9 @@ import {
     }
     p-button.p-flex button,
     p-autocomplete.p-flex div,
+    app-dropdown.p-flex div,
+    app-autocomplete-dropdown.p-flex div, 
+    app-button.p-flex button,
     p-dropdown.p-flex > div:first-child,
     p-calendar.p-flex span,
     p-password.p-flex div,

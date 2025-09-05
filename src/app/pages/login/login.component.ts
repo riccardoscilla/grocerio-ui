@@ -21,17 +21,17 @@ import { HttpErrorResponse } from '@angular/common/http';
       <app-container />
 
       <app-row>
-        <p-button #fullflex label="Login" (click)="login()" />
+        <app-button #fullflex label="Login" (onClick)="login()" />
       </app-row>
       <app-row>
-        <p-button #fullflex label="Login Demo" [outlined]="true" (click)="loginDemo()" />
+        <app-button #fullflex label="Login Demo" variant="outlined" (onClick)="loginDemo()" />
       </app-row>
 
       <app-container />
 
       <app-row>
         <span>Don't have an account?</span>
-        <p-button #fullflex label="Register" [text]="true" (click)="gotoRegister()" />
+        <app-button #fullflex label="Register" variant="outlined" (onClick)="gotoRegister()" />
       </app-row>
     </app-container>
   `,

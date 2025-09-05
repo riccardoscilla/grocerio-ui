@@ -1,12 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { CategoriesData, ItemsData } from '../../data/data';
+import { Component, computed, OnInit } from '@angular/core';
 import { ToastService } from '../../services/toast.service';
 import { DataStateHandler } from '../../data/dataStateHandler';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Item } from '../../model/item';
-import { Category } from '../../model/category';
 import { ApiService } from '../../services/api.service';
-import { catchError, forkJoin, of, tap } from 'rxjs';
+import { forkJoin } from 'rxjs';
+import { SharedDataService } from '../../services/shared-data.service';
 
 @Component({
   selector: 'app-item',
@@ -16,20 +14,20 @@ import { catchError, forkJoin, of, tap } from 'rxjs';
 
       <app-container content [padding]="'16px'" *ngIf="dataStateHandler.isSuccess()">
         <app-list>
-          @for (item of itemsData.filteredItems; track item.id) {
-            <app-list-tile>
+          @for (item of filteredItems(); track item.id) {
+            <app-list-tile (onClick)="onOpenEdit(item)">
               <app-category-icon leading [icon]="item.icon" [favourite]="item.favourite" />
             <div content>{{item.name}}</div>
             </app-list-tile>
           }
         </app-list>
 
-        <app-row *ngIf="itemsData.isEmpty()">No Items</app-row>
+        <app-row *ngIf="sharedDataService.itemsData.isEmpty()">No Items</app-row>
       </app-container>
 
       <app-list-loading content *ngIf="dataStateHandler.isLoading()"></app-list-loading>
 
-      <app-new-button fab (toggleShowNew)="onNew()"></app-new-button>
+      <app-button fab icon="plus.svg" shape="round" size="large" iconSize="20" (onClick)="onOpenNew()"/>
 
       <app-menu-bottom bottomtabbar />
     </app-scaffold>
@@ -37,24 +35,17 @@ import { catchError, forkJoin, of, tap } from 'rxjs';
     <app-item-new
       *ngIf="showItemNew"
       [item]="itemNew"
-      [categoriesData]="categoriesData"
       (onClosed)="showItemNew = false"
-      (onSaved)="savedItem($event)"
     />
 
     <app-item-edit
       *ngIf="showItemEdit"
       [item]="itemEdit"
-      [categoriesData]="categoriesData"
       (onClosed)="showItemEdit = false"
-      (onEdited)="editedItem($event)"
-      (onDeleted)="deletedItem($event)"
     />
   `,
 })
 export class ItemComponent implements OnInit {
-  itemsData: ItemsData = new ItemsData();
-  categoriesData: CategoriesData = new CategoriesData();
   dataStateHandler: DataStateHandler = new DataStateHandler();
 
   showItemNew = false;
@@ -63,9 +54,12 @@ export class ItemComponent implements OnInit {
   showItemEdit = false;
   itemEdit: Item;
 
-  showCategoryFilter = false;
+  filteredItems = computed(() =>
+    this.sharedDataService.itemsData.filter()
+  );
 
   constructor(
+    public sharedDataService: SharedDataService,
     public apiService: ApiService,
     private toastService: ToastService
   ) {}
@@ -87,7 +81,7 @@ export class ItemComponent implements OnInit {
 
   getCategories() {
     return this.apiService.fetchData(
-      this.categoriesData,
+      this.sharedDataService.categoriesData,
       this.dataStateHandler,
       () => this.apiService.getCategories()
     );
@@ -95,7 +89,7 @@ export class ItemComponent implements OnInit {
 
   getItems() {
     return this.apiService.fetchData(
-      this.itemsData,
+      this.sharedDataService.itemsData,
       this.dataStateHandler,
       () => this.apiService.getItems()
     );
@@ -103,37 +97,13 @@ export class ItemComponent implements OnInit {
 
   // HANDLES
 
-  onSearchTextChanged(searchText: string) {
-    this.itemsData.itemName = searchText;
-    this.itemsData.filter();
-  }
-
-  onNew() {
+  onOpenNew() {
     this.itemNew = Item.new();
     this.showItemNew = true;
   }
 
-  onEdit(item: Item) {
+  onOpenEdit(item: Item) {
     this.itemEdit = item.deepcopy();
     this.showItemEdit = true;
-  }
-
-  onApplyCategoryFilter(categories: Category[]) {
-    this.itemsData.selectedCategories = [...categories];
-    this.itemsData.filter();
-    this.showCategoryFilter = false;
-  }
-
-  // ACTIONS
-  editedItem(item: Item) {
-    this.itemsData.update([item]);
-  }
-
-  savedItem(item: Item) {
-    this.itemsData.update([item]);
-  }
-
-  deletedItem(item: Item) {
-    this.itemsData.delete([item]);
   }
 }

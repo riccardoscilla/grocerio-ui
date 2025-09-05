@@ -1,33 +1,28 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, computed, EventEmitter, OnInit, Output, signal } from '@angular/core';
 import { ShelfItem } from '../../model/shelfItem';
 import { Item } from '../../model/item';
-import { CategoriesData, ItemsData } from '../../data/data';
 import { ApiService } from '../../services/api.service';
 import { ToastService } from '../../services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CheckboxChangeEvent } from 'primeng/checkbox';
+import { SharedDataService } from '../../services/shared-data.service';
 
 @Component({
   selector: 'app-shelf-new',
   template: `
     <app-bottom-sheet
-      *ngIf="visible"
-      [header]="'Add Shelf Item'"
-      (closed)="closed()"
+      [visible]="visible"
+      header="Add Shelf Item"
+      (closed)="onClosed.emit()"
     >
       <app-container content>
         <p-iconField #fullflex iconPosition="right">
           <p-inputIcon styleClass="pi pi-search" />
-          <input type="text" pInputText placeholder="Search" [(ngModel)]="searchText" (ngModelChange)="onSearch(searchText)" />
+          <input type="text" pInputText placeholder="Search" [ngModel]="searchItemName()" (ngModelChange)="searchItemName.set($event)" />
         </p-iconField>
 
-        <!-- <app-row>
-          <app-chip [label]="'All'" [selected]="true" />
-          <app-chip [label]="'Not in Shelf'" />
-        </app-row> -->
-
         <app-list>
-          @for (item of itemsData.filteredItems; track item.id) {
+          @for (item of filteredItems(); track item.id) {
             <app-list-tile>
               <app-category-icon leading [icon]="item.icon" [favourite]="item.favourite" />
               <div content>{{item.name}}</div>
@@ -36,64 +31,57 @@ import { CheckboxChangeEvent } from 'primeng/checkbox';
           }
         </app-list>
 
-        <app-row *ngIf="searchText && itemsData.isEmpty()">
-          <p-button #fullflex [label]="'Add Item '+formattedSearchText()" icon="pi pi-plus" [outlined]="true" (click)="onNewItem()" />
+        <app-row *ngIf="searchItemName() && sharedDataService.itemsData.isEmpty()">
+          <app-button #fullflex [label]="'Add Item '+formattedSearchItemName()" iconLeft="plus.svg"  (onClick)="onOpenNewItem()" />
         </app-row>
       </app-container>
 
       <app-row footer>
-        <p-button #fullflex label="Save" (click)="save()" [disabled]="disabledSave()"/>
+        <app-button #fullflex label="Save" (onClick)="save()" [disabled]="disabledSave()" />
       </app-row>
     </app-bottom-sheet>
 
     <app-item-new
       *ngIf="showItemNew"
       [item]="itemNew"
-      [categoriesData]="categoriesData"
       (onClosed)="showItemNew = false"
-      (onSaved)="savedItem($event)"
     ></app-item-new>
   `
 })
-export class ShelfNewComponent implements OnInit {
-  @Input() itemsData: ItemsData;
-  @Input() categoriesData: CategoriesData;
-  
+export class ShelfNewComponent implements OnInit {  
   @Output() onClosed = new EventEmitter<void>();
-  @Output() onSaved = new EventEmitter<ShelfItem[]>();
 
-  visible = true;
+  visible = false;
 
   // FORM
-  searchText: string
+  searchItemName = signal('');
+  filteredItems = computed(() =>
+    this.sharedDataService.itemsData.filter(this.searchItemName())
+  );
   itemsToAdd: Item[] = [];
 
   showItemNew: boolean = false;
   itemNew: Item;
 
   constructor(
+    public sharedDataService: SharedDataService,
     public apiService: ApiService,
     private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
-    this.itemsData.items.forEach(i => i.checked = false);
-    this.itemsData.filter();
+    this.visible = true;
   }
 
-  formattedSearchText() {
-    return this.searchText.charAt(0).toUpperCase() + this.searchText.slice(1).toLowerCase();
+  formattedSearchItemName() {
+    return this.searchItemName().charAt(0).toUpperCase() + this.searchItemName().slice(1).toLowerCase();
   }
 
   // ACTIONS
 
-  onSearch(searchText: string) {
-    this.itemsData.filter(searchText);
-  }
-
-  onNewItem() {
+  onOpenNewItem() {
     this.itemNew = Item.new();
-    this.itemNew.name = this.formattedSearchText();
+    this.itemNew.name = this.formattedSearchItemName();
     this.showItemNew = true;
   }
 
@@ -110,7 +98,7 @@ export class ShelfNewComponent implements OnInit {
   }
 
   savedItem(item: Item) {
-    this.itemsData.update([item]);
+    this.sharedDataService.itemsData.update([item]);
   }
 
   save() {
@@ -126,17 +114,12 @@ export class ShelfNewComponent implements OnInit {
     this.apiService.saveShelfItems(data).subscribe({
       next: (shelfItems: ShelfItem[]) => {
         this.toastService.handleSuccess('Shelf Item saved');
-        this.onSaved.emit(shelfItems);
+        this.sharedDataService.shelfItemsData.update(shelfItems);
         this.onClosed.emit();
       },
       error: (error: HttpErrorResponse) => {
         this.toastService.handleError(error, 'Error save Shelf Item');
       },
     });
-  }
-
-  closed() {
-    this.visible = false;
-    this.onClosed.emit();
   }
 }

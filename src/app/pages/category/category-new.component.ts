@@ -3,14 +3,15 @@ import { Category } from '../../model/category';
 import { ApiService } from '../../services/api.service';
 import { ToastService } from '../../services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { SharedDataService } from '../../services/shared-data.service';
 
 @Component({
   selector: 'app-category-new',
   template: `
     <app-bottom-sheet
-      *ngIf="visible"
-      [header]="'Edit Grocery Item'"
-      (closed)="closed()"
+      [visible]="visible"
+      header="Edit Grocery Item"
+      (closed)="onClosed.emit()"
     >
       <app-container content>
         <app-row label="Name">
@@ -23,12 +24,7 @@ import { HttpErrorResponse } from '@angular/common/http';
       </app-container>
 
       <app-row footer>
-        <p-button
-          #fullflex
-          label="Save"
-          [disabled]="disabledSave()"
-          (click)="save()"
-        />
+        <app-button #fullflex label="Save" (onClick)="save()" [disabled]="disabledSave()" />
       </app-row>
     </app-bottom-sheet>
   `,
@@ -38,21 +34,22 @@ export class CategoryNewComponent implements OnInit {
   @Input() category: Category;
 
   @Output() onClosed = new EventEmitter<void>();
-  @Output() onSaved = new EventEmitter<Category>();
 
-  visible = true;
+  visible = false;
 
   // form
   name: string;
   icon: string;
 
   constructor(
+    public sharedDataService: SharedDataService,
     public apiService: ApiService,
     private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
     this.name = this.category.name;
+    this.visible = true;
   }
 
   save() {
@@ -64,7 +61,7 @@ export class CategoryNewComponent implements OnInit {
     this.apiService.saveCategory(data).subscribe({
       next: (category: Category) => {
         this.toastService.handleSuccess('Category saved');
-        this.onSaved.emit(category);
+        this.sharedDataService.categoriesData.update([category]);
         this.onClosed.emit();
       },
       error: (error: HttpErrorResponse) => {
@@ -77,10 +74,5 @@ export class CategoryNewComponent implements OnInit {
     if (this.name === undefined || this.name.trim() === '') return true;
     if (this.icon === undefined || this.name.trim() === '') return true;
     return false;
-  }
-
-  closed() {
-    this.visible = false;
-    this.onClosed.emit();
   }
 }

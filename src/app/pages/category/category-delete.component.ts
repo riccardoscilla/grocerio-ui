@@ -1,63 +1,55 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { GroceryItem } from '../../model/groceryItem';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { ToastService } from '../../services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Item } from '../../model/item';
 import { Category } from '../../model/category';
+import { SharedDataService } from '../../services/shared-data.service';
 
 @Component({
   selector: 'app-category-delete',
   template: `
-    <p-dialog
-      [(visible)]="visible"
-      [draggable]="false"
-      [resizable]="false"
-      [modal]="true"
-      [closable]="true"
-      [dismissableMask]="true"
-      [header]="'Delete Category'"
-      (onHide)="visibleChange.emit(false)"
-      position="bottom"
-      class="bottom-sheet"
+   <app-bottom-sheet
+      [visible]="visible"
+      header="Delete Category"
+      (closed)="onClosed.emit()"
     >
-      <app-container>
-        Delete Category {{ category.icon }} {{ category.name }}?
+      <app-container content>
+        Delete category {{ category.icon }} {{ category.name }}?
       </app-container>
 
-      <ng-template pTemplate="footer">
+      <app-container footer>
         <app-row>
-          <p-button
-            #fullflex
-            label="Delete"
-            [outlined]="true"
-            severity="danger"
-            (click)="delete()"
-          />
+          <app-button #fullflex label="Delete" type="error" (onClick)="delete()" />
         </app-row>
-      </ng-template>
-    </p-dialog>
+      </app-container>
+      
+    </app-bottom-sheet>
   `,
   styles: [],
 })
-export class CategoryDeleteComponent {
+export class CategoryDeleteComponent implements OnInit {
   @Input() category: Category;
-  @Input() visible: boolean;
+  @Output() onClosed = new EventEmitter<void>();
+  @Output() onDeleted = new EventEmitter<void>();
 
-  @Output() visibleChange = new EventEmitter<boolean>();
-  @Output() onDeleted = new EventEmitter<Category>();
+  visible = false;
 
   constructor(
+    public sharedDataService: SharedDataService,
     public apiService: ApiService,
     private toastService: ToastService
   ) {}
+
+  ngOnInit(): void {
+    this.visible = true;
+  }
 
   delete() {
     this.apiService.deleteCategory(this.category.id).subscribe({
       next: (category: Category) => {
         this.toastService.handleSuccess('Category deleted');
-        this.onDeleted.emit(category);
-        this.visibleChange.emit(false);
+        this.sharedDataService.categoriesData.delete([category])
+        this.onDeleted.emit();
       },
       error: (error: HttpErrorResponse) => {
         this.toastService.handleError(error, 'Error delete Category');

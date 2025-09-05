@@ -18,10 +18,10 @@ import { HttpErrorResponse } from '@angular/common/http';
           <div class="title">Welcome to Grocerio</div>
         </app-row>
         <app-row>
-          <p-button #fullflex label="Login" (click)="gotoLogin()" />
+          <app-button #fullflex label="Login" (onClick)="gotoLogin()" />
         </app-row>
         <app-row>
-          <p-button #fullflex label="Register" [outlined]="true" (click)="gotoRegister()"/>
+          <app-button #fullflex label="Register" variant="outlined" (onClick)="gotoRegister()" />
         </app-row>
       </app-container>
     </app-container>

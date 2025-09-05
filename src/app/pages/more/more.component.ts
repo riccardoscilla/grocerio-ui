@@ -12,44 +12,31 @@ import { AuthService } from '../../services/auth.service';
         <app-list>
           <app-list-tile>
             <div content>Items</div>
-            <p-button trailing [text]="true" [rounded]="true" (onClick)="goto('/items')">
-              <ng-template pTemplate="icon">
-                <app-svg [color]="'black'" [size]="18" [path]="'angle-small-right.svg'"></app-svg>
-              </ng-template>
-            </p-button>
+            <app-button trailing variant="text" icon="angle-small-right.svg" iconSize="18" (onClick)="goto('/items')" />
           </app-list-tile>
 
           <app-list-tile>
             <div content>Categories</div>
-            <p-button trailing [text]="true" [rounded]="true" (onClick)="goto('/categories')">
-              <ng-template pTemplate="icon">
-                <app-svg [color]="'black'" [size]="18" [path]="'angle-small-right.svg'"></app-svg>
-              </ng-template>
-            </p-button>
+            <app-button trailing variant="text" icon="angle-small-right.svg" iconSize="18" (onClick)="goto('/categories')" />
           </app-list-tile>
 
           <app-list-tile>
             <div content>Share Shelf</div>
-            <p-button trailing [text]="true" [rounded]="true" (onClick)="goto('/share-shelf')">
-              <ng-template pTemplate="icon">
-                <app-svg [color]="'black'" [size]="18" [path]="'angle-small-right.svg'"></app-svg>
-              </ng-template>
-            </p-button>
+            <app-button trailing variant="text" icon="angle-small-right.svg" iconSize="18" (onClick)="goto('/share-shelf')" />
           </app-list-tile>
 
           <app-list-tile>
             <div content>Timer</div>
-            <p-button trailing [text]="true" [rounded]="true" (onClick)="goto('/timer')">
-              <ng-template pTemplate="icon">
-                <app-svg [color]="'black'" [size]="18" [path]="'angle-small-right.svg'"></app-svg>
-              </ng-template>
-            </p-button>
+            <app-button trailing variant="text" icon="angle-small-right.svg" iconSize="18" (onClick)="goto('/timer')" />
           </app-list-tile>
         </app-list>
-        
-        <p-button [outlined]="true" label="Logout" (click)="logout()" />
+
+        <app-row>
+          <app-button #fullflex variant="outlined" label="Logout" (onClick)="logout()" />
+        </app-row>
       </app-container>
       
+
       <app-menu-bottom bottomtabbar />
     </app-scaffold>
     `,
