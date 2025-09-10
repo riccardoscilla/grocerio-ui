@@ -5,36 +5,24 @@
 @import "style/theme.scss";
 
 html { 
-    height: 100svh;
-
-    &::-webkit-scrollbar {
-        display: none;
-    }
-    -ms-overflow-style: none;  /* For Internet Explorer and Edge */
-    scrollbar-width: none;    /* For Firefox */
+    // height: 100svh;
+    color: var(--text-base);
 }
 body { 
-    height: 100svh;
+    // height: 100svh;
     margin: 0; 
     padding: 0; 
     user-select: none;
+    // overflow: hidden;
     -webkit-tap-highlight-color: transparent; // remove highlight tap
     -webkit-tap-callout: none;
-    overscroll-behavior: contain;
-    position: relative;
-}
+    overscroll-behavior: contain; // evita pull-to-refresh 
 
-body::after {
-  content: "";
-  display: block;
-  height: env(safe-area-inset-bottom);
-  background-color: var(--background-color);
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 9999;
-  pointer-events: none;
+    
+    // overscroll-behavior-y: none; /* evita pull-to-refresh */
+    // -webkit-overflow-scrolling: touch;
+
+    position: relative;
 }
 
 @media (min-width: 500px) { 

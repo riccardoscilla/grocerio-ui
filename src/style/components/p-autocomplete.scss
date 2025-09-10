@@ -44,13 +44,13 @@ p-autocomplete {
 //     color: #0f172a;
 //   }
   .p-autocomplete.p-invalid.p-component > .p-inputtext {
-    border-color: var(--error-color);
+    border-color: var(--error);
   }
 
   .p-autocomplete-panel {
     background: var(--background-color);
-    color: var(--background-text-color);
-    border: 1px solid var(--background-border-color);
+    color: var(--text-base);
+    border: 1px solid var(--border);
     border-radius: 6px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
   }
@@ -61,7 +61,7 @@ p-autocomplete {
     margin: 2px 0;
     padding: 0.5rem 0.75rem;
     // border: 0 none;
-    // color: var(--background-text-color);
+    // color: var(--text-base);
     // background: transparent;
     transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s, outline-color 0.2s;
     border-radius: 4px;
@@ -70,9 +70,9 @@ p-autocomplete {
 //     margin-top: 0;
 //   }
   .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item.p-highlight {
-    color: var(--primary-color);
+    color: var(--primary);
     // background: #EFF6FF;
-    background: var(--primary-highlight-color);
+    background: var(--primary-highlight);
   }
 //   .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item.p-highlight.p-focus {
 //     background: rgba(59, 130, 246, 0.24);
@@ -80,12 +80,12 @@ p-autocomplete {
   .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item:not(.p-highlight):not(.p-disabled).p-focus {
     // color: #0f172a;
     // background: #e2e8f0;
-    background: var(--primary-highlight-color);
+    background: var(--primary-highlight);
   }
   .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item:not(.p-highlight):not(.p-disabled):hover {
     // color: #1e293b;
     // background: #f1f5f9;
-    background: var(--primary-highlight-color);
+    background: var(--primary-highlight);
   }
 //   .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item-group {
 //     margin: 0;
@@ -101,7 +101,7 @@ p-autocomplete {
 //   }
 
 //   p-autocomplete.ng-dirty.ng-invalid > .p-autocomplete > .p-inputtext {
-//     border-color: var(--error-color);
+//     border-color: var(--error);
 //   }
 
 //   p-autocomplete.p-autocomplete-clearable .p-inputtext {

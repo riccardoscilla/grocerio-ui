@@ -10,6 +10,7 @@ import { AfterContentInit, Component, ContentChildren, ElementRef, Input, QueryL
       justify-content: center;
       gap: 16px;
       width: 100%;
+      
     }
     .p-flex {
       flex: 1;

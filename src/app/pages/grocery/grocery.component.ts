@@ -33,7 +33,7 @@ import { SharedDataService } from '../../services/shared-data.service';
       <app-list-loading content *ngIf="dataStateHandler.isLoading()"></app-list-loading>
 
       <app-button fab icon="plus.svg" shape="round" size="large" iconSize="20" (onClick)="onOpenNew()"/>
-      <app-button fab2 icon="cart-shopping-fast.svg" iconSize="16" (onClick)="onFinish()"/>
+      <app-button fab2 icon="cart-shopping-fast.svg" iconSize="16" (onClick)="onFinish()" [visible]="hasGroceryItemsInCart()"/>
 
       <app-menu-bottom bottomtabbar />
     </app-scaffold>
@@ -149,5 +149,9 @@ export class GroceryComponent {
         this.toastService.handleError(error, 'Error moving Grocery items in shelf');
       },
     });
+  }
+
+  hasGroceryItemsInCart() {
+    return this.sharedDataService.groceryItemsData.data().some(item => item.inCart);
   }
 }

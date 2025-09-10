@@ -10,7 +10,7 @@ import { Component, Input } from '@angular/core';
       {{ icon }}
     </span>
     <div class="favourite-icon" *ngIf="favourite">
-      <app-svg [color]="'var(--background-text-color)'" [size]="14" [path]="'circle-heart.svg'"></app-svg>
+      <app-svg [color]="'var(--text-base)'" [size]="14" [path]="'circle-heart.svg'"></app-svg>
     </div>
   `,
   styles: `
@@ -29,7 +29,7 @@ import { Component, Input } from '@angular/core';
       display: flex; 
       bottom: -4px; 
       right: -4px;
-      background-color: var(--background-color);
+      background-color: transparent;
       border-radius: 50%;
       padding: 0.7px;
     }

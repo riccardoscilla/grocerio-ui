@@ -16,14 +16,14 @@ p-dialog.bottom-sheet .p-dialog {
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
     background: var(--background-color);
     color: var(-background-text-color);
-    border: 1px solid var(--background-border-color);
+    border: 1px solid var(--border);
   }
 
 
   .p-dialog .p-dialog-header {
     padding: 1rem;
     border-bottom: 0 none;
-    color: var(--background-text-color);
+    color: var(--text-base);
     // border-top-right-radius: 6px;
     // border-top-left-radius: 6px;
   }
@@ -34,7 +34,7 @@ p-dialog.bottom-sheet .p-dialog {
   .p-dialog .p-dialog-header .p-dialog-header-icon {
     width: 1.75rem;
     height: 1.75rem;
-    color: var(--background-text-color);
+    color: var(--text-base);
     padding: 1rem;
     border: 0 none;
     background: var(--background-color);
@@ -43,9 +43,9 @@ p-dialog.bottom-sheet .p-dialog {
     // margin-right: 0.5rem;
   }
   .p-dialog .p-dialog-header .p-dialog-header-icon:enabled:hover {
-    color: var(--background-text-color);
+    color: var(--text-base);
     // border-color: transparent;
-    background: var(--background-highlight-color);
+    background: var(--bg-highlight);
   }
   // .p-dialog .p-dialog-header .p-dialog-header-icon:focus-visible {
   //   outline: 1px solid var(--p-focus-ring-color);

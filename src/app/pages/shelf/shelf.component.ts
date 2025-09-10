@@ -10,31 +10,31 @@ import { SharedDataService } from '../../services/shared-data.service';
 @Component({
   selector: 'app-shelf',
   template: `
-    <app-scaffold (onRefresh)="initLoad()">
-      <app-round-top-container appbar>
-        <app-title [title]="sharedDataService.shelfData.getData()?.name" [defaultTitle]="'Shelf'" [onPrimary]="true"/> v1.3.3
-      </app-round-top-container>
-      
-      <app-container content [padding]="'16px'" *ngIf="dataStateHandler.isSuccess()">
-        <app-list>
-          @for (shelfItem of filteredShelfItems(); track shelfItem.id) {
-            <app-list-tile (onClick)="onOpenEdit(shelfItem)">
-              <app-category-icon leading [icon]="shelfItem.icon" [favourite]="shelfItem.item.favourite" />
-              <div content>{{shelfItem.name}}</div>
-              <div subcontent>{{shelfItem.purchaseDate | date:'EEEE, dd MMMM yyyy'}}</div>
-              <div trailing>{{shelfItem.quantity}}</div>
-            </app-list-tile>
-          }
-        </app-list>
+    <app-scaffold (onRefresh)="initLoad()">  
+      <app-title appbar [title]="sharedDataService.shelfData.getData()?.name + ' v1.3.4'" defaultTitle="Shelf"/>
 
-        <app-row *ngIf="sharedDataService.shelfItemsData.isEmpty() && !sharedDataService.categoriesData.isEmpty()">
-          No Shelf Items
-        </app-row>
+      <app-card content>
+        <app-container padding="8px 16px" *ngIf="dataStateHandler.isSuccess()">
+          <app-list>
+            @for (shelfItem of filteredShelfItems(); track shelfItem.id) {
+              <app-list-tile (onClick)="onOpenEdit(shelfItem)">
+                <app-category-icon leading [icon]="shelfItem.icon" [favourite]="shelfItem.item.favourite" />
+                <div content>{{shelfItem.name}}</div>
+                <div subcontent>{{shelfItem.purchaseDate | date:'EEEE, dd MMMM yyyy'}}</div>
+                <div trailing>{{shelfItem.quantity}}</div>
+              </app-list-tile>
+            }
+          </app-list>
 
-        <app-row *ngIf="sharedDataService.categoriesData.isEmpty()">
-          <app-button #fullflex label="Start here to add new Categories" (onClick)="gotoCategories()" />
-        </app-row>
-      </app-container>
+          <app-row *ngIf="sharedDataService.shelfItemsData.isEmpty() && !sharedDataService.categoriesData.isEmpty()">
+            No Shelf Items
+          </app-row>
+
+          <app-row *ngIf="sharedDataService.categoriesData.isEmpty()">
+            <app-button #fullflex label="Start here to add new Categories" (onClick)="gotoCategories()" />
+          </app-row>
+        </app-container>
+      </app-card>
 
       <app-list-loading content *ngIf="dataStateHandler.isLoading()"></app-list-loading>
 

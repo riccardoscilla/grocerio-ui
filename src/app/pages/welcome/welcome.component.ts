@@ -31,7 +31,7 @@ import { HttpErrorResponse } from '@angular/common/http';
       .title {
         font-size: 28px;
         font-weight: 500;
-        color: var(--background-text-color);
+        color: var(--text-base);
       }
     `,
   ],

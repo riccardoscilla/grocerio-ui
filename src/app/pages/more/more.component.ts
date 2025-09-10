@@ -29,6 +29,11 @@ import { AuthService } from '../../services/auth.service';
             <div content>Timer</div>
             <app-button trailing variant="text" icon="angle-small-right.svg" iconSize="18" (onClick)="goto('/timer')" />
           </app-list-tile>
+
+          <app-list-tile>
+            <div content>test</div>
+            <app-button trailing variant="text" icon="angle-small-right.svg" iconSize="18" (onClick)="goto('/test')" />
+          </app-list-tile>
         </app-list>
 
         <app-row>

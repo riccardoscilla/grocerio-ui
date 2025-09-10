@@ -12,7 +12,7 @@ import { MenuItem } from 'primeng/api';
       :host {
         display: flex;        
         position: relative;
-        background-color: var(--primary-color);
+        background-color: var(--primary);
       }
 
       :host::before {
@@ -24,7 +24,7 @@ import { MenuItem } from 'primeng/api';
         height: 32px;
         width: 16px;
         border-top-left-radius: 16px;
-        box-shadow: 0 -16px 0 0 var(--primary-color);
+        box-shadow: 0 -16px 0 0 var(--primary);
       }
 
       :host::after {
@@ -36,7 +36,7 @@ import { MenuItem } from 'primeng/api';
         height: 32px;
         width: 16px;
         border-top-right-radius: 16px;
-        box-shadow: 0 -16px 0 0 var(--primary-color);
+        box-shadow: 0 -16px 0 0 var(--primary);
       }
     `,
   ],

@@ -17,9 +17,9 @@ import { GestureUtils } from '../utils/GestureUtils';
       
       <ng-content select="[content]"></ng-content>
 
-      <div style="height: 48px;"></div>
     </div>
     
+    <!-- <div style="height: 47px;"></div> -->
     <div class="scaffold-bottomtabbar">
       <ng-content select="[bottomtabbar]"></ng-content>
       
@@ -39,13 +39,24 @@ import { GestureUtils } from '../utils/GestureUtils';
 
     .scaffold-appbar {
       z-index: 10;
+      background-color: var(--bg-base);
     }
     
     .scaffold-content {
       flex: 1;
-      overflow-y: auto;
+      overflow-y: scroll;
+      // -webkit-overflow-scrolling: touch;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+      scrollbar-width: none;    /* For Firefox */
+
       position: relative;
-      background-color: var(--background-color);
+      background-color: var(--bg-base);
+
+      padding-bottom: 96px;
+      box-sizing: border-box;
     }
 
     .scaffold-content .refresh-icon {
@@ -57,12 +68,16 @@ import { GestureUtils } from '../utils/GestureUtils';
       transform: translateX(-50%);
       padding: 8px;
       border-radius: 50%;
-      background-color: var(--background-color);
-      border: 1px solid var(--background-border-color);
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border);
     }
 
     .scaffold-bottomtabbar {
-      position: relative;
+      position: absolute;
+      // overflow: hidden;
+      bottom: 0;
+      left: 0;
+      right: 0;
     }
 
     .scaffold-fab {

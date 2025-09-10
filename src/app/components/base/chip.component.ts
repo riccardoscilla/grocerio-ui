@@ -7,7 +7,7 @@ import { AfterContentInit, Component, Input } from '@angular/core';
   `,
   styles: [`
     ::ng-deep p-chip.selected .p-chip {
-      border: 1px solid var(--primary-color);
+      border: 1px solid var(--primary);
     }
   `]  
 })

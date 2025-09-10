@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
     }
 
     :host ::ng-deep > * {
-      border-bottom: 1px solid var(--background-border-color);
+      border-bottom: 1px solid var(--border);
     }
 
     :host ::ng-deep > *:last-child {

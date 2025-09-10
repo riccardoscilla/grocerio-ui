@@ -9,7 +9,7 @@ import { GestureUtils } from '../utils/GestureUtils';
 
       <ng-content select="[leading]"></ng-content>
 
-      <div class="list-tile-content-container" #fullflex>
+      <div class="list-tile-content-container" #fullflex #tileContent>
         <div class="list-tile-content">
           <ng-content select="[content]"></ng-content>
         </div>
@@ -25,7 +25,7 @@ import { GestureUtils } from '../utils/GestureUtils';
       app-row {
         border-radius: 8px;
         &:active {
-          background-color: var(--background-highlight-color);
+          background-color: var(--bg-highlight);
         }
       }
     }
@@ -55,6 +55,7 @@ import { GestureUtils } from '../utils/GestureUtils';
 })
 export class ListTileComponent implements AfterViewInit {
   @ViewChild('tile', { read: ElementRef }) tileRef!: ElementRef<HTMLElement>;
+  @ViewChild('tileContent', { read: ElementRef }) tileContentRef!: ElementRef<HTMLElement>;
   @ViewChild('dragBox') dragBoxRef!: ElementRef<HTMLDivElement>;
 
   @Output() onClick = new EventEmitter<void>();
@@ -67,13 +68,12 @@ export class ListTileComponent implements AfterViewInit {
   }
 
   initClick() {
-    const tile = this.tileRef?.nativeElement;
+    const tile = this.tileContentRef?.nativeElement;
     
     let clickTime = 0;
     let clickX = 0;
     let clickY = 0;
     let clicking = false;
-    let target: EventTarget | null = null;
 
     const onMouseDown = (e: MouseEvent | TouchEvent) => {
       clicking = true;

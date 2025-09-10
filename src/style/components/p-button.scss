@@ -1,8 +1,8 @@
 
   .p-button {
-    color: var(--primary-text-color);
-    background: var(--primary-color);
-    border: 1px solid var(--primary-color);
+    color: var(--primary-text);
+    background: var(--primary);
+    border: 1px solid var(--primary);
     padding: 0.5rem 1rem;
     font-size: 1rem;
     transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s, outline-color 0.2s;
@@ -10,9 +10,9 @@
     // outline-color: transparent;
   }
   .p-button:not(:disabled):hover {
-    background: var(--primary-hover-color);
+    background: var(--primary-hover);
     // color: #ffffff;
-    border-color: var(--primary-hover-color);
+    border-color: var(--primary-hover);
   }
 //   .p-button:not(:disabled):active {
 //     background: #1D4ED8;
@@ -387,13 +387,13 @@
 
   .p-button.p-button-danger, .p-button-group.p-button-danger > .p-button, .p-splitbutton.p-button-danger > .p-button {
     // color: #ffffff;
-    background: var(--danger-color);
-    border: 1px solid var(--danger-color);
+    background: var(--danger);
+    border: 1px solid var(--danger);
   }
   .p-button.p-button-danger:not(:disabled):hover, .p-button-group.p-button-danger > .p-button:not(:disabled):hover, .p-splitbutton.p-button-danger > .p-button:not(:disabled):hover {
-    background: var(--danger-hover-color);
+    background: var(--danger-hover);
     // color: #ffffff;
-    border-color: var(--danger-hover-color);
+    border-color: var(--danger-hover);
   }
 //   .p-button.p-button-danger:not(:disabled):focus, .p-button-group.p-button-danger > .p-button:not(:disabled):focus, .p-splitbutton.p-button-danger > .p-button:not(:disabled):focus {
 //     box-shadow: none;
@@ -405,11 +405,11 @@
 //   }
   .p-button.p-button-danger.p-button-outlined, .p-button-group.p-button-danger > .p-button.p-button-outlined, .p-splitbutton.p-button-danger > .p-button.p-button-outlined {
     background-color: var(--background-color);
-    color: var(--danger-hover-color);
-    // border: 1px solid  var(--danger-hover-color);
+    color: var(--danger-hover);
+    // border: 1px solid  var(--danger-hover);
   }
   .p-button.p-button-danger.p-button-outlined:not(:disabled):hover, .p-button-group.p-button-danger > .p-button.p-button-outlined:not(:disabled):hover, .p-splitbutton.p-button-danger > .p-button.p-button-outlined:not(:disabled):hover {
-    background: var(--danger-highlight-color);
+    background: var(--danger-highlight);
     color: #ef4444;
     // border: 1px solid;
   }

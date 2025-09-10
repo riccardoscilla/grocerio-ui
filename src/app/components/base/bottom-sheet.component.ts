@@ -36,7 +36,7 @@ import { GestureUtils } from '../utils/GestureUtils';
     }
 
     .bottom-sheet {
-      background-color: var(--background-color);
+      background-color: var(--bg-surface);
       width: 100%;
       height: calc(100svh - 60px);
       display: flex;
@@ -61,7 +61,7 @@ import { GestureUtils } from '../utils/GestureUtils';
       width: 20%; 
       height: 4px; 
       border-radius: 4px;
-      background-color: var(--background-border-color);
+      background-color: var(--border);
     }
 
     .bottom-sheet-content {

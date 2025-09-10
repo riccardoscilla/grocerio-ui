@@ -19,7 +19,7 @@ import { MenuItem } from 'primeng/api';
       }
 
       .title {
-        font-size: 28px;
+        font-size: 1.5rem;
         font-weight: 500;
       }
     `,
@@ -35,7 +35,7 @@ export class TitleComponent implements AfterContentInit {
 
   ngAfterContentInit() {
     if (this.onPrimary) {
-      this.renderer.setStyle(this.hostRef.nativeElement, 'color', 'var(--primary-text-color)');
+      this.renderer.setStyle(this.hostRef.nativeElement, 'color', 'var(--primary-text)');
     }
   }
 

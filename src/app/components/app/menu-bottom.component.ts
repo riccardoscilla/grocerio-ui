@@ -30,9 +30,9 @@ interface MenuItem {
   `,
   styles: `
     .menu {
-      background: var(--background-color);
-      border-top: 2px solid var(--background-border-color);
-      border-radius: 16px;
+      background: var(--bg-base);
+      border-top: 2px solid var(--border);
+      border-radius: 16px 16px 0 0 ;
     }
 
     .item {
@@ -56,7 +56,7 @@ interface MenuItem {
       top: 0;
 
       border-radius: 0 0 8px 8px;
-      background-color: var(--primary-color);
+      background-color: var(--primary);
 
       visibility: hidden; // do not show by deafult
     }
@@ -72,7 +72,7 @@ interface MenuItem {
       }
 
       .text {
-        color: var(--primary-color);
+        color: var(--primary);
       }
     }
   `,
@@ -96,8 +96,8 @@ export class MenuBottomComponent {
   }
 
   getIconColor(menuItem: MenuItem) {
-    if (this.isRoute(menuItem)) return 'var(--primary-color)';
-    return 'var(--background-text-color)';
+    if (this.isRoute(menuItem)) return 'var(--primary)';
+    return 'var(--text-base)';
   }
 
   goTo(url: string) {

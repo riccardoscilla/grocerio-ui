@@ -878,8 +878,8 @@ $imagePreviewActionIconBorderRadius: 50% !default;
     --font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     --text-color: #{$shade700};
     --text-color-secondary: #{$shade500};
-    --primary-color: #{$primaryColor};
-    --primary-color-text: #{$primaryTextColor};
+    --primary: #{$primaryColor};
+    --primary-text: #{$primaryTextColor};
     --surface-0: #ffffff;
     --surface-50: #f8fafc;
     --surface-100: #f1f5f9;
@@ -922,5 +922,5 @@ $imagePreviewActionIconBorderRadius: 50% !default;
 }
 
 :root {
-    --p-focus-ring-color: var(--primary-color);
+    --p-focus-ring-color: var(--primary);
 }

@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'app-appbar',
   template: `
-
+    <div class="box"></div>
     <app-row>
       <app-button label="Filled" variant="filled" [disabled]="true" (clicked)="do()">
       </app-button>
@@ -17,6 +17,78 @@ import { Component, Input } from '@angular/core';
       <app-button iconLeft="home.svg" variant="filled" shape='round' (clicked)="do()">
       </app-button>
     </app-row>
+
+    <app-row>
+      <app-button label="Filled" variant="filled" [disabled]="true" (clicked)="do()">
+      </app-button>
+    </app-row>
+    <br/>
+    <br/>
+    <br/>
+    
+
+    <app-row>
+      <app-button label="Filled" variant="filled" [disabled]="true" (clicked)="do()">
+      </app-button>
+    </app-row>
+    <br/>
+    <br/>
+    <br/>
+    
+
+    <app-row>
+      <app-button label="Filled" variant="filled" [disabled]="true" (clicked)="do()">
+      </app-button>
+    </app-row>
+    <br/>
+    <br/>
+    <br/>
+    
+
+    <app-row>
+      <app-button label="Filled" variant="filled" [disabled]="true" (clicked)="do()">
+      </app-button>
+    </app-row>
+    <br/>
+    <br/>
+    <br/>
+    
+
+    <app-row>
+      <app-button label="Filled" variant="filled" [disabled]="true" (clicked)="do()">
+      </app-button>
+    </app-row>
+    <br/>
+    <br/>
+    <br/>
+    
+
+    <app-row>
+      <app-button label="Filled" variant="filled" [disabled]="true" (clicked)="do()">
+      </app-button>
+    </app-row>
+    <br/>
+    <br/>
+    <br/>
+    
+
+    <app-row>
+      <app-button label="Filled" variant="filled" [disabled]="true" (clicked)="do()">
+      </app-button>
+    </app-row>
+    <br/>
+    <br/>
+    <br/>
+    
+
+    <app-row>
+      <app-button label="Filled" variant="filled" [disabled]="true" (clicked)="do()">
+      </app-button>
+    </app-row>
+    <br/>
+    <br/>
+    <br/>
+    
 
 
     <app-row>
@@ -90,7 +162,10 @@ import { Component, Input } from '@angular/core';
 
   `,
   styles: [`
-    
+    .box {
+      width: env(safe-area-inset-top,10px);
+      height: env(safe-area-inset-top);
+    }
   `]  
 })
 export class TestComponent {

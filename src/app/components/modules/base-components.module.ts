@@ -21,6 +21,7 @@ import { TestComponent } from '../base/_test.component';
 import { ButtonComponent } from '../base/button.component';
 import { AutocompleteComponent } from '../base/autocomplete-dropdown';
 import { DropdownComponent } from '../base/dropdown';
+import { CardComponent } from '../base/card.component';
 
 export const BaseComponentsModule = [
     ButtonComponent,
@@ -33,6 +34,7 @@ export const BaseComponentsModule = [
 
     ContainerComponent,
     RowComponent,
+    CardComponent,
 
     ListComponent,
     ListTileComponent,

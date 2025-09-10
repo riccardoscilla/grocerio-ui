@@ -59,24 +59,24 @@ import { Component, Input, Output, EventEmitter, ElementRef, ViewChild, HostList
       width: 100%;
       font-family: var(--font-family);
       font-size: 1rem;
-      color: var(--background-text-color);
-      background: var(--background-color);
+      color: var(--text-base);
+      background: var(--bg-surface);
       display: flex;
       align-items: center;
       padding-left: 0.75rem;
 
-      border: 1px solid var(--background-border-color);
+      border: 1px solid var(--border);
       border-radius: 8px;
       height: 40px;
       outline: none;
       transition: all 0.2s ease;
 
       &:hover {
-        border-color: var(--background-border-highlight-color);
+        border-color: var(--border-highlight);
       }
 
       &:focus {
-        border-color: var(--primary-color);
+        border-color: var(--primary);
       }
     }
 
@@ -85,7 +85,7 @@ import { Component, Input, Output, EventEmitter, ElementRef, ViewChild, HostList
       right: 0;
       width: 40px;
       height: 100%;
-      color: var(--background-border-highlight-color);
+      color: var(--border-highlight);
       cursor: pointer;
 
       display: flex;
@@ -116,7 +116,7 @@ import { Component, Input, Output, EventEmitter, ElementRef, ViewChild, HostList
 
     .dropdown-content {
       background: white;
-      border: 1px solid var(--background-border-color);
+      border: 1px solid var(--border);
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       max-height: 200px;
@@ -135,17 +135,17 @@ import { Component, Input, Output, EventEmitter, ElementRef, ViewChild, HostList
       font-size: 0.95rem;
 
       &:hover {
-        background-color: var(--background-hover-color);
+        background-color: var(--bg-hover);
       }
 
       &.selected {
-        background-color: var(--primary-highlight-color);
-        color: var(--primary-color);
+        background-color: var(--primary-highlight);
+        color: var(--primary);
       }
     }
 
     .add-new-item {
-      color: var(--primary-color);
+      color: var(--primary);
     }
   `,
 })

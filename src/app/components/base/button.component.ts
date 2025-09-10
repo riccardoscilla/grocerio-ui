@@ -6,6 +6,7 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, View
     <button #button
       [ngClass]="['button', type, variant, shape, size]"
       [class.disabled]="disabled"
+      [class.visible]="visible"
       (click)="click()">
       
       <app-svg *ngIf="iconLeft" [path]="iconLeft" [size]="+iconSize"></app-svg>
@@ -23,26 +24,12 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, View
       border: 1px solid;
       cursor: pointer;
       transition: background-color 0.2s;
-      // line-height: 1;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-    }
-
-    .button.disabled {
-      opacity: 0.6;
-      cursor: auto;
-    }
-    
-    .button {
       padding: 0.5rem 1rem;
       border-radius: 8px;
-
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
       gap: 8px;
-
       min-height: 2.25rem;
       min-width: 2.25rem;
 
@@ -50,134 +37,77 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, View
         min-height: 3rem;
         min-width: 3rem;
       }
+
+      &.round {
+        border-radius: 50%;
+      }
+
+      &.disabled {
+        opacity: 0.6;
+        cursor: auto;
+      }
+
+      &:not(.visible) {
+        opacity: 0;
+        cursor: auto;
+      }
+
+      /* --- Varianti --- */
+      &.filled {
+        background-color: var(--btn-color);
+        color: var(--btn-text-color);
+        border-color: var(--btn-color);
+
+        app-svg { background-color: var(--btn-text-color); }
+        &:not(.disabled):hover { background-color: var(--btn-hover-color); }
+      }
+
+      &.outlined {
+        background-color: transparent;
+        color: var(--btn-color);
+        border-color: var(--btn-color);
+
+        app-svg { background-color: var(--btn-color); }
+        &:not(.disabled):hover { background-color: var(--btn-highlight-color); }
+      }
+
+      &.text {
+        background-color: transparent;
+        color: var(--btn-color);
+        border-color: transparent;
+
+        app-svg { background-color: var(--btn-color); }
+        &:not(.disabled):hover { background-color: var(--btn-highlight-color); }
+      }
     }
 
-    .button.round {
-      border-radius: 50%;
+    /* --- Tipi: impostano solo le variabili --- */
+    .button.primary {
+      --btn-color: var(--primary);
+      --btn-text-color: var(--primary-text);
+      --btn-hover-color: var(--primary-hover);
+      --btn-highlight-color: var(--primary-highlight);
     }
 
-    /* ---------- PRIMARY ---------- */
-    .button.primary.filled { 
-      background-color: var(--primary-color); 
-      color: var(--primary-text-color); 
-      border-color: var(--primary-color);
-
-      app-svg { background-color: var(--primary-text-color); }
-
-      &:not(.disabled):hover { background-color: var(--primary-hover-color); }
+    .button.error {
+      --btn-color: var(--error);
+      --btn-text-color: var(--error-text);
+      --btn-hover-color: var(--error-hover);
+      --btn-highlight-color: var(--error-highlight);
     }
 
-    .button.primary.outlined { 
-      background-color: var(--background-color); 
-      color: var(--primary-color); 
-      border-color: var(--primary-color);
-
-      app-svg { background-color: var(--primary-color); }
-
-      &:not(.disabled):hover { background-color: var(--primary-highlight-color); }
+    .button.warning {
+      --btn-color: var(--warning);
+      --btn-text-color: var(--warning-text);
+      --btn-hover-color: var(--warning-hover);
+      --btn-highlight-color: var(--warning-highlight);
     }
 
-    .button.primary.text { 
-      background-color: var(--background-color); 
-      color: var(--primary-color); 
-      border-color: var(--background-color);
-
-      app-svg { background-color: var(--primary-color); }
-
-      &:not(.disabled):hover { background-color: var(--primary-highlight-color); }
-    }
-
-    /* ---------- ERROR ---------- */
-    .button.error.filled { 
-      background-color: var(--error-color); 
-      color: var(--error-text-color); 
-      border-color: var(--error-color);
-
-      app-svg { background-color: var(--error-text-color); }
-
-      &:not(.disabled):hover { background-color: var(--error-hover-color); }
-    }
-
-    .button.error.outlined { 
-      background-color: var(--background-color); 
-      color: var(--error-color); 
-      border-color: var(--error-color);
-
-      app-svg { background-color: var(--error-color); }
-
-      &:not(.disabled):hover { background-color: var(--error-highlight-color); }
-    }
-
-    .button.error.text { 
-      background-color: var(--background-color); 
-      color: var(--error-color); 
-      border-color: var(--background-color);
-
-      app-svg { background-color: var(--error-color); }
-
-      &:not(.disabled):hover { background-color: var(--error-highlight-color); }
-    }
-
-    /* ---------- WARNING ---------- */
-    .button.warning.filled { 
-      background-color: var(--warning-color); 
-      color: var(--warning-text-color); 
-      border-color: var(--warning-color);
-
-      app-svg { background-color: var(--warning-text-color); }
-
-      &:not(.disabled):hover { background-color: var(--warning-hover-color); }
-    }
-
-    .button.warning.outlined { 
-      background-color: var(--background-color); 
-      color: var(--warning-color); 
-      border-color: var(--warning-color);
-
-      app-svg { background-color: var(--warning-color); }
-
-      &:not(.disabled):hover { background-color: var(--warning-highlight-color); }
-    }
-
-    .button.warning.text { 
-      background-color: var(--background-color); 
-      color: var(--warning-color); 
-      border-color: var(--background-color);
-
-      app-svg { background-color: var(--warning-color); }
-
-      &:not(.disabled):hover { background-color: var(--warning-highlight-color); }
-    }
-
-    /* ---------- SUCCESS ---------- */
-    .button.success.filled { 
-      background-color: var(--success-color); 
-      color: var(--success-text-color); 
-      border-color: var(--success-color);
-
-      app-svg { background-color: var(--success-text-color); }
-
-      &:not(.disabled):hover { background-color: var(--success-hover-color); }
-    }
-
-    .button.success.outlined { 
-      background-color: var(--background-color); 
-      color: var(--success-color); 
-      border-color: var(--success-color);
-
-      app-svg { background-color: var(--success-color); }
-
-      &:not(.disabled):hover { background-color: var(--success-highlight-color); }
-    }
-
-    .button.success.text { 
-      background-color: var(--background-color); 
-      color: var(--success-color); 
-      border-color: var(--background-color);
-
-      app-svg { background-color: var(--success-color); }
-
-      &:not(.disabled):hover { background-color: var(--success-highlight-color); }
+    .button.success {
+      --btn-color: var(--success-color);
+      --btn-text-color: var(--success-text-color);
+      --btn-hover-color: var(--success-hover-color);
+      --btn-highlight-color: var(--success-highlight-color);
     }
   `]
 })
@@ -195,6 +125,7 @@ export class ButtonComponent implements AfterViewInit {
   @Input() size: 'normal' | 'large' = 'normal';
 
   @Input() disabled = false;
+  @Input() visible = true;
 
   /** Evento click */
   @Output() onClick = new EventEmitter<void>();
@@ -210,7 +141,7 @@ export class ButtonComponent implements AfterViewInit {
   }
 
   click() {
-    if (!this.disabled) {
+    if (!this.disabled && this.visible) {
       this.onClick.emit();
     }
   }
