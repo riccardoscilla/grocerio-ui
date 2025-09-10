@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1754741727161,
+  "timestamp": 1757516346357,
   "index": "/grocerio-ui/index.html",
   "assetGroups": [
     {
@@ -13,10 +13,10 @@
       "urls": [
         "/grocerio-ui/favicon.ico",
         "/grocerio-ui/index.html",
-        "/grocerio-ui/main-OX6TJ3WS.js",
+        "/grocerio-ui/main-EFOWDBCN.js",
         "/grocerio-ui/manifest.webmanifest",
         "/grocerio-ui/polyfills-6EAL64PA.js",
-        "/grocerio-ui/styles-K67HS2QY.css",
+        "/grocerio-ui/styles-OX4P7HAE.css",
         "/grocerio-ui/worker-3NCFLVFN.js"
       ],
       "patterns": []
@@ -48,6 +48,7 @@
         "/grocerio-ui/assets/svg/angle-circle-right.svg",
         "/grocerio-ui/assets/svg/angle-small-right.svg",
         "/grocerio-ui/assets/svg/arrow-small-left.svg",
+        "/grocerio-ui/assets/svg/cart-shopping-fast.svg",
         "/grocerio-ui/assets/svg/circle-heart.svg",
         "/grocerio-ui/assets/svg/circle-user.svg",
         "/grocerio-ui/assets/svg/edit.svg",
@@ -60,6 +61,7 @@
         "/grocerio-ui/assets/svg/pencil.svg",
         "/grocerio-ui/assets/svg/plus.svg",
         "/grocerio-ui/assets/svg/recipe-book.svg",
+        "/grocerio-ui/assets/svg/rotate-right.svg",
         "/grocerio-ui/assets/svg/settings-sliders.svg",
         "/grocerio-ui/assets/svg/trash-xmark.svg",
         "/grocerio-ui/assets/sw.js",
@@ -96,6 +98,7 @@
     "/grocerio-ui/assets/svg/angle-circle-right.svg": "cf366f3edc3469d14173ccbacf784db728ed49e7",
     "/grocerio-ui/assets/svg/angle-small-right.svg": "41a7a6cf3c06e9ad2fb24db0f252ddab08aca45d",
     "/grocerio-ui/assets/svg/arrow-small-left.svg": "961b8cfc2711cf704eaf738f11dcb48dd8f952bb",
+    "/grocerio-ui/assets/svg/cart-shopping-fast.svg": "d4501d28338988ecd6797892d8e932c7402e547a",
     "/grocerio-ui/assets/svg/circle-heart.svg": "91e289b8013d246fbdb75489db008d801735a51a",
     "/grocerio-ui/assets/svg/circle-user.svg": "28f1ef4528b12311078f03c60facc0fb4f4215d5",
     "/grocerio-ui/assets/svg/edit.svg": "de3054af547a9d0704492f892a2490ef8eeb3c4e",
@@ -108,13 +111,14 @@
     "/grocerio-ui/assets/svg/pencil.svg": "8ee0bfacc96fb97ec6349df6f6ca902ecde61d02",
     "/grocerio-ui/assets/svg/plus.svg": "d93b04c6b8d1e63f9730fbdd5b7aa4aca154f3f6",
     "/grocerio-ui/assets/svg/recipe-book.svg": "060c80cf240ea86e89fdcc1b061b24ab2e8e261c",
+    "/grocerio-ui/assets/svg/rotate-right.svg": "a7e16f2e4f1c45c8635a1da7a9fbf6ac6ed11588",
     "/grocerio-ui/assets/svg/settings-sliders.svg": "a9cee9c08a1451e2ecce25c8e2d705d853c9633a",
     "/grocerio-ui/assets/svg/trash-xmark.svg": "8076df79a1c227d9dfb4222daec18a35523399b9",
     "/grocerio-ui/assets/sw.js": "b4711a0866a580fcb886607c9526443b4fed678c",
     "/grocerio-ui/favicon.ico": "84d20f10a40f14d5323b7f2b3525cac4839542f6",
-    "/grocerio-ui/index.html": "6cc3587bf5ca0dc2f1ec92905012a539698da157",
-    "/grocerio-ui/main-OX6TJ3WS.js": "5b0ff897a41ba858929a053369dbfcaaa32d7608",
-    "/grocerio-ui/manifest.webmanifest": "54cd5e64af7ea5ee94031cc1b5054792739ce38a",
+    "/grocerio-ui/index.html": "06e9b1023e42f2eb5f267dc8a82c52636777e1da",
+    "/grocerio-ui/main-EFOWDBCN.js": "52d1ddc614c06fd78b3d6e52031b77111ecfa0a3",
+    "/grocerio-ui/manifest.webmanifest": "cff9366bea765d32b66ed074ad0a7bef14a6b034",
     "/grocerio-ui/media/Inter-italic.var-SWFAXF2C.woff2": "6f20a046917bf86d4b6cc29c4e2515bd64d2cb9b",
     "/grocerio-ui/media/Inter-roman.var-WIJJYAE4.woff2": "7a2602d2ebb08ce895e33addb6fe595f1029431e",
     "/grocerio-ui/media/color-3LUHUBGQ.png": "ff4c4bcb2207891b292f544edb4da9d2df5d45cf",
@@ -124,7 +128,7 @@
     "/grocerio-ui/media/primeicons-GEFHGEHP.ttf": "3b878ca7e88945a8ec25814810b95367d8977ae6",
     "/grocerio-ui/media/primeicons-P53SE5CV.woff": "361e3af71bb4e515feead2f787348a92a5527158",
     "/grocerio-ui/polyfills-6EAL64PA.js": "d874147a12a6570d9b44e99935e9de8b7f3cabbc",
-    "/grocerio-ui/styles-K67HS2QY.css": "c9d72d250935cfb167ce0c388b9e02d6f002e067",
+    "/grocerio-ui/styles-OX4P7HAE.css": "603ba457242a64d5925f8545bc7c4bcca71f19d0",
     "/grocerio-ui/worker-3NCFLVFN.js": "756a43891df3952ba22651337f9d728ade940814"
   },
   "navigationUrls": [

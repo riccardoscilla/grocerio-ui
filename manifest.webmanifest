@@ -1,9 +1,9 @@
 {
   "name": "Grocerio",
   "short_name": "Grocerio",
-  "theme_color": "#3b82f6",
-  "background_color": "#fafafa",
   "display": "standalone",
+  "theme_color": "transparent",
+  "background_color": "#ffffff",
   "scope": "./",
   "start_url": "./",
   "icons": [
